@@ -1,1 +1,26 @@
 ok this is the plan
+
+Monday 5/22
+Building functionality (be able to place buildings, make sure buildings aren't overlapping, make sure that player can afford to place)
+
+Thursday 5/25
+Enemies (Pathfinding, drops money, Stack of enemies at start, attacks)
+
+Tuesday 5/30
+Troops and Training Queue (Be able to click an icon of a troop and train them/reorder troops, buy troops)
+
+Friday 6/2
+Difficulty and Special Spell and finishing up core parts (Everything should be working decently well)
+
+Wednesday 6/7
+Finished Project
+
+Thursday 6/8
+Music and Debugging
+
+Friday 6/9 Morning
+Final Project Due Date
+
+Everything is currently a soft deadline, meaning it can be pushed back. We left extra time once all functionality has been added to work out the kinks. 
+
+The tasks will be staggered, meaning that Kevin will work on building functionality and I will work on enemies, then he works on troops and training queue, etc. 
