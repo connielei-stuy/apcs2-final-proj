@@ -9,8 +9,6 @@ Unit test; //test unit
 public enum State {
   NULL , STRUCTURESELECTED }
   
-  
-
 void setup(){
   size(500, 600); //change this to fit the lab's computers
   frameRate(60); 
@@ -34,7 +32,6 @@ void draw(){
     rect(0,500,500,100);
     if(difficulty < 0){
       //program to allow user to choose difficult
-      //System.out.println("hello world");
     }
     //display every structure
     for (Structure s : structures) {

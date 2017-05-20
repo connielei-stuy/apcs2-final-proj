@@ -13,6 +13,19 @@ class Enemy extends Unit{
     fill(color(14, 15, 15));
     ellipse(x, y, 300,150);
   }
-
+  
+  void update(){
+    if(state == 0){
+      move();
+    }
+    else if (state == 1){
+      attack(s); //where s is structure
+    }
+  }
+  
+  void move(){
+    
+    
+  }
   
 }

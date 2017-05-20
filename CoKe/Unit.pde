@@ -34,9 +34,10 @@ abstract class Unit {
     return false;
   }
 
-//  boolean attack(Structure s){
-    
-  //}
+  boolean attack(Structure s){
+    s.health = s.health - attack;
+    return true;
+  }
 
   boolean heal() {
     float healing = random(maxHealth);
@@ -47,7 +48,6 @@ abstract class Unit {
     return false;
   }
   
-  
-  //void display();
+  abstract void display();
   
 }
