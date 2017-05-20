@@ -22,6 +22,14 @@ abstract class Structure {
     return height;
   }
   
+  float getX() {
+    return x;
+  }
+  
+  float getY() {
+    return y;
+  }
+  
   boolean attack(Unit u) {
     if (attack - u.getDefense() > 0) {
       u.health -= attack - u.getDefense();
@@ -30,7 +38,10 @@ abstract class Structure {
     return false;
   }
   
+  //how to display structures for now
   void display(){
+    fill(c);
+    rect(x,y,w,h);
   }
   
 }

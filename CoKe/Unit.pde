@@ -13,6 +13,18 @@ abstract class Unit {
   float getAttack() {
     return attack;
   }
+  
+  float getSpeed() {
+    return speed;
+  }
+  
+  float getX() {
+    return x;
+  }
+  
+  float getY() {
+    return y;
+  }
 
   boolean attack(Unit u) {
     if (attack - u.getDefense() > 0) {

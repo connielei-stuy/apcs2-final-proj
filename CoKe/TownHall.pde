@@ -11,8 +11,4 @@ class TownHall extends Structure {
     c = color(255,0,0);
   }
   
-  void display() {
-    fill (c);
-    rect(x,y,w,h);
-  }
 }
