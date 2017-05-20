@@ -8,10 +8,11 @@ class TownHall extends Structure {
     h = 50;
     x = 500/2 - w/2;
     y = 500/2 - h/2;
+    c = color(255,0,0);
   }
   
   void display() {
-    fill (color (120,0,0));
+    fill (c);
     rect(x,y,w,h);
   }
 }

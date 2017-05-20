@@ -1,5 +1,6 @@
 abstract class Structure {
   protected float health, defense, attack, w, h, x, y;
+  protected color c;
   
   float getHealth() {
     return health;
