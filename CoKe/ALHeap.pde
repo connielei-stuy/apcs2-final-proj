@@ -5,17 +5,17 @@ class ALHeap<T extends Location<T>>
   ArrayList<T> _heap;
   float x, y;
 
-  ALHeap(float Ex, float Ey) { 
+  ALHeap(float Ux, float Uy) { 
     _heap = new ArrayList<T>();
-    x = Ex;
-    y = Ey;
+    x = Ux;
+    y = Uy;
   }
 
   boolean isEmpty() { 
     return _heap.isEmpty();
   }
 
-  T peekMin() { 
+  T peekMin(){ 
     if (_heap.size() < 1 )
       return null;
     else
@@ -40,34 +40,22 @@ class ALHeap<T extends Location<T>>
     }
   }
 
-  float compareTo(T a, T b) {
-    float distA = dist(a.getX(), a.getY(), x, y);
-    float distB = dist(b.getX(), b.getY(), x, y);
-    return distA - distB;
-  }
-
-  T removeMin() 
-  {
+  T removeMin() {
     if ( _heap.size() == 0 ) 
       return null;
-
-    //store root value for return at end of fxn
+      
     T retVal = peekMin();
 
-    //store val about to be swapped into root
     T foo = _heap.get( _heap.size() - 1);
 
-    //swap last (rightmost, deepest) leaf with root
     swap( 0, _heap.size() - 1 );
 
-    //lop off last leaf
     _heap.remove( _heap.size() - 1);
-
-    // walk the now-out-of-place root node down the tree...
+    
     int pos = 0;
     int minChildPos;
 
-    while ( pos < _heap.size() ) {
+    while ( pos < _heap.size() ){
 
       minChildPos = minChildPos(pos);
 
@@ -83,8 +71,7 @@ class ALHeap<T extends Location<T>>
     return retVal;
   }
 
-  int minChildPos( int pos ) 
-  {
+  int minChildPos( int pos ) {
     int retVal;
     int lc = 2*pos + 1; 
     int rc = 2*pos + 2; 
@@ -100,16 +87,21 @@ class ALHeap<T extends Location<T>>
     return retVal;
   }
 
-  T minOf( T a, T b ) 
-  {
+  T minOf( T a, T b ){
     if ( compareTo(a, b) < 0 )
       return a;
     else
       return b;
   }
 
-  void swap( int pos1, int pos2 ) 
-  {
+  float compareTo(T a, T b) {
+    float distA = dist(a.getX(), a.getY(), x, y);
+    float distB = dist(b.getX(), b.getY(), x, y);
+    return distA - distB;
+  }
+
+  void swap( int pos1, int pos2 ){
     _heap.set( pos1, _heap.set( pos2, _heap.get(pos1) ) );
   }
+  
 }

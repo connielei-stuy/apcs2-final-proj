@@ -1,6 +1,7 @@
 class Enemy extends Unit{
  
-  ALHeap<Structure> temp;
+  ALHeap<Structure> sTarget;
+  ALHeap<Unit> uTarget;
   
   Enemy(){
     health = 50;
@@ -10,7 +11,8 @@ class Enemy extends Unit{
     x = height;
     y = width;
     state = 0;
-    temp = new ALHeap<Structure>(x, y);
+    sTarget = new ALHeap<Structure>(x, y);
+    uTarget = new ALHeap<Unit>(x, y);
   }
   
   void display(){
