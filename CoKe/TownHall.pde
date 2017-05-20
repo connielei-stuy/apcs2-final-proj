@@ -11,4 +11,12 @@ class TownHall extends Structure {
     c = color(255,0,0);
   }
   
+  float getX() {
+    return x;
+  }
+  
+  float getY() {
+    return y;
+  }
+  
 }

@@ -1,4 +1,6 @@
 class Enemy extends Unit{
+ 
+  ALHeap<Structure> temp;
   
   Enemy(){
     health = 50;
@@ -7,6 +9,8 @@ class Enemy extends Unit{
     speed = random(10);
     x = height;
     y = width;
+    state = 0;
+    temp = new ALHeap<Structure>(x, y);
   }
   
   void display(){
@@ -19,7 +23,6 @@ class Enemy extends Unit{
       move();
     }
     else if (state == 1){
-      attack(s); //where s is structure
     }
   }
   

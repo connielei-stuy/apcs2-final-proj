@@ -1,4 +1,5 @@
-abstract class Structure {
+class Structure implements Location<Structure>{
+  
   protected float health, defense, attack, w, h, x, y;
   protected color c;
   
@@ -15,11 +16,11 @@ abstract class Structure {
   }
   
   float getWidth() {
-    return width;
+    return w;
   }
   
   float getHeight() {
-    return height;
+    return h;
   }
   
   float getX() {

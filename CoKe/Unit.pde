@@ -1,6 +1,7 @@
 abstract class Unit {
 
   protected float health, defense, attack, speed, x, y, maxHealth;
+  protected int state;
 
   float getHealth() {
     return health;
