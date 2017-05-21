@@ -1,24 +1,57 @@
-this be the devlog yo
-
+Dev-Log
+========================================================================
 5/18
-Kevin: decided plan together, started background generation
-Connie: decided plan together, wrote up plan and devlog, started enemies
 
+Kevin:
+- decided plan together
+- started background generation
+Connie:
+- decided plan together
+- wrote up plan and devlog
+- started enemies
+========================================================================
 5/19
-Kevin: implemented structure, created working town hall
-Connie: worked on adapting heap so it was typed to structures/units, worked on enemies 
 
+Kevin:
+- implemented structure
+- created working town hall
+Connie:
+- worked on adapting heap so it was typed to structures/units
+- worked on enemies 
+========================================================================
 5/20
-Kevin: implemented cannons, allowed drag and drop
-Connie: finished ALHeap, added Location interface to solve problem, now functional with structures, units, first steps towards pathfinding/movement
 
-
+Kevin:
+- added cannons
+- implemented drag and drop functionality to structures
+- implemented class Bullet, structures can now shoot
+Connie:
+- finished ALHeap
+- added Location interface to solve problem
+- now functional with structures, units
+- first steps towards pathfinding/movement
+========================================================================
 5/21
+
 Kevin:
 Connie:
-
+========================================================================
 5/22
+
 Kevin:
 Connie:
-
+========================================================================
 5/23
+
+Kevin:
+Connie:
+========================================================================
+5/24
+
+Kevin:
+Connie:
+========================================================================
+5/25
+
+Kevin:
+Connie:
