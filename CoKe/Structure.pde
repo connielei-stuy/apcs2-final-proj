@@ -48,7 +48,7 @@ class Structure implements Location<Structure> {
     if (b == null) {
       b = new Bullet(centerX,centerY,u.centerX-centerX,u.centerY-centerY);
     }
-    if (collision(b,u)) {
+    if (b.collision(u)) {
       if (attack - u.getDefense() > 0) {
         u.health -= attack - u.getDefense();
         //u.c = color(0);

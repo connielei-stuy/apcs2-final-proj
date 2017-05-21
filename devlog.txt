@@ -16,7 +16,7 @@ Kevin:
 - implemented structure
 - created working town hall
 Connie:
-- worked on adapting heap so it was typed to structures/units
+- worked on adapting heap so it was typed to Structure/Unit
 - worked on enemies 
 ========================================================================
 5/20
@@ -35,6 +35,13 @@ Connie:
 
 Kevin:
 Connie:
+-worked on organization, cleaned up extra methods, moved methods
+-cleaned up UML diagrams for all existing classes
+-worked on Enemy's constructors, adapting according to difficulty
+-worked on generating the Structure and Unit heaps for Enemy
+-worked on Enemy's update (includes choosing movement or attack)
+-worked on Enemy's targeting/pathfinding (not very well)
+-added comments
 ========================================================================
 5/22
 

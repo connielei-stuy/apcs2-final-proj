@@ -1,9 +1,12 @@
 boolean startGame = false; //is the game started or not?
 int difficulty = -1; //difficulty
-ArrayList<Structure> structures = new ArrayList(); //arrayList that contains all the structures
+ArrayList<Structure> structures = new ArrayList<Structure>(); //arrayList that contains all the structures
+ArrayList<Unit> troops = new ArrayList<Unit>();
+ArrayList<Unit> enemies = new ArrayList<Unit>();
+
 Structure currentStructure;
 State state; //variable to store current state of the mouse
-Unit test; //test unit'
+Unit test; //test unit
 
 //enums for state of the mouse
 //should add more later
@@ -37,8 +40,8 @@ void draw() {
     if (difficulty < 0) {
       //program to allow user to choose difficult
     }
-    
-    
+
+
     //display every structure
     for (Structure s : structures) {
       s.display();
@@ -87,23 +90,10 @@ boolean canPlace(Structure s, float x, float y) {
   return true;
 }
 
-
-float distance(float x1, float y1, float x2, float y2) {
-  return sqrt(pow((x2-x1), 2) + pow((y2-y1), 2));
-}
-
 boolean inRange(Structure attacker, Structure target) {
-  if (distance(attacker.getX(), attacker.getY(), target.getX(), target.getY()) < attacker.getRange()/2) {
-    if (distance(attacker.getX(), attacker.getY(), target.getX(), target.getY()) != 0) {
-      return true;
-    }
-  }
-  return false;
-}
-
-boolean collision(Bullet b , Structure s) {
-  if (distance(b.getX(),b.getY(),s.getX(),s.getY()) < (b.w + s.w)) {
+  float distance = dist(attacker.getX(), attacker.getY(), target.getX(), target.getY());
+  if (distance < attacker.getRange()/2 && 
+    distance != 0)
     return true;
-  }
   return false;
 }

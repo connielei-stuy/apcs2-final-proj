@@ -26,4 +26,8 @@ class Bullet {
     return y;
   }
   
+  boolean collision(Structure s) {
+    return dist(x, y, s.getX(), s.getY()) < (w + s.getWidth());
+  }
+  
 }

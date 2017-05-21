@@ -34,21 +34,12 @@ abstract class Unit implements Location<Unit> {
     }
     return false;
   }
-
+  
   boolean attack(Structure s){
     s.health = s.health - attack;
     return true;
   }
-
-  boolean heal() {
-    float healing = random(maxHealth);
-    if (health + healing < maxHealth) {
-      health += healing;
-      return true;
-    }
-    return false;
-  }
   
-  abstract void display();
-  
+  abstract void attack();
+  abstract void display();  
 }
