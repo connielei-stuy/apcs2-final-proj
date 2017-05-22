@@ -19,16 +19,13 @@ class Enemy extends Unit {
       defense = random(50);
       attack = random(50);
       speed = random(10);
-    }
-    else if (difficulty == 1) {
+    } else if (difficulty == 1) {
       health = 70;
       defense = random(70);
       attack = random(70);
       speed = random(30);
-    }
-    else if (difficulty  == 2){
-    }
-    else if (difficulty == 3){
+    } else if (difficulty  == 2) {
+    } else if (difficulty == 3) {
     }
   }
 
@@ -58,6 +55,7 @@ class Enemy extends Unit {
 
   void update() {    
     updateTarget();
+    display();
     if (state == 1)
       attack();
     else
@@ -67,19 +65,25 @@ class Enemy extends Unit {
   void move() {
     if (target == 0) { //targeting structure
       Structure temp = sTarget.peekMin();
+      System.out.println(sTarget);
       float hyp = dist(temp.getX(), temp.getY(), x, y);
       x += (speed * (temp.getX() - x) / hyp);
       y += (speed * (temp.getY() - y) / hyp);
-      } 
-    else{
+      hyp = dist(temp.getX(), temp.getY(), x, y);
+      if(hyp < (temp.getWidth() + 20)){
+        state = 1;
+      }
+    } else {
       Unit temp = uTarget.peekMin();
       float hyp = dist(temp.getX(), temp.getY(), x, y);
       x += (speed * (temp.getX() - x) / hyp);
       y += (speed * (temp.getY() - y) / hyp);
+      hyp = dist(temp.getX(), temp.getY(), x, y);
+      if(hyp < (20 + 20)){
+        state = 1;
+      }
     }
   }
-
-  
 
   void updateTarget() {
     Unit uTemp = uTarget.peekMin();
@@ -108,5 +112,5 @@ class Enemy extends Unit {
       }
     }
   }
-  
+ 
 }

@@ -2,11 +2,10 @@ boolean startGame = false; //is the game started or not?
 int difficulty = -1; //difficulty
 ArrayList<Structure> structures = new ArrayList<Structure>(); //arrayList that contains all the structures
 ArrayList<Unit> troops = new ArrayList<Unit>();
-ArrayList<Unit> enemies = new ArrayList<Unit>();
+ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 Structure currentStructure;
 State state; //variable to store current state of the mouse
-Unit test; //test unit
 
 //enums for state of the mouse
 //should add more later
@@ -18,8 +17,9 @@ void setup() {
   size(500, 600); //change this to fit the lab's computers
   frameRate(60); 
   stroke(255, 255, 0); //change color of outline of shapes
-  test = new Enemy();
   structures.add(new TownHall()); //required for every game
+  enemies.add(new Enemy());
+  enemies.add(new Enemy());
 }
 
 void draw() {
@@ -43,13 +43,23 @@ void draw() {
 
 
     //display every structure
-    for (Structure s : structures) {
-      s.display();
-      for (Structure s2 : structures) {
-        if (inRange(s, s2)) {
-          s.attack(s2);
-        }
+    int s = 0;
+    while(s < structures.size()){
+      if(structures.get(s).getHealth() > 0){
+        structures.get(s).display();
+        s ++;
       }
+      else
+        structures.remove(s);
+    }
+    int e = 0;
+    while(e < enemies.size()){
+      if(enemies.get(e).getHealth() > 0){
+         enemies.get(e).update();
+         e ++;
+      }
+      else
+        enemies.remove(e);
     }
   }
 }
@@ -69,8 +79,12 @@ void mouseReleased() {
   if (state == State.STRUCTURESELECTED) {
     currentStructure = new Cannon();
     state = State.NULL;
-    if (canPlace(currentStructure, mouseX, mouseY)) 
+    if (canPlace(currentStructure, mouseX, mouseY)){
       structures.add(currentStructure);
+      for(Enemy u: enemies){
+         u.heaping(); 
+      }
+    }
   }
 }
 

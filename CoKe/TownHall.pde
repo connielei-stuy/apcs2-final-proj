@@ -21,4 +21,8 @@ class TownHall extends Structure {
   float getY() {
     return y;
   }
+  
+  String toString(){
+    return "Town Hall"; 
+  }
 }

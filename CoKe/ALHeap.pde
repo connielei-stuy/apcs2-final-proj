@@ -104,4 +104,12 @@ class ALHeap<T extends Location<T>>
     _heap.set( pos1, _heap.set( pos2, _heap.get(pos1) ) );
   }
   
+  String toString(){
+    String retStr = "";
+    for(T t : _heap){
+      retStr += t + " ";
+    }
+    return retStr;
+  }
+  
 }
