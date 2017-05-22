@@ -1,7 +1,7 @@
 class Enemy extends Unit {
   ALHeap<Structure> sTarget;
   ALHeap<Unit> uTarget;
-  int target;
+  int target; //0 for structure, 1 for troop
 
   Enemy() {
     setC(0);
@@ -53,7 +53,7 @@ class Enemy extends Unit {
 
   void display() {
     fill(color(14, 15, 15));
-    ellipse(x, y, 300, 150);
+    ellipse(x, y, 20, 20);
   }
 
   void update() {    
@@ -66,9 +66,20 @@ class Enemy extends Unit {
 
   void move() {
     if (target == 0) { //targeting structure
-    } else {
+      Structure temp = sTarget.peekMin();
+      float hyp = dist(temp.getX(), temp.getY(), x, y);
+      x += (speed * (temp.getX() - x) / hyp);
+      y += (speed * (temp.getY() - y) / hyp);
+      } 
+    else{
+      Unit temp = uTarget.peekMin();
+      float hyp = dist(temp.getX(), temp.getY(), x, y);
+      x += (speed * (temp.getX() - x) / hyp);
+      y += (speed * (temp.getY() - y) / hyp);
     }
   }
+
+  
 
   void updateTarget() {
     Unit uTemp = uTarget.peekMin();

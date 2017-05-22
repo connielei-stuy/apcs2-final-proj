@@ -40,6 +40,7 @@ abstract class Unit implements Location<Unit> {
     return true;
   }
   
+  
   abstract void attack();
   abstract void display();  
 }
