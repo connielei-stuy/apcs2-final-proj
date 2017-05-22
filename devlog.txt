@@ -41,12 +41,12 @@ Connie:
 -worked on generating the Structure and Unit heaps for Enemy
 -worked on Enemy's update (includes choosing movement or attack)
 -worked on Enemy's targeting/pathfinding (not very well)
--added comments
 ========================================================================
 5/22
 
 Kevin:
 Connie:
+-finished MOVE 
 ========================================================================
 5/23
 
