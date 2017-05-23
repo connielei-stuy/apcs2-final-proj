@@ -19,7 +19,7 @@ class Enemy extends Unit {
       health = 500;
       defense = random(30);
       attack = random(75);
-      speed = random(2);
+      speed = 2;
     } else if (difficulty == 1) {
       health = 100;
       defense = random(20);

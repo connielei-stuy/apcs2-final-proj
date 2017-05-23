@@ -17,7 +17,7 @@ public enum State {
 }
 
 void setup() {
-  size(500, 600); //change this to fit the lab's computers
+  size(1400, 825); //change this to fit the lab's computers 500/600
   frameRate(60); 
   stroke(255, 255, 0); //change color of outline of shapes
   structures.add(th); //required for every game
@@ -33,11 +33,12 @@ void draw() {
     fill(255,0,0);
     text("GAME OVER",75,300);
   }
+  
   else if (!startGame) {
     background(0, 200, 255);
     textSize(32); 
     fill(0);
-    text("Click to start game!", 100, 100);
+    text("Click to start game!", 175, 300);
     if (mousePressed == true) {
       startGame = true;
     }
@@ -51,9 +52,9 @@ void draw() {
     //System.out.println(th.getHealth());
     background(0, 255, 0); //0 for black, 255 for white
     fill(0, 255, 40);
-    rect(50, 50, 400, 400);
+    rect(width/2-200, height/2-200, 400, 400);
     fill(200, 0, 255);
-    rect(0, 500, 500, 100);
+    rect(0,height-200, width, 200);
     if (difficulty < 0) {
       //program to allow user to choose difficult
     }
