@@ -45,6 +45,9 @@ Connie:
 5/22
 
 Kevin:
+-added time functionality for spawn rate of enemies and attack rate of enemies
+-added a game over screen when townhall is destroyed
+-modified attack method for structures so that it attacks enemies
 Connie:
 -finished MOVE 
 ========================================================================
