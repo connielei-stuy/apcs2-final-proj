@@ -2,6 +2,7 @@ class Enemy extends Unit {
   ALHeap<Structure> sTarget;
   ALHeap<Unit> uTarget;
   int target; //0 for structure, 1 for troop
+  int sec = second();
 
   Enemy() {
     setC(0);
@@ -15,22 +16,22 @@ class Enemy extends Unit {
 
   void setC(int difficulty) {
     if (difficulty == 0) {
-      health = 50;
-      defense = random(50);
-      attack = random(50);
-      speed = random(10);
+      health = 500;
+      defense = random(30);
+      attack = random(75);
+      speed = random(2);
     } else if (difficulty == 1) {
-      health = 70;
-      defense = random(70);
-      attack = random(70);
-      speed = random(30);
+      health = 100;
+      defense = random(20);
+      attack = random(20);
+      speed = random(5);
     } else if (difficulty  == 2) {
     } else if (difficulty == 3) {
     }
   }
 
   void defaults() {
-    x = height;
+    x = height-100-random(300);
     y = width;
     state = 0;
     target = 0;
@@ -49,7 +50,7 @@ class Enemy extends Unit {
   }
 
   void display() {
-    fill(color(14, 15, 15));
+    fill(color(14, 15, 200));
     ellipse(x, y, 20, 20);
   }
 
@@ -64,14 +65,16 @@ class Enemy extends Unit {
 
   void move() {
     if (target == 0) { //targeting structure
-      Structure temp = sTarget.peekMin();
-      System.out.println(sTarget);
-      float hyp = dist(temp.getX(), temp.getY(), x, y);
-      x += (speed * (temp.getX() - x) / hyp);
-      y += (speed * (temp.getY() - y) / hyp);
-      hyp = dist(temp.getX(), temp.getY(), x, y);
-      if(hyp < (temp.getWidth() + 20)){
-        state = 1;
+      if (!sTarget.isEmpty()) {
+        Structure temp = sTarget.peekMin();
+        //System.out.println(sTarget);
+        float hyp = dist(temp.getX(), temp.getY(), x, y);
+        x += (speed * (temp.getX() - x) / hyp);
+        y += (speed * (temp.getY() - y) / hyp);
+        hyp = dist(temp.getX(), temp.getY(), x, y);
+        if (hyp < (temp.getWidth() + 20)) {
+          state = 1;
+        }
       }
     } else {
       Unit temp = uTarget.peekMin();
@@ -79,7 +82,7 @@ class Enemy extends Unit {
       x += (speed * (temp.getX() - x) / hyp);
       y += (speed * (temp.getY() - y) / hyp);
       hyp = dist(temp.getX(), temp.getY(), x, y);
-      if(hyp < (20 + 20)){
+      if (hyp < (20 + 20)) {
         state = 1;
       }
     }
@@ -96,6 +99,9 @@ class Enemy extends Unit {
   }
 
   void attack() {
+    int sec2 = second();
+    if (sec2-sec>2) {
+      sec = second();
     if (target == 0) {
       Structure s = sTarget.peekMin();
       attack(s);
@@ -111,6 +117,6 @@ class Enemy extends Unit {
         state = 0;
       }
     }
+    }
   }
- 
 }

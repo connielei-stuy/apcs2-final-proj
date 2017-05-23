@@ -1,8 +1,11 @@
 boolean startGame = false; //is the game started or not?
+boolean endGame = false;
 int difficulty = -1; //difficulty
+TownHall th = new TownHall();
 ArrayList<Structure> structures = new ArrayList<Structure>(); //arrayList that contains all the structures
 ArrayList<Unit> troops = new ArrayList<Unit>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+int sec = second();
 
 Structure currentStructure;
 State state; //variable to store current state of the mouse
@@ -17,13 +20,20 @@ void setup() {
   size(500, 600); //change this to fit the lab's computers
   frameRate(60); 
   stroke(255, 255, 0); //change color of outline of shapes
-  structures.add(new TownHall()); //required for every game
-  enemies.add(new Enemy());
-  enemies.add(new Enemy());
+  structures.add(th); //required for every game
+  //enemies.add(new Enemy());
+  //enemies.add(new Enemy());
+  sec = second();
 }
 
 void draw() {
-  if (!startGame) {
+  if (endGame) {
+    background(0);
+    textSize(64);
+    fill(255,0,0);
+    text("GAME OVER",75,300);
+  }
+  else if (!startGame) {
     background(0, 200, 255);
     textSize(32); 
     fill(0);
@@ -31,7 +41,14 @@ void draw() {
     if (mousePressed == true) {
       startGame = true;
     }
-  } else {
+  } 
+  else {
+    int sec2 = second();
+    if (sec2-sec > 5) {
+      enemies.add(new Enemy());
+      sec = second();
+    }
+    //System.out.println(th.getHealth());
     background(0, 255, 0); //0 for black, 255 for white
     fill(0, 255, 40);
     rect(50, 50, 400, 400);
@@ -41,6 +58,15 @@ void draw() {
       //program to allow user to choose difficult
     }
 
+    for (Structure s: structures) {
+      for (Enemy e: enemies) {
+        if (inRange(s,e)) {
+          s.attack(e);
+          System.out.println("Cannon" + s.getHealth());
+          System.out.println(e.getHealth());
+        }
+      }
+    }
 
     //display every structure
     int s = 0;
@@ -49,8 +75,12 @@ void draw() {
         structures.get(s).display();
         s ++;
       }
-      else
+      else {
+        if (structures.get(s).equals(structures.get(0))) {
+          endGame = true;
+        }
         structures.remove(s);
+      }
     }
     int e = 0;
     while(e < enemies.size()){
@@ -63,9 +93,10 @@ void draw() {
     }
   }
 }
+    
 
 void mouseDragged() {
-  if (mouseY >= 500) {
+  if (mouseY >= 500 && !endGame) {
     state = State.STRUCTURESELECTED;
   }
   if (state == State.STRUCTURESELECTED) {
@@ -104,7 +135,7 @@ boolean canPlace(Structure s, float x, float y) {
   return true;
 }
 
-boolean inRange(Structure attacker, Structure target) {
+boolean inRange(Structure attacker, Enemy target) {
   float distance = dist(attacker.getX(), attacker.getY(), target.getX(), target.getY());
   if (distance < attacker.getRange()/2 && 
     distance != 0)

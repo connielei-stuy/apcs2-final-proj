@@ -1,7 +1,7 @@
 class Cannon extends Structure {
   Cannon() {
-    health = 300;
-    defense = 30;
+    health = 500;
+    defense = 50;
     attack = 50;
     range = 175;
     w = 40;

@@ -1,8 +1,9 @@
 class Structure implements Location<Structure> {
 
-  protected float health, defense, attack, range, w, h, x, y , centerX, centerY;
+  protected float health, defense, attack, range, w, h, x, y, centerX, centerY;
   protected color c;
   protected Bullet b = null;
+  int sec = second();
 
   float getHealth() {
     return health;
@@ -37,25 +38,18 @@ class Structure implements Location<Structure> {
   }
 
   boolean attack(Unit u) {
-    if (attack - u.getDefense() > 0) {
-      u.health -= attack - u.getDefense();
-      return true;
-    }
-    return false;
-  }
-  
-  boolean attack(Structure u) {
     if (b == null) {
-      b = new Bullet(centerX,centerY,u.centerX-centerX,u.centerY-centerY);
+      b = new Bullet(centerX, centerY, u.x-centerX, u.y-centerY);
     }
     if (b.collision(u)) {
       if (attack - u.getDefense() > 0) {
         u.health -= attack - u.getDefense();
-        //u.c = color(0);
+        b = null;
+        //u.c = color(100,255,0);
         return true;
       }
     }
-    else b.move();
+    b.move();
     return false;
   }
   //how to display structures for now
@@ -69,5 +63,4 @@ class Structure implements Location<Structure> {
     fill(c, 50);
     ellipse(x+w/2, y+h/2, range, range);
   }
-
 }

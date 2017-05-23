@@ -1,6 +1,7 @@
 abstract class Unit implements Location<Unit> {
 
   protected float health, defense, attack, speed, x, y, maxHealth;
+  protected color c;
   protected int state;
 
   float getHealth() {
