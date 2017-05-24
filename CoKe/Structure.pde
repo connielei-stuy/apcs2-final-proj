@@ -36,6 +36,14 @@ class Structure implements Location<Structure> {
   float getY() {
     return y;
   }
+  
+  float getCenterX() {
+    return centerX;
+  }
+  
+  float getCenterY() {
+    return centerY;
+  }
 
   boolean attack(Unit u) {
     if (b == null) {

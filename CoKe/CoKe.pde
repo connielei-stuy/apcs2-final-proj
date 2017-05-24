@@ -31,12 +31,12 @@ void draw() {
     background(0);
     textSize(64);
     fill(255, 0, 0);
-    text("GAME OVER", 75, 300);
+    text("GAME OVER", width/2-175, height/2);
   } else if (!startGame) {
     background(0, 200, 255);
     textSize(32); 
     fill(0);
-    text("Click to start game!", 175, 300);
+    text("Click to start game!", width/2-150, height/2);
     if (mousePressed == true) {
       startGame = true;
     }
@@ -95,7 +95,7 @@ void draw() {
 
 
 void mouseDragged() {
-  if (mouseY >= 500 && !endGame) {
+  if (mouseX >= width-275 && !endGame && startGame) {
     state = State.STRUCTURESELECTED;
   }
   if (state == State.STRUCTURESELECTED) {
@@ -128,16 +128,15 @@ void mouseWheel() {
 }
 
 boolean canPlace(Structure s, float x, float y) {
-  if (y > 500-s.getHeight()/2) return false;
-  if (x < 50+s.getWidth()/2 || x > 450-s.getWidth()/2) return false;
-  if (y < 50+s.getHeight()/2 || y >450-s.getHeight()/2) return false;
+  if (x > width-275-s.getHeight()/2) return false;
+  if (x < 300+s.getWidth()/2 || x > width-300-s.getWidth()/2) return false;
+  if (y < 25+s.getHeight()/2 || y >height-25-s.getHeight()/2) return false;
   return true;
 }
 
 boolean inRange(Structure attacker, Enemy target) {
-  float distance = dist(attacker.getX(), attacker.getY(), target.getX(), target.getY());
-  if (distance < attacker.getRange()/2 && 
-    distance != 0)
+  float distance = dist(attacker.getCenterX(), attacker.getCenterY(), target.getX(), target.getY());
+  if (distance < attacker.getRange()/2 && distance != 0)
     return true;
   return false;
 }
