@@ -32,11 +32,9 @@ void draw() {
   if (endGame) {
     background(0);
     textSize(64);
-    fill(255,0,0);
-    text("GAME OVER",75,300);
-  }
-  
-  else if (!startGame) {
+    fill(255, 0, 0);
+    text("GAME OVER", 75, 300);
+  } else if (!startGame) {
     background(0, 200, 255);
     textSize(32); 
     fill(0);
@@ -44,8 +42,7 @@ void draw() {
     if (mousePressed == true) {
       startGame = true;
     }
-  } 
-  else {
+  } else {
     int sec2 = second();
     if (sec2-sec > 5) {
       enemies.add(new Enemy());
@@ -54,16 +51,16 @@ void draw() {
     //System.out.println(th.getHealth());
     background(0, 255, 0); //0 for black, 255 for white
     fill(0, 255, 40);
-    rect(width/2-200, height/2-200, 400, 400);
+    rect(width/2-500, height/2-382.5, 775, 775);
     fill(200, 0, 255);
-    rect(0,height-200, width, 200);
+    rect(width-250, 0, 250, height);
     if (difficulty < 0) {
       //program to allow user to choose difficult
     }
 
-    for (Structure s: structures) {
-      for (Enemy e: enemies) {
-        if (inRange(s,e)) {
+    for (Structure s : structures) {
+      for (Enemy e : enemies) {
+        if (inRange(s, e)) {
           s.attack(e);
           System.out.println("Cannon" + s.getHealth());
           System.out.println(e.getHealth());
@@ -73,12 +70,11 @@ void draw() {
 
     //display every structure
     int s = 0;
-    while(s < structures.size()){
-      if(structures.get(s).getHealth() > 0){
+    while (s < structures.size()) {
+      if (structures.get(s).getHealth() > 0) {
         structures.get(s).display();
         s ++;
-      }
-      else {
+      } else {
         if (structures.get(s).equals(structures.get(0))) {
           endGame = true;
         }
@@ -86,20 +82,18 @@ void draw() {
       }
     }
     int e = 0;
-    while(e < enemies.size()){
-      if(enemies.get(e).getHealth() > 0){
-         enemies.get(e).update();
-         e ++;
-      }
-      else{
+    while (e < enemies.size()) {
+      if (enemies.get(e).getHealth() > 0) {
+        enemies.get(e).update();
+        e ++;
+      } else {
         gold += enemies.get(e).getGold();
         enemies.remove(e);
-        
       }
     }
   }
 }
-    
+
 
 void mouseDragged() {
   if (mouseY >= 500 && !endGame) {
@@ -116,10 +110,10 @@ void mouseReleased() {
   if (state == State.STRUCTURESELECTED) {
     currentStructure = new Cannon();
     state = State.NULL;
-    if (canPlace(currentStructure, mouseX, mouseY)){
+    if (canPlace(currentStructure, mouseX, mouseY)) {
       structures.add(currentStructure);
-      for(Enemy u: enemies){
-         u.heaping(); 
+      for (Enemy u : enemies) {
+        u.heaping();
       }
     }
   }
