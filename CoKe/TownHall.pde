@@ -7,8 +7,8 @@ class TownHall extends Structure {
     range = 100;
     w = 50;
     h = 50;
-    x = 500/2 - w/2;
-    y = 500/2 - h/2;
+    x = 1150/2 - w/2;
+    y = 825/2 - h/2;
     centerX = x+w/2;
     centerY = y+w/2;
     c = color(255, 0, 0);

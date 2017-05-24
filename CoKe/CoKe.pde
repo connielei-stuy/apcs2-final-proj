@@ -23,8 +23,6 @@ void setup() {
   frameRate(60); 
   stroke(255, 255, 0); //change color of outline of shapes
   structures.add(th); //required for every game
-  //enemies.add(new Enemy());
-  //enemies.add(new Enemy());
   sec = second();
 }
 
@@ -51,9 +49,10 @@ void draw() {
     //System.out.println(th.getHealth());
     background(0, 255, 0); //0 for black, 255 for white
     fill(0, 255, 40);
-    rect(width/2-500, height/2-382.5, 775, 775);
+    rect(312.5, height/2-387.5, 775, 775);
     fill(200, 0, 255);
-    rect(width-250, 0, 250, height);
+    rect(width-275, 0, 300, height);
+    rect(0,0,275,height);
     if (difficulty < 0) {
       //program to allow user to choose difficult
     }
