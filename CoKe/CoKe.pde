@@ -6,6 +6,8 @@ ArrayList<Structure> structures = new ArrayList<Structure>(); //arrayList that c
 ArrayList<Unit> troops = new ArrayList<Unit>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 int sec = second();
+float gold = 500;
+
 
 Structure currentStructure;
 State state; //variable to store current state of the mouse
@@ -89,8 +91,11 @@ void draw() {
          enemies.get(e).update();
          e ++;
       }
-      else
+      else{
+        gold += enemies.get(e).getGold();
         enemies.remove(e);
+        
+      }
     }
   }
 }

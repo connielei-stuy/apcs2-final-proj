@@ -3,6 +3,7 @@ class Enemy extends Unit {
   ALHeap<Unit> uTarget;
   int target; //0 for structure, 1 for troop
   int sec = second();
+  float gold;
 
   Enemy() {
     setC(0);
@@ -20,11 +21,13 @@ class Enemy extends Unit {
       defense = random(30);
       attack = random(75);
       speed = 2;
+      gold = 30;
     } else if (difficulty == 1) {
       health = 100;
       defense = random(20);
       attack = random(20);
       speed = random(5);
+      gold = 20;
     } else if (difficulty  == 2) {
     } else if (difficulty == 3) {
     }
@@ -119,4 +122,9 @@ class Enemy extends Unit {
     }
     }
   }
+  
+  float getGold(){
+    return gold;
+  }
+  
 }
