@@ -57,6 +57,9 @@ class Structure implements Location<Structure> {
         return true;
       }
     }
+    if (b.getX()<312.5 || b.getX()>1087.5 || b.getY()<25 || b.getY()>height-25) {
+      b = null;
+    }    
     b.move();
     return false;
   }

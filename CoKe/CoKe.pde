@@ -11,11 +11,12 @@ PriorityQueue<Troop> training = new ArrayPriorityQueue<Troop>();
 
 Structure currentStructure;
 State state; //variable to store current state of the mouse
+State structureSelected;
 
 //enums for state of the mouse
 //should add more later
 public enum State {
-  NULL, STRUCTURESELECTED
+  NULL, STRUCTURESELECTED, CANNONSELECTED, WALLSELECTED
 }
 
 void setup() {
@@ -47,12 +48,7 @@ void draw() {
       sec = second();
     }
     //System.out.println(th.getHealth());
-    background(0, 255, 0); //0 for black, 255 for white
-    fill(0, 255, 40);
-    rect(312.5, height/2-387.5, 775, 775);
-    fill(200, 0, 255);
-    rect(width-275, 0, 300, height);
-    rect(0,0,275,height);
+    generate();
     if (difficulty < 0) {
       //program to allow user to choose difficult
     }
@@ -93,10 +89,22 @@ void draw() {
   }
 }
 
+void generate() {
+    background(0, 255, 0); //0 for black, 255 for white
+    fill(0, 255, 40);
+    rect(312.5, height/2-387.5, 775, 775);  
+    fill(200, 0, 255);
+    rect(width-275, 0, 300, height/2);
+    rect(0,0,275,height);  
+    fill(10,150,255);
+    rect(width-275,height/2,300,height/2);
+}
 
 void mouseDragged() {
   if (mouseX >= width-275 && !endGame && startGame) {
     state = State.STRUCTURESELECTED;
+    if (mouseY < height/2) {structureSelected = State.CANNONSELECTED;}
+    if (mouseY > height/2) {structureSelected = State.WALLSELECTED;}
   }
   if (state == State.STRUCTURESELECTED) {
     fill(color(200, 0, 255));
@@ -107,7 +115,8 @@ void mouseDragged() {
 
 void mouseReleased() {
   if (state == State.STRUCTURESELECTED) {
-    currentStructure = new Cannon();
+    if (structureSelected == State.CANNONSELECTED) currentStructure = new Cannon();
+    if (structureSelected == State.WALLSELECTED) currentStructure = new Wall();
     state = State.NULL;
     if (canPlace(currentStructure, mouseX, mouseY)) {
       structures.add(currentStructure);

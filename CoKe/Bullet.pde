@@ -14,8 +14,8 @@ class Bullet {
   void move() {
     fill(150,150,0);
     ellipse(x , y , w , h);
-    x += dx/33;
-    y += dy/33;
+    x += dx/25;
+    y += dy/25;
   }
   
   float getX() {
