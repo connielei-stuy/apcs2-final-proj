@@ -1,5 +1,3 @@
-export Structures;
-
 boolean startGame, endGame = false;
 
 int difficulty = -1; //difficulty
