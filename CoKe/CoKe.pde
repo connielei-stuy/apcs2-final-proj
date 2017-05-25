@@ -140,8 +140,23 @@ boolean canPlace(Structure s, float x, float y) {
   if (x > width-275-s.getHeight()/2) return false;
   if (x < 300+s.getWidth()/2 || x > width-300-s.getWidth()/2) return false;
   if (y < 25+s.getHeight()/2 || y >height-25-s.getHeight()/2) return false;
+  for (Structure st : structures) {
+    return  (checkLeftBound(s,x,y));
+  }
   return true;
 }
+
+//returns false if invalid, true if valid
+boolean checkLeftBound(Structure s , float x , float y) {
+  for (Structure st : structures) {
+    if (x-s.getWidth()/2 > st.getX() && x-s.getWidth()/2 < st.getX()+st.getWidth()) {
+      return false;
+    }
+  }
+  return true;
+}
+
+
 
 boolean inRange(Structure attacker, Enemy target) {
   float distance = dist(attacker.getCenterX(), attacker.getCenterY(), target.getX(), target.getY());
