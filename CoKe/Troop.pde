@@ -1,7 +1,8 @@
-class Troop extends Unit {
+class Troop extends Unit implements Comparable<Troop> {
 
   ALHeap<Unit> uTarget;
   int sec = second();
+  float time = 0;
 
   Troop() {
     setC(0);
@@ -42,6 +43,15 @@ class Troop extends Unit {
   
   void update(){
     return ;
+  }
+  
+  float getTime(){
+    return time;
+    
+  }
+  
+  float compareTo(Troop other){
+    return time - other.getTime();
   }
   
   void attack(){

@@ -3,11 +3,11 @@ boolean endGame = false;
 int difficulty = -1; //difficulty
 TownHall th = new TownHall();
 ArrayList<Structure> structures = new ArrayList<Structure>(); //arrayList that contains all the structures
-ArrayList<Unit> troops = new ArrayList<Unit>();
+ArrayList<Troop> troops = new ArrayList<Troop>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 int sec = second();
 float gold = 500;
-
+PriorityQueue<Troop> training = new ArrayPriorityQueue<Troop>();
 
 Structure currentStructure;
 State state; //variable to store current state of the mouse
