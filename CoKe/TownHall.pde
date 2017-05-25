@@ -1,25 +1,17 @@
 class TownHall extends Structure {
 
   TownHall() {
-    health = 100;
-    defense = 20;
-    attack = 5;
-    range = 160;
-    w = 80;
-    h = 80;
-    x = 1400/2 - w/2;
-    y = 825/2 - h/2;
-    centerX = x+w/2;
-    centerY = y+w/2;
+    _health = 100;
+    _defense = 20;
+    _attack = 5;
+    _range = 160;
+    _width = 80;
+    _height = 80;
+    _x = 1400/2 - _width/2;
+    _y = 825/2 - _height/2;
+    _centerX = _x + _width/2;
+    _centerY = _y + _width/2;
     c = color(255, 0, 0);
-  }
-
-  float getX() {
-    return x;
-  }
-
-  float getY() {
-    return y;
   }
   
   String toString(){

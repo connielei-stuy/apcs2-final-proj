@@ -1,4 +1,4 @@
-class Bullet {
+class Bullet implements Location<Bullet>{
 
   float speed, w, h, x, y, dx, dy;
   
@@ -26,7 +26,7 @@ class Bullet {
     return y;
   }
   
-  boolean collision(Unit u) {
+  boolean collision(Entity u) {
     return dist(x, y, u.getX(), u.getY()) < (w);
   }
   

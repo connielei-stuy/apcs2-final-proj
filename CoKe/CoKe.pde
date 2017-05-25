@@ -1,22 +1,29 @@
-boolean startGame = false; //is the game started or not?
-boolean endGame = false;
+export Structures;
+
+boolean startGame, endGame = false;
+
 int difficulty = -1; //difficulty
+
 TownHall th = new TownHall();
-ArrayList<Structure> structures = new ArrayList<Structure>(); //arrayList that contains all the structures
+
+ArrayList<Structure> structures = new ArrayList<Structure>();
 ArrayList<Troop> troops = new ArrayList<Troop>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+ArrayPriorityQueue<Troop> training = new ArrayPriorityQueue<Troop>();
+
 int sec = second();
+
 float gold = 500;
-PriorityQueue<Troop> training = new ArrayPriorityQueue<Troop>();
 
 Structure currentStructure;
-State state; //variable to store current state of the mouse
 State structureSelected;
+State state; 
+
 
 //enums for state of the mouse
 //should add more later
 public enum State {
-  NULL, STRUCTURESELECTED, CANNONSELECTED, WALLSELECTED
+  NULL, STRUCTURESELECTED, CANNON, WALL, BARRACK
 }
 
 void setup() {
@@ -44,7 +51,7 @@ void draw() {
   } else {
     int sec2 = second();
     if (sec2-sec > 5) {
-      enemies.add(new Enemy());
+      enemies.add(new Enemy(0));
       sec = second();
     }
     //System.out.println(th.getHealth());
@@ -103,8 +110,8 @@ void generate() {
 void mouseDragged() {
   if (mouseX >= width-275 && !endGame && startGame) {
     state = State.STRUCTURESELECTED;
-    if (mouseY < height/2) {structureSelected = State.CANNONSELECTED;}
-    if (mouseY > height/2) {structureSelected = State.WALLSELECTED;}
+    if (mouseY < height/2) {structureSelected = State.CANNON;}
+    if (mouseY > height/2) {structureSelected = State.WALL;}
   }
   if (state == State.STRUCTURESELECTED) {
     fill(color(200, 0, 255));
@@ -115,13 +122,13 @@ void mouseDragged() {
 
 void mouseReleased() {
   if (state == State.STRUCTURESELECTED) {
-    if (structureSelected == State.CANNONSELECTED) currentStructure = new Cannon();
-    if (structureSelected == State.WALLSELECTED) currentStructure = new Wall();
+    if (structureSelected == State.CANNON) currentStructure = new Cannon();
+    if (structureSelected == State.WALL) currentStructure = new Wall();
     state = State.NULL;
     if (canPlace(currentStructure, mouseX, mouseY)) {
       structures.add(currentStructure);
-      for (Enemy u : enemies) {
-        u.heaping();
+      for (Enemy e : enemies) {
+        e.add(currentStructure);
       }
     }
   }
@@ -141,7 +148,7 @@ boolean canPlace(Structure s, float x, float y) {
   if (x < 300+s.getWidth()/2 || x > width-300-s.getWidth()/2) return false;
   if (y < 25+s.getHeight()/2 || y >height-25-s.getHeight()/2) return false;
   for (Structure st : structures) {
-    return  (checkLeftBound(s,x,y));
+    return  (checkLeftBound(st,x,y));
   }
   return true;
 }
@@ -152,6 +159,8 @@ boolean checkLeftBound(Structure s , float x , float y) {
     if (x-s.getWidth()/2 > st.getX() && x-s.getWidth()/2 < st.getX()+st.getWidth()) {
       return false;
     }
+    if(y-s.getHeight()/2 > st.getY() && y-s.getHeight()/2 < st.getY()+st.getHeight())
+      return false;
   }
   return true;
 }
