@@ -54,11 +54,16 @@ Connie:
 5/23
 
 Kevin:
+-worked on resizing everything
 Connie:
 ========================================================================
 5/24
 
 Kevin:
+-finished resizing
+-modified structure selection/placement algo
+-added walls
+-added bullet expiration functionality (travel past boundaries -> kill bullet)
 Connie:
 ========================================================================
 5/25
