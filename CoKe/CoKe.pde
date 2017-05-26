@@ -108,8 +108,8 @@ void generate() {
 void mouseDragged() {
   if (mouseX >= width-275 && !endGame && startGame) {
     state = State.STRUCTURESELECTED;
-    if (mouseY < height/2) {structureSelected = State.CANNON;}
-    if (mouseY > height/2) {structureSelected = State.WALL;}
+    if (mouseY < height/2.0) {structureSelected = State.CANNON;}
+    if (mouseY > height/2.0) {structureSelected = State.WALL;}
   }
   if (state == State.STRUCTURESELECTED) {
     fill(color(200, 0, 255));
@@ -133,6 +133,7 @@ void mouseReleased() {
 }
 
 void mouseClicked() {
+  System.out.println(mouseY);
 }
 
 void mousePressed() {
@@ -145,26 +146,30 @@ boolean canPlace(Structure s, float x, float y) {
   if (x > width-275-s.getHeight()/2) return false;
   if (x < 300+s.getWidth()/2 || x > width-300-s.getWidth()/2) return false;
   if (y < 25+s.getHeight()/2 || y >height-25-s.getHeight()/2) return false;
+  //check if any of the four corners of the structure you want to place will be inside any structure 
+  //returns false if any point is inside any structure
   for (Structure st : structures) {
-    return  (checkLeftBound(st,x,y));
+    if (isInside(st , x-s.getWidth()/2 , y+s.getHeight()/2) || //bl corner
+        isInside(st , x-s.getWidth()/2 , y-s.getHeight()/2) || //ul corner
+        isInside(st , x+s.getWidth()/2 , y+s.getHeight()/2) || //br corner
+        isInside(st , x+s.getWidth()/2 , y-s.getHeight()/2) )  //ur corner
+        return false;
   }
   return true;
 }
 
-//returns false if invalid, true if valid
-boolean checkLeftBound(Structure s , float x , float y) {
-  for (Structure st : structures) {
-    if (x-s.getWidth()/2 > st.getX() && x-s.getWidth()/2 < st.getX()+st.getWidth()) {
-      return false;
-    }
-    if(y-s.getHeight()/2 > st.getY() && y-s.getHeight()/2 < st.getY()+st.getHeight())
-      return false;
-  }
-  return true;
+//checks if point is inside a structure
+boolean isInside(Structure s , float x , float y) {
+  if (x < s.getX()+s.getWidth() &&
+      x > s.getX() &&
+      y < s.getY()+s.getHeight() &&
+      y > s.getY() )
+      return true;
+  return false;
 }
 
 
-
+//checks if an enemy is in the range of a structure
 boolean inRange(Structure attacker, Enemy target) {
   float distance = dist(attacker.getCenterX(), attacker.getCenterY(), target.getX(), target.getY());
   if (distance < attacker.getRange()/2 && distance != 0)
