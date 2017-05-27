@@ -12,6 +12,7 @@ class Cannon extends Structure {
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
     c = color(200, 0, 255);
+    cost = 200;
   }
   
 }

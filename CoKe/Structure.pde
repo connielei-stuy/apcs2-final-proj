@@ -1,6 +1,6 @@
 class Structure extends Entity {
 
-  protected float _centerX, _centerY;
+  protected float _centerX, _centerY, cost;
   protected color c;
   protected Bullet b = null;
   int sec = second();
@@ -11,6 +11,10 @@ class Structure extends Entity {
 
   float getCenterY() {
     return _centerY;
+  }
+  
+  float getCost() {
+    return cost;
   }
 
   boolean attack(Entity e) {

@@ -2,6 +2,7 @@ class Enemy extends Unit {
   
   ALHeap<Entity> targets;
 
+  protected float _gold;
   int target; //0 for structure, 1 for troop
   int sec = second();
   
@@ -12,8 +13,9 @@ class Enemy extends Unit {
 
   void setC(int difficulty) {
     if (difficulty == 0) {
-      _health = 500;
-      _defense = random(30);
+      _health = 100;
+      //_defense = random(30);
+      _defense = 0;
       _attack = random(75);
       _speed = 2;
       _gold = 30;
@@ -22,10 +24,14 @@ class Enemy extends Unit {
       _defense = random(20);
       _attack = random(20);
       _speed = random(5);
-      _gold = 20;
+      _gold = 50;
     } else if (difficulty  == 2) {
     } else if (difficulty == 3) {
     }
+  }
+  
+  float getGold() {
+    return _gold;
   }
 
   void defaults() {
