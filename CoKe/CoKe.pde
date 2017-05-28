@@ -102,10 +102,12 @@ void generate() {
   fill(0, 255, 40);
   rect(312.5, height/2-387.5, 775, 775);  
   fill(200, 0, 255);
-  rect(width-275, 0, 300, height/2);
+  rect(width-275, 0, 300, height/3);
   rect(0, 0, 275, height);  
   fill(10, 150, 255);
-  rect(width-275, height/2, 300, height/2);
+  rect(width-275, height/3, 300, height/3);
+  fill(100, 50, 200);
+  rect(width-275, 2*(height/3), 300, height/3);
   textSize(20);
   fill(255, 250, 0);
   text("GOLD: " + gold, 30, 30);
@@ -114,22 +116,25 @@ void generate() {
 void mouseDragged() {
   if (mouseX >= width-275 && !endGame && startGame) {
     state = State.STRUCTURESELECTED;
-    if (mouseY < height/2.0) structureSelected = State.CANNON;
-    if (mouseY > height/2.0) structureSelected = State.WALL;
+    if (mouseY < height/3.0) structureSelected = State.CANNON;
+    if (mouseY > height/3.0 && mouseY < 2*(height/3.0)) structureSelected = State.WALL;
+    if (mouseY > 2*(height/3.0)) structureSelected = State.BARRACK;
   }
   if (state == State.STRUCTURESELECTED) {
-    //fill(color(200, 0, 255));
+    Structure t = new Cannon();
     if (structureSelected == State.CANNON) {
       //rect(mouseX-30,mouseY-30,60,60);
-      Cannon t = new Cannon();
-      t.display();
+      t = new Cannon();
     }
     if (structureSelected == State.WALL) {
       //rect(mouseX-40,mouseY-10,80,20);
-      Wall t = new Wall();
-      t.display();
+      t = new Wall();
     }
-    System.out.println("structure selected");
+    if (structureSelected == State.BARRACK) {
+      t = new Barrack();
+    }
+    t.display();
+    //System.out.println("structure selected");
   }
 }
 
@@ -137,6 +142,7 @@ void mouseReleased() {
   if (state == State.STRUCTURESELECTED) {
     if (structureSelected == State.CANNON) currentStructure = new Cannon();
     if (structureSelected == State.WALL) currentStructure = new Wall();
+    if (structureSelected == State.BARRACK) currentStructure = new Barrack();
     state = State.NULL;
     if (canPlace(currentStructure, mouseX, mouseY)) {
       structures.add(currentStructure);

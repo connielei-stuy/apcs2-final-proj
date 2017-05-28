@@ -12,7 +12,7 @@ class Wall extends Structure {
     _y = mouseY - _height/2;
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
-    c = color(200, 0, 255);
+    c = color(10, 150, 255);
     cost = 100;
   }
   
