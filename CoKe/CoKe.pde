@@ -3,21 +3,22 @@ boolean startGame, endGame = false;
 int difficulty = 0; //difficulty
 
 TownHall th = new TownHall();
-Barrack bk = null;
+static Barrack bk = null;
 
 ArrayList<Structure> structures = new ArrayList<Structure>();
 ArrayList<Troop> troops = new ArrayList<Troop>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-ArrayPriorityQueue<Troop> training = new ArrayPriorityQueue<Troop>();
+ArrayPriorityQueue<Troop> training = new ArrayPriorityQueue<Troop>(); //implemented this in class Barrack. oops?
 
-int sec;
-int sect;
+int sec; //controls monster spawn
+int sect; //controls troop spawn
 
-float gold = 500;
+float gold = 500; //starting gold to spend
 
-Structure currentStructure;
-State structureSelected;
-State state; 
+Structure currentStructure; //stores a structure 
+State structureSelected; //stores a type of structure selected
+State state; //stores a state of the mouse
+String message = "";
 
 
 //enums for state of the mouse
@@ -60,11 +61,11 @@ void draw() {
     }
     if (bk != null && !bk.trainingQ.isEmpty()) {
       int sec3 = second();
-      if (sec3-sect > 2) {
+      if (sec3-sect > bk.trainingQ.peekMin().getTime()) {
         troops.add(bk.trainingQ.removeMin());
       }
     }
-      
+
     //System.out.println(th.getHealth());
     generate();
     if (difficulty < 0) {
@@ -122,7 +123,9 @@ void generate() {
   rect(312.5, height/2-387.5, 775, 775);  
   fill(200, 0, 255);
   rect(width-275, 0, 300, height/3);
-  rect(0, 0, 275, height);  
+  rect(0, 0, 275, height-200);
+  fill(255, 245, 150);
+  rect(0, height-200, 275, 200);
   fill(10, 150, 255);
   rect(width-275, height/3, 300, height/3);
   fill(100, 50, 200);
@@ -130,6 +133,7 @@ void generate() {
   textSize(20);
   fill(255, 250, 0);
   text("GOLD: " + gold, 30, 30);
+  displayMessage();
 }
 
 void mouseDragged() {
@@ -163,7 +167,8 @@ void mouseReleased() {
     if (structureSelected == State.WALL) currentStructure = new Wall();
     if (structureSelected == State.BARRACK) currentStructure = new Barrack();
     state = State.NULL;
-    if (canPlace(currentStructure, mouseX, mouseY)) {
+    message = canPlace(currentStructure, mouseX, mouseY); 
+    if (message == "Structure successfully built") {
       structures.add(currentStructure);
       if (currentStructure.isA("barrack")) bk = new Barrack();
       gold -= currentStructure.getCost();
@@ -193,19 +198,22 @@ void keyPressed() {
     }//end for
   }//end if
   if (key == 't' || key == 'T') {
-    bk.train();
-    sect = second();
+    if (bk != null) {
+      bk.train();
+      sect = second();
+    }
+    else message = "Cannot train: Build a barrack first";
   }
 }//end 
 
-
-boolean canPlace(Structure s, float x, float y) {
+//returns a message 
+String canPlace(Structure s, float x, float y) {
   if (s.getCost() > gold) { 
-    return false;
+    return "Cannot build: Insufficient gold";
   }
-  if (x > width-275-s.getHeight()/2) return false;
-  if (x < 300+s.getWidth()/2 || x > width-300-s.getWidth()/2) return false;
-  if (y < 25+s.getHeight()/2 || y >height-25-s.getHeight()/2) return false;
+  if (x < 300+s.getWidth()/2 || x > width-300-s.getWidth()/2) return "Cannot build: Out of Bounds";
+  if (y < 25+s.getHeight()/2 || y >height-25-s.getHeight()/2) return "Cannot build: Out of Bounds";
+  if (s.isA("barrack") && bk != null) return "Cannot build: Barrack already built";
   //check if any of the four corners of the structure you want to place will be inside any structure 
   //returns false if any point is inside any structure
   for (Structure st : structures) {
@@ -213,9 +221,9 @@ boolean canPlace(Structure s, float x, float y) {
       isInside(st, x-s.getWidth()/2, y-s.getHeight()/2) || //ul corner
       isInside(st, x+s.getWidth()/2, y+s.getHeight()/2) || //br corner
       isInside(st, x+s.getWidth()/2, y-s.getHeight()/2) )  //ur corner
-      return false;
+      return "Cannot build: On another structure";
   }
-  return true;
+  return "Structure successfully built";
 }
 
 //checks if point is inside a structure
@@ -235,4 +243,10 @@ boolean inRange(Structure attacker, Enemy target) {
   if (distance < attacker.getRange()/2 && distance != 0)
     return true;
   return false;
+}
+
+void displayMessage() {
+  fill(0);
+  textSize(14);
+  text(message, 20, height-180);
 }

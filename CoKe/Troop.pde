@@ -2,7 +2,8 @@ class Troop extends Unit implements Comparable<Troop> {
 
   ALHeap<Entity> targets;
   int sec = second();
-  float time = 0;
+  float time = 3;
+  Barrack home = CoKe.bk; //this is where a troop come from
 
   Troop() {
     setC(0);
@@ -31,8 +32,8 @@ class Troop extends Unit implements Comparable<Troop> {
   }
 
   void defaults() {
-    _x = 500;
-    _y = 500;
+    _x = home.getX()+random(home.getWidth());
+    _y = home.getY()+home.getHeight()+10;
     state = 0;
   }
 

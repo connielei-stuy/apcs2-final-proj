@@ -16,32 +16,21 @@ public class ArrayPriorityQueue<T> implements Comparable<T> {
     return _queue.isEmpty();
   }
 
-/*
   public T peekMin() {
     if (isEmpty()) //exception throwing according to the API
       throw new RuntimeException();
-    else {
-      T temp = _queue.get(0);
-      for (int counter = 1; counter < _queue.size(); counter ++) {
-        if ((_queue.get(counter).compareTo(temp)) < 0)
-          temp = _queue.get(counter);
-      }
-      return temp;
-    }
-  }*/
+    return _queue.get(0);
+  }
+
 
   public T removeMin() {
     if (isEmpty())
       throw new RuntimeException();
-    int position = 0;
-    /*
-    for (int counter = 1; counter < _queue.size(); counter ++) {
-      if (_queue.get(counter).compareTo(_queue.get(position)) < 0) 
-        position = counter;
-    }*/
-    return _queue.remove(position);
+    T temp = peekMin();
+    _queue.remove(0);
+    return temp;
   }
-  
+
   int compareTo(T other) {
     return 1;
   }
@@ -53,5 +42,4 @@ public class ArrayPriorityQueue<T> implements Comparable<T> {
     print += " ]";
     return print;
   }
-  
 }
