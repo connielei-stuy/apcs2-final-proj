@@ -1,6 +1,7 @@
 class Cannon extends Structure {
   
   Cannon() {
+    ID = "cannon";
     _health = 500;
     _defense = 50;
     _attack = 50;

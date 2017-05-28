@@ -47,8 +47,11 @@ void draw() {
       startGame = true;
     }
   } else {
-    int sec2 = second();
-    if (sec2-sec > 5) {
+    int sec2 = second();    
+    if (sec -sec2 >= 2) {
+      sec = second();
+    }
+    if (sec2-sec > 1) {
       enemies.add(new Enemy(0));
       sec = second();
     }
@@ -111,16 +114,21 @@ void generate() {
 void mouseDragged() {
   if (mouseX >= width-275 && !endGame && startGame) {
     state = State.STRUCTURESELECTED;
-    if (mouseY < height/2.0) {
-      structureSelected = State.CANNON;
-    }
-    if (mouseY > height/2.0) {
-      structureSelected = State.WALL;
-    }
+    if (mouseY < height/2.0) structureSelected = State.CANNON;
+    if (mouseY > height/2.0) structureSelected = State.WALL;
   }
   if (state == State.STRUCTURESELECTED) {
-    fill(color(200, 0, 255));
-    rect(mouseX-40/2, mouseY-40/2, 40, 40);
+    //fill(color(200, 0, 255));
+    if (structureSelected == State.CANNON) {
+      //rect(mouseX-30,mouseY-30,60,60);
+      Cannon t = new Cannon();
+      t.display();
+    }
+    if (structureSelected == State.WALL) {
+      //rect(mouseX-40,mouseY-10,80,20);
+      Wall t = new Wall();
+      t.display();
+    }
     System.out.println("structure selected");
   }
 }
@@ -149,6 +157,17 @@ void mousePressed() {
 
 void mouseWheel() {
 }
+
+void keyPressed() {
+  if (key == 'r' || key == 'R') {
+    for (Structure s : structures) {
+      if (s.isA("wall")) {
+        s.rotate();
+      }
+    }
+  }
+}
+
 
 boolean canPlace(Structure s, float x, float y) {
   if (s.getCost() > gold) { 

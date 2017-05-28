@@ -1,5 +1,6 @@
 class Structure extends Entity {
 
+  protected String ID;
   protected float _centerX, _centerY, cost;
   protected color c;
   protected Bullet b = null;
@@ -12,9 +13,13 @@ class Structure extends Entity {
   float getCenterY() {
     return _centerY;
   }
-  
+
   float getCost() {
     return cost;
+  }
+
+  String getID() {
+    return ID;
   }
 
   boolean attack(Entity e) {
@@ -31,6 +36,21 @@ class Structure extends Entity {
       b = null; 
 
     return false;
+  }
+
+  //checks if this is a certain structure
+  boolean isA(String str) {
+    if (this.getID() == str) {
+      return true;
+    }
+    return false;
+  }
+
+  //rotates
+  void rotate() {
+    float w = _width;
+    _width = _height;
+    _height = w;
   }
 
   //how to display structures for now

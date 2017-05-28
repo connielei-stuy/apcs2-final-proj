@@ -1,7 +1,8 @@
 class TownHall extends Structure {
 
   TownHall() {
-    _health = 100;
+    ID = "townhall";
+    _health = 1000000;
     _defense = 20;
     _attack = 5;
     _range = 160;

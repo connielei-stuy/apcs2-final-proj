@@ -14,7 +14,6 @@ class Enemy extends Unit {
   void setC(int difficulty) {
     if (difficulty == 0) {
       _health = 100;
-      //_defense = random(30);
       _defense = 0;
       _attack = random(75);
       _speed = 2;
@@ -35,8 +34,23 @@ class Enemy extends Unit {
   }
 
   void defaults() {
-    _x = height-100-random(300);
-    _y = width;
+    float r = random(4);
+    if (r >= 0 && r <1) {
+      _x = random(300,width-300);
+      _y = 25;
+    }
+    if (r >= 1 && r <2) {
+      _x = width-300;
+      _y = random(25,height-25);
+    }
+    if (r >= 2 && r<3) {
+      _x = random(300,width-300);
+      _y = height-25;
+    }
+    else {
+      _x = 300;
+      _y = random(25,height-25);
+    }
     state = 0;
     target = 0;
     heaping();
