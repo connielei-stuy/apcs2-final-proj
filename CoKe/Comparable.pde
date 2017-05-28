@@ -1,5 +1,5 @@
 interface Comparable<T>{
   
-  float compareTo(T other);
+  int compareTo(T other);
   
 }

@@ -52,6 +52,9 @@ class Structure extends Entity {
     _width = _height;
     _height = w;
   }
+  
+  void train(){
+  }
 
   //how to display structures for now
   void display() {

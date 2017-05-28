@@ -67,7 +67,7 @@ class Enemy extends Unit {
   }
 
   void display() {
-    fill(color(14, 15, 200));
+    fill(color(255, 0, 255));
     ellipse(_x, _y, 20, 20);
   }
 

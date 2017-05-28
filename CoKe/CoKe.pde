@@ -3,13 +3,15 @@ boolean startGame, endGame = false;
 int difficulty = 0; //difficulty
 
 TownHall th = new TownHall();
+Barrack bk = null;
 
 ArrayList<Structure> structures = new ArrayList<Structure>();
 ArrayList<Troop> troops = new ArrayList<Troop>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 ArrayPriorityQueue<Troop> training = new ArrayPriorityQueue<Troop>();
 
-int sec = second();
+int sec;
+int sect;
 
 float gold = 500;
 
@@ -30,6 +32,7 @@ void setup() {
   stroke(255, 255, 0); //change color of outline of shapes
   structures.add(th); //required for every game
   sec = second();
+  sect = second();
 }
 
 void draw() {
@@ -47,7 +50,7 @@ void draw() {
       startGame = true;
     }
   } else {
-    int sec2 = second();    
+    int sec2 = second(); //controls enemy spawn 
     if (sec -sec2 >= 2) {
       sec = second();
     }
@@ -55,6 +58,13 @@ void draw() {
       enemies.add(new Enemy(0));
       sec = second();
     }
+    if (bk != null && !bk.trainingQ.isEmpty()) {
+      int sec3 = second();
+      if (sec3-sect > 2) {
+        troops.add(bk.trainingQ.removeMin());
+      }
+    }
+      
     //System.out.println(th.getHealth());
     generate();
     if (difficulty < 0) {
@@ -84,6 +94,15 @@ void draw() {
         structures.remove(s);
       }
     }
+    int t = 0;
+    while (t < troops.size()) {
+      if (troops.get(t).getHealth() > 0) {
+        troops.get(t).display();
+        t ++;
+      } else {
+        troops.remove(t);
+      }
+    }    
     int e = 0;
     while (e < enemies.size()) {
       if (enemies.get(e).getHealth() > 0) {
@@ -146,6 +165,7 @@ void mouseReleased() {
     state = State.NULL;
     if (canPlace(currentStructure, mouseX, mouseY)) {
       structures.add(currentStructure);
+      if (currentStructure.isA("barrack")) bk = new Barrack();
       gold -= currentStructure.getCost();
       for (Enemy e : enemies) {
         e.add(currentStructure);
@@ -169,10 +189,14 @@ void keyPressed() {
     for (Structure s : structures) {
       if (s.isA("wall")) {
         s.rotate();
-      }
-    }
+      }//end if s.isA(wall)
+    }//end for
+  }//end if
+  if (key == 't' || key == 'T') {
+    bk.train();
+    sect = second();
   }
-}
+}//end 
 
 
 boolean canPlace(Structure s, float x, float y) {

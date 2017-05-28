@@ -31,13 +31,13 @@ class Troop extends Unit implements Comparable<Troop> {
   }
 
   void defaults() {
-    _x = height/2;
-    _y = width/2;
+    _x = 500;
+    _y = 500;
     state = 0;
   }
 
   void display() {
-    fill(color(14, 15, 200));
+    fill(color(100, 50, 200));
     ellipse(_x, _y, 20, 20);
   }
   
@@ -50,8 +50,13 @@ class Troop extends Unit implements Comparable<Troop> {
     
   }
   
+  /*
   float compareTo(Troop other){
     return time - other.getTime();
+  }*/
+  
+  int compareTo(Troop other){
+    return 1;
   }
   
   void attack(){

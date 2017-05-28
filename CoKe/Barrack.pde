@@ -1,5 +1,7 @@
 class Barrack extends Structure{
   
+  ArrayPriorityQueue<Troop> trainingQ;
+  
   Barrack(){
     ID = "barrack";
     _health = 500;
@@ -14,7 +16,15 @@ class Barrack extends Structure{
     _centerY = _y + _height/2;
     c = color(100, 50, 200);
     cost = 300;
+    trainingQ = new ArrayPriorityQueue<Troop>();
   }
+  
+  //trains a troop
+  void train() {
+    trainingQ.add(new Troop());
+  }
+  
+  
   
   
 }
