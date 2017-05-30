@@ -1,6 +1,6 @@
 CoKe: Connie Lei, Kevin Bao
 
-<b>Project Title</b>:
+<b>Project Title</b>:<br>
 <b>What our project presents to a user</b>:<br>
 Our project is a strategy game where a user has to defend a town hall by using
 gold constructing structures and/or by training troops. These structures and
