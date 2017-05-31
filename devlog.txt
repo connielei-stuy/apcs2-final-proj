@@ -88,30 +88,41 @@ Connie:
 5/26
 
 Kevin:
+-added funcionality so that structures could not be built on each other (sort of)
 Connie:
 -out of commission, sick 
 ========================================================================
 5/27
 
 Kevin:
+-added gold functionality for structures and enemies
 Connie:
 -out of commission, sick 
 ========================================================================
 5/28
 
 Kevin:
+-added structure IDs to keep track of structures
+-added primitive type of rotation of walls
+-modified enemy spawn so that they still spawn after 1 minute
+-added primitive troop training
+-added messages to describe the latest action taken by the user
 Connie:
 -out of commission, sick 
 ========================================================================
 5/29
 
 Kevin:
+-README.md
 Connie:
 -worked on fixing move
 ========================================================================
 5/30
 
 Kevin:
+-modified structure placement so that structures don't flicker when dragged around
+-worked on fixing structure placement (walls are a bit problematic)
+-added gold, enemy counters to GUI
 Connie:
 -fixed most of move's bugs (two large ones remaining)
 -devlog and readme issues
