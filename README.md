@@ -29,7 +29,7 @@ trained before others in the priorityQueue.
 2. Use processing to run
 ```$ processing CoKe.pde```
 
-       OR
+  OR
 
 2. Open ```Coke.pde``` in the  ```Coke``` directory, contained in the root of this repo.
 
