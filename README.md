@@ -22,8 +22,17 @@ user can choose to give a troop priority over others, allowing this troop is be
 trained before others in the priorityQueue.
 
 <b>Launch Instructions</b>:<br>
-1. Clone this repo.
-2. Open a file from directory 'CoKe' in Processing.
-3. In Processing click the play triangle.
+
+1. Download the repo
+```$ git clone https://github.com/kaybowwow/CoKe.git```
+
+2. Use processing to run
+```$ processing CoKe.pde```
+
+OR
+
+2. Open ```Coke.pde`` in the  ```Coke``` directory, contained in the root of this repo.
+
+3. Press the triangle Run button.
 
 [ANTHEM](https://www.youtube.com/watch?v=9DwzBICPhdM)

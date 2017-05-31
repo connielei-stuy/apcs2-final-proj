@@ -1,3 +1,8 @@
+Team CoKe
+Kevin Bao, Connie Lei
+Period 1
+TLSFN
+
 Dev-Log
 ========================================================================
 5/18
@@ -49,13 +54,14 @@ Kevin:
 -added a game over screen when townhall is destroyed
 -modified attack method for structures so that it attacks enemies
 Connie:
--finished MOVE 
+-finished move (first version only, redone later)
 ========================================================================
 5/23
 
 Kevin:
 -worked on resizing everything
 Connie:
+-
 ========================================================================
 5/24
 
@@ -64,7 +70,11 @@ Kevin:
 -modified structure selection/placement algo
 -added walls
 -added bullet expiration functionality (travel past boundaries -> kill bullet)
+-created flowchart
 Connie:
+-updated UML diagrams
+-added gold system
+-created preliminary training queue
 ========================================================================
 5/25
 
@@ -72,28 +82,82 @@ Kevin:
 -started working on solving the issue of being able to place structures on
 top of each other.
 Connie:
+-added Entity class, changed structure of classes
+-reworked move
 ========================================================================
 5/26
 
 Kevin:
 Connie:
+-out of commission, sick 
 ========================================================================
 5/27
 
 Kevin:
 Connie:
+-out of commission, sick 
 ========================================================================
 5/28
 
 Kevin:
 Connie:
+-out of commission, sick 
 ========================================================================
 5/29
 
 Kevin:
 Connie:
+-worked on fixing move
 ========================================================================
 5/30
 
 Kevin:
 Connie:
+-fixed most of move's bugs (two large ones remaining)
+-devlog and readme issues
+-started work on troops
+========================================================================
+5/31
+
+Kevin:
+Connie:
+
+========================================================================
+6/1
+
+Kevin:
+Connie:
+
+========================================================================
+6/2
+
+Kevin:
+Connie:
+
+========================================================================
+6/3
+
+Kevin:
+Connie:
+
+========================================================================
+6/4
+
+Kevin:
+Connie:
+
+========================================================================
+6/5
+
+Kevin:
+Connie:
+
+========================================================================
+6/6
+
+Kevin:
+Connie:
+
+
+
+
