@@ -31,7 +31,7 @@ trained before others in the priorityQueue.
 
 OR
 
-2. Open ```Coke.pde`` in the  ```Coke``` directory, contained in the root of this repo.
+2. Open ```Coke.pde``` in the  ```Coke``` directory, contained in the root of this repo.
 
 3. Press the triangle Run button.
 
