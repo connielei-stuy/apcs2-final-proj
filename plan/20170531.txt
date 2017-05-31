@@ -1,0 +1,35 @@
+Which jobs are most crucial?
+-structure placement : making sure structures don't overlap, making sure player can afford to buy them
+-troop placement : making sure player can afford to buy them, making sure you can train them, making sure you can tell them to target an enemy
+-enemy spawning/targeting : making sure they spawn in waves and get progressively harder, making sure their pathfinding works, making sure they drop money when killed
+
+Which components constitute core functionality (vs non-essential)?
+-essential: structures, troops, enemy
+-non essential: music, pictures, extra structures, pretty attacking motions, spells
+
+Which components are prerequisites for others?
+-structures are the basis, then an overall unit that encompasses enemy and troop, then development on either one
+-once all of that is built in, the player gold
+
+Which tasks can be delegated, and which must be collaboratively tackled?
+-Kevin: structures, gold, troop spawning, troop upgrading
+-Connie: enemy spawning (waves, etc) and targeting, troop targeting
+
+What is the timeline, and how does it accommodate setbacks, course changes?
+
+Thursday 6/1
+Building functionality (be able to place buildings, make sure buildings aren't overlapping, make sure that player can afford to place)
+Enemies (Pathfinding, Stack of enemies at start, attacks)
+
+Tuesday 6/3
+Troops and Training Queue (Be able to click an icon of a troop and train them/reorder troops, buy troops)
+Currency system implemented
+
+Friday 6/4-6/5
+Difficulty and Special Spell and finishing up core parts (Everything should be working decently well)
+
+Weekend 6/5
+DEBUGGING
+
+Wednesday 6/6
+Final Project Due Date
