@@ -5,7 +5,6 @@ class Barrack extends Structure{
   Barrack(){
     ID = "barrack";
     _health = 500;
-    _defense = 50;
     _attack = 0;
     _range = 0;
     _width = 60;

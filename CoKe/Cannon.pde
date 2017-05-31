@@ -3,7 +3,6 @@ class Cannon extends Structure {
   Cannon() {
     ID = "cannon";
     _health = 500;
-    _defense = 50;
     _attack = 50;
     _range = 250;
     _width = 60;

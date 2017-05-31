@@ -14,13 +14,11 @@ class Enemy extends Unit {
   void setC(int difficulty) {
     if (difficulty == 0) {
       _health = 100;
-      _defense = 0;
       _attack = random(75);
       _speed = 2;
       _gold = 30;
     } else if (difficulty == 1) {
       _health = 100;
-      _defense = random(20);
       _attack = random(20);
       _speed = random(5);
       _gold = 50;

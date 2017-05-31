@@ -210,7 +210,7 @@ void keyPressed() {
 }//end 
 
 //returns a message 
-String canPlace(Structure s, float x, float y) {
+String canPlace(Structure s, float x, float y) { //s is the structure you want to place
   if (s.getCost() > gold) { 
     return "Cannot build: Insufficient gold";
   }
@@ -223,7 +223,8 @@ String canPlace(Structure s, float x, float y) {
     if (isInside(st, x-s.getWidth()/2, y+s.getHeight()/2) || //bl corner
       isInside(st, x-s.getWidth()/2, y-s.getHeight()/2) || //ul corner
       isInside(st, x+s.getWidth()/2, y+s.getHeight()/2) || //br corner
-      isInside(st, x+s.getWidth()/2, y-s.getHeight()/2) )  //ur corner
+      isInside(st, x+s.getWidth()/2, y-s.getHeight()/2) || //ur corner
+      isInside(st, x , y) )//center 
       return "Cannot build: On another structure";
   }
   return "Structure successfully built";
