@@ -34,6 +34,7 @@ void setup() {
   structures.add(th); //required for every game
   sec = second();
   sect = second();
+  background(0, 200, 255);
 }
 
 void draw() {
@@ -43,7 +44,6 @@ void draw() {
     fill(255, 0, 0);
     text("GAME OVER", width/2-175, height/2);
   } else if (!startGame) {
-    background(0, 200, 255);
     textSize(32); 
     fill(0);
     text("Click to start game!", width/2-150, height/2);
@@ -82,6 +82,11 @@ void draw() {
       }
     }
 
+    if (currentStructure != null) {
+      structures.add(currentStructure);
+      structures.get(structures.size()-1).display();
+      structures.remove(structures.size()-1);
+    }
     //display every structure
     int s = 0;
     while (s < structures.size()) {
@@ -133,6 +138,7 @@ void generate() {
   textSize(20);
   fill(255, 250, 0);
   text("GOLD: " + gold, 30, 30);
+  text("ENEMIES LEFT: " + enemies.size(), 30, 60);
   displayMessage();
 }
 
@@ -144,28 +150,23 @@ void mouseDragged() {
     if (mouseY > 2*(height/3.0)) structureSelected = State.BARRACK;
   }
   if (state == State.STRUCTURESELECTED) {
-    Structure t = new Cannon();
     if (structureSelected == State.CANNON) {
       //rect(mouseX-30,mouseY-30,60,60);
-      t = new Cannon();
+      currentStructure = new Cannon();
     }
     if (structureSelected == State.WALL) {
       //rect(mouseX-40,mouseY-10,80,20);
-      t = new Wall();
+      currentStructure = new Wall();
     }
     if (structureSelected == State.BARRACK) {
-      t = new Barrack();
+      currentStructure = new Barrack();
     }
-    t.display();
     //System.out.println("structure selected");
   }
 }
 
 void mouseReleased() {
   if (state == State.STRUCTURESELECTED) {
-    if (structureSelected == State.CANNON) currentStructure = new Cannon();
-    if (structureSelected == State.WALL) currentStructure = new Wall();
-    if (structureSelected == State.BARRACK) currentStructure = new Barrack();
     state = State.NULL;
     message = canPlace(currentStructure, mouseX, mouseY); 
     if (message == "Structure successfully built") {
@@ -175,6 +176,9 @@ void mouseReleased() {
       for (Enemy e : enemies) {
         e.add(currentStructure);
       }
+    }
+    else {
+      currentStructure = null;
     }
   }
 }
@@ -201,8 +205,7 @@ void keyPressed() {
     if (bk != null) {
       bk.train();
       sect = second();
-    }
-    else message = "Cannot train: Build a barrack first";
+    } else message = "Cannot train: Build a barrack first";
   }
 }//end 
 

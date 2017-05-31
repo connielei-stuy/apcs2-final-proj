@@ -82,6 +82,7 @@ class Enemy extends Unit {
   }
 
   void move() {
+    if (!targets.isEmpty()) {
     Entity temp = targets.peekMin();
     
     float _dx = 0, _dy = 0, dis = 0;
@@ -137,6 +138,7 @@ class Enemy extends Unit {
     
     if(dis < 12)
       state = 1;
+    }
   }
 
   void attack() {
