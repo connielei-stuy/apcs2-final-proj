@@ -1,18 +1,10 @@
 class Structure extends Entity {
 
   protected String ID;
-  protected float _centerX, _centerY, cost;
+  protected float cost;
   protected color c;
   protected Bullet b = null;
   int sec = second();
-
-  float getCenterX() {
-    return _centerX;
-  }
-
-  float getCenterY() {
-    return _centerY;
-  }
 
   float getCost() {
     return cost;

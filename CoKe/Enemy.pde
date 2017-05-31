@@ -54,6 +54,8 @@ class Enemy extends Unit {
     state = 0;
     target = 0;
     heaping();
+    _width = 40;
+    _height  = 40;
   }
 
   void heaping() {
@@ -81,16 +83,60 @@ class Enemy extends Unit {
 
   void move() {
     Entity temp = targets.peekMin();
-    float hyp = dist(temp.getX(), temp.getY(), _x, _y);
-    float _dx = _speed * (temp.getX() - _x) / hyp;
-    float _dy = _speed * (temp.getY() - _y) / hyp;
+    
+    float _dx = 0, _dy = 0, dis = 0;
+    
+    if(temp.getCX() - temp.getWidth()/2 <= _x && _x <= temp.getCX() + temp.getWidth()/2){
+      _dx = 0;
+      _dy = _speed * (temp.getCY() - _y) / abs(temp.getCY() - _y);
+      dis = abs(temp.getCY() - _y) - temp.getHeight()/2;
+    }
+    //chose what side like top or bot
+    else if(temp.getCY() - temp.getHeight() /2 < _y && _y <= temp.getCY() + temp.getHeight()/2){
+      _dy = 0;
+      _dx = _speed * (temp.getCX() - _x)/ abs(temp.getCX() - _x);
+      dis = abs(temp.getCX() - _x) - temp.getWidth()/2;
+    }
+    //chose what side like right or left
+
+
+    else{
+      float topY = temp.getCY() - temp.getHeight()/2;
+      float botY = temp.getCY() + temp.getHeight()/2;
+      float rightX = temp.getCX() - temp.getWidth()/2;
+      float leftX = temp.getCX() + temp.getWidth()/2;
+      
+      float quadI = dist(_x, _y, rightX, topY);
+      float quadII = dist(_x, _y, leftX, topY);
+      float quadIII = dist(_x, _y, leftX, botY);
+      float quadIV = dist(_x, _y, rightX, botY);
+      float[] values = {quadI, quadII, quadIII, quadIV};
+   
+      float cornerX = rightX;
+      float cornerY = botY;
+     
+      if(min(values) == quadI){
+        cornerY = topY;
+      }
+      else if(min(values) == quadII){
+        cornerX = leftX;
+        cornerY = topY;
+      }
+      else if(min(values) == quadIII){
+        cornerX = leftX;
+      }
+      
+      float hyp = dist(cornerX, cornerY, _x, _y);
+      _dx = _speed * (cornerX - _x) / hyp;
+      _dy = _speed * (cornerY - _y) / hyp;
+      dis = dist(cornerX, cornerY, _x, _y);
+    }
+
     _x += _dx;
     _y += _dy;
-    hyp = dist(temp.getX(), temp.getY(), _x, _y);
-
-    //if (hyp < (temp.getWidth() + 20)) {
-    //  state = 1;
-    //}
+    
+    if(dis < 12)
+      state = 1;
   }
 
   void attack() {

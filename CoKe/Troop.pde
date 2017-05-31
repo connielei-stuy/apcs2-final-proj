@@ -34,7 +34,11 @@ class Troop extends Unit implements Comparable<Troop> {
   void defaults() {
     _x = home.getX()+random(home.getWidth());
     _y = home.getY()+home.getHeight()+10;
+    _centerX = _x;
+    _centerY = _y;
     state = 0;
+    _width = 40;
+    _height  = 40;
   }
 
   void display() {
@@ -50,11 +54,6 @@ class Troop extends Unit implements Comparable<Troop> {
     return time;
     
   }
-  
-  /*
-  float compareTo(Troop other){
-    return time - other.getTime();
-  }*/
   
   int compareTo(Troop other){
     return 1;

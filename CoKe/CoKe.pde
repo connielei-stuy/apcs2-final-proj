@@ -238,8 +238,8 @@ boolean isInside(Structure s, float x, float y) {
 
 
 //checks if an enemy is in the range of a structure
-boolean inRange(Structure attacker, Enemy target) {
-  float distance = dist(attacker.getCenterX(), attacker.getCenterY(), target.getX(), target.getY());
+boolean inRange(Entity attacker, Entity target) {
+  float distance = dist(attacker.getCX(), attacker.getCY(), target.getX(), target.getY());
   if (distance < attacker.getRange()/2 && distance != 0)
     return true;
   return false;

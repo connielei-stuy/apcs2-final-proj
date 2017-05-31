@@ -12,6 +12,7 @@ abstract class Unit extends Entity {
     e.takeDamage(_attack);
   }
   
+  
   abstract void update();
   abstract void attack();
   abstract void display();  
