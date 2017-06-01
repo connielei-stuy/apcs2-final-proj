@@ -1,6 +1,6 @@
 abstract class Entity implements Location<Entity>{
   
-  protected float _health, _attack, _x, _y, _centerX, _centerY, _width, _height, _range;
+  protected float _health, _attack, _x, _y, _centerX, _centerY, _width, _height, _range, _gold;
   
   float getX(){
     return _x;
@@ -37,6 +37,10 @@ abstract class Entity implements Location<Entity>{
     return _range;
   }
   
+  float getGold() {
+    return _gold;
+  }
+  
   void setHealth(float newHealth){
     _health = newHealth;
   }
@@ -45,6 +49,7 @@ abstract class Entity implements Location<Entity>{
       setHealth(_health - attack);
   }
   
+  abstract void update();
   abstract void display();
   
 }

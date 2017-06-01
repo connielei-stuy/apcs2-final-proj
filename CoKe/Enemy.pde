@@ -1,8 +1,6 @@
 class Enemy extends Unit {
 
-  protected float _gold;
   int target; //0 for structure, 1 for troop
-  int sec = second();
 
   Enemy(int difficulty) {
     setC(difficulty);
@@ -20,14 +18,9 @@ class Enemy extends Unit {
       _attack = random(20);
       _speed = random(5);
       _gold = 50;
-    } else if (difficulty  == 2) {
-    } else if (difficulty == 3) {
     }
   }
-
-  float getGold() {
-    return _gold;
-  }
+ 
 
   void defaults() {
     float r = random(4);
@@ -51,6 +44,8 @@ class Enemy extends Unit {
     heaping();
     _width = 20;
     _height  = 20;
+    _centerX = _x;
+    _centerY = _y;
   }
 
   void heaping() {

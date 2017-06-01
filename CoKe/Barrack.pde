@@ -14,7 +14,7 @@ class Barrack extends Structure{
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
     c = color(100, 50, 200);
-    cost = 300;
+    _gold = 300;
     trainingQ = new ArrayPriorityQueue<Troop>();
   }
   
@@ -22,8 +22,5 @@ class Barrack extends Structure{
   void train() {
     trainingQ.add(new Troop());
   }
-  
-  
-  
   
 }

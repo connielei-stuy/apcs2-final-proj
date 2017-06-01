@@ -160,7 +160,7 @@ void mouseReleased() {
       structures.add(currentStructure);
       if (currentStructure.isA("barrack")) 
         bk = new Barrack();
-      gold -= currentStructure.getCost();
+      gold -= currentStructure.getGold();
       for (Enemy e : enemies)
         e.add(currentStructure);
     } else
@@ -195,7 +195,7 @@ void keyPressed() {
 
 //returns a message 
 String canPlace(Structure s, float x, float y) { //s is the structure you want to place
-  if (s.getCost() > gold) { 
+  if (s.getGold() > gold) { 
     return "Cannot build: Insufficient gold";
   }
   if (x < 300+s.getWidth()/2 || x > width-300-s.getWidth()/2) return "Cannot build: Out of Bounds";
@@ -250,9 +250,9 @@ void startGame() {
 
 void enemySpawn() {
   int tempSec = second(); //controls enemy spawn 
-  if (enemySec -tempSec >= 2)
+  if (enemySec - tempSec >= 2)
     enemySec = second();
-  if (tempSec-enemySec > 1) {
+  if (tempSec - enemySec > 1) {
     enemies.add(new Enemy(0));
     enemySec = second();
   }

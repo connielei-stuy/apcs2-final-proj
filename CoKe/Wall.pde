@@ -12,7 +12,7 @@ class Wall extends Structure {
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
     c = color(10, 150, 255);
-    cost = 75;
+    _gold = 75;
   }
   
 }

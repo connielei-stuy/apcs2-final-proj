@@ -1,6 +1,5 @@
 class Troop extends Unit implements Comparable<Troop> {
-
-  int sec = second();
+  
   float time = 3;
   Barrack home = CoKe.bk; //this is where a troop come from
 
@@ -23,8 +22,6 @@ class Troop extends Unit implements Comparable<Troop> {
       _health = 100;
       _attack = random(20);
       _speed = random(5);
-    } else if (difficulty  == 2) {
-    } else if (difficulty == 3) {
     }
   }
 
@@ -36,6 +33,7 @@ class Troop extends Unit implements Comparable<Troop> {
     _width = 20;
     _height  = 20;
     state = 0;
+    _gold = 10;
     heaping();
   }
 

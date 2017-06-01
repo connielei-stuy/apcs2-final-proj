@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
-public class ArrayPriorityQueue<T> implements Comparable<T> {
+public class ArrayPriorityQueue<T extends Comparable<T>>
+{
 
   private ArrayList<T> _queue;
 
@@ -29,10 +30,6 @@ public class ArrayPriorityQueue<T> implements Comparable<T> {
     T temp = peekMin();
     _queue.remove(0);
     return temp;
-  }
-
-  int compareTo(T other) {
-    return 1;
   }
 
   public String toString() {

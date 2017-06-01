@@ -1,6 +1,6 @@
 abstract class Unit extends Entity {
 
-  protected float _speed, maxHealth, _gold;
+  protected float _speed, _gold;
   protected color c;
   protected int state;
   protected ALHeap<Entity> targets;
