@@ -21,19 +21,7 @@ abstract class Unit extends Entity {
       move();
   }
 
-  void attack() {
-    int sec2 = second();
-    if (sec2 - sec > 2) {
-      sec = second();
-      attack(targets.peekMin());
-      if (targets.peekMin().getHealth() < 0) {
-        targets.removeMin();
-        state = 0;
-      }
-    }
-  }
-
-
+  abstract void attack();
   abstract void move();
   abstract void display();
 }

@@ -44,8 +44,8 @@ class Structure extends Entity {
     _width = _height;
     _height = w;
   }
-  
-  void train(){
+
+  void train() {
   }
 
   //how to display structures for now
@@ -58,5 +58,19 @@ class Structure extends Entity {
   void displayRange() {
     fill(c, 50);
     ellipse(_x + _width/2, _y + _height/2, _range, _range);
+  }
+
+  void update() {
+    display();
+    for (Enemy e : enemies) {
+      if (inRange(e)) {
+        attack(e);
+      }
+    }
+  }
+
+  boolean inRange(Entity target) {
+    float distance = dist(_centerX, _centerY, target.getX(), target.getY());
+    return (distance < _range/2 && distance != 0);
   }
 }

@@ -41,7 +41,6 @@ class Troop extends Unit implements Comparable<Troop> {
     heaping();
   }
 
-
   void heaping() {
     targets = new ALHeap<Entity>(_x, _y);
     for (Entity e : enemies)
@@ -75,6 +74,19 @@ class Troop extends Unit implements Comparable<Troop> {
 
       _x += _dx;
       _y += _dy;
+    }
+  }
+  
+  
+  void attack() {
+    int tempSec = second();
+    if (tempSec - troopSec > 2) {
+      troopSec = second();
+      attack(targets.peekMin());
+      if (targets.peekMin().getHealth() < 0) {
+        targets.removeMin();
+        state = 0;
+      }
     }
   }
   

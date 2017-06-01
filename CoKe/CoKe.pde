@@ -8,10 +8,9 @@ static Barrack bk = null;
 ArrayList<Structure> structures = new ArrayList<Structure>();
 ArrayList<Troop> troops = new ArrayList<Troop>();
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-ArrayPriorityQueue<Troop> training = new ArrayPriorityQueue<Troop>(); //implemented this in class Barrack. oops?
 
-int sec; //controls monster spawn
-int sect; //controls troop spawn
+int enemySec; //controls monster spawn
+int troopSec; //controls troop spawn
 
 float gold = 500; //starting gold to spend
 
@@ -32,56 +31,35 @@ void setup() {
   frameRate(60); 
   stroke(255, 255, 0); //change color of outline of shapes
   structures.add(th); //required for every game
-  sec = second();
-  sect = second();
+  enemySec = second();
+  troopSec = second();
   background(0, 200, 255);
 }
 
 void draw() {
-  if (endGame) {
-    background(0);
-    textSize(64);
-    fill(255, 0, 0);
-    text("GAME OVER", width/2-175, height/2);
-  } else if (!startGame) {
-    textSize(32); 
-    fill(0);
-    text("Click to start game!", width/2-150, height/2);
-    if (mousePressed == true) {
-      startGame = true;
-    }
-  } else {
-    int sec2 = second(); //controls enemy spawn 
-    if (sec -sec2 >= 2) {
-      sec = second();
-    }
-    if (sec2-sec > 1) {
-      enemies.add(new Enemy(0));
-      sec = second();
-    }
+  if (endGame)
+    endGame();
+  else if (!startGame)
+    startGame();
+  
+  
+  
+  else {
+    enemySpawn();
     if (bk != null && !bk.trainingQ.isEmpty()) {
       int sec3 = second();
-      if (sec3-sect > bk.trainingQ.peekMin().getTime()) {
+      if (sec3-troopSec > bk.trainingQ.peekMin().getTime()) {
         troops.add(bk.trainingQ.removeMin());
       }
     }
 
-    //System.out.println(th.getHealth());
     generate();
-    if (difficulty < 0) {
-      //program to allow user to choose difficult
-    }
 
     for (Structure s : structures) {
       if (mouseX > s.getX() && mouseX < s.getX() + s.getWidth() &&
-          mouseY > s.getY() && mouseY < s.getY() + s.getHeight() ) {
-            fill(0);
-            text("Health: " + s.getHealth(), s.getX(), s.getY());
-      }
-      for (Enemy e : enemies) {
-        if (inRange(s, e)) {
-          s.attack(e);
-        }
+        mouseY > s.getY() && mouseY < s.getY() + s.getHeight() ) {
+        fill(0);
+        text("Health: " + s.getHealth(), s.getX(), s.getY());
       }
     }
 
@@ -90,11 +68,16 @@ void draw() {
       structures.get(structures.size()-1).display();
       structures.remove(structures.size()-1);
     }
-    //display every structure
+
+
+    //STRUCTURE DISPLAY
+    //displays all structures if their health > 0
+    //removes structures that have health <= 0
+    //also checks endGame condition
     int s = 0;
     while (s < structures.size()) {
       if (structures.get(s).getHealth() > 0) {
-        structures.get(s).display();
+        structures.get(s).update();
         s ++;
       } else {
         if (structures.get(s).equals(structures.get(0))) {
@@ -103,6 +86,11 @@ void draw() {
         structures.remove(s);
       }
     }
+
+    //TROOP DISPLAY
+    //displays all troops if their health > 0
+    //removes troops that have health <= 0
+    //updates troop movement, etc
     int t = 0;
     while (t < troops.size()) {
       if (troops.get(t).getHealth() > 0) {
@@ -111,7 +99,12 @@ void draw() {
       } else {
         troops.remove(t);
       }
-    }    
+    }  
+
+    //ENEMY DISPLAY
+    //displays all enemies currently on the field with health > 0
+    //removes enemies that have health <= 0
+    //updates enemy movement, etc
     int e = 0;
     while (e < enemies.size()) {
       if (enemies.get(e).getHealth() > 0) {
@@ -174,19 +167,17 @@ void mouseReleased() {
     message = canPlace(currentStructure, mouseX, mouseY); 
     if (message == "Structure successfully built") {
       structures.add(currentStructure);
-      if (currentStructure.isA("barrack")) bk = new Barrack();
+      if (currentStructure.isA("barrack")) 
+        bk = new Barrack();
       gold -= currentStructure.getCost();
-      for (Enemy e : enemies) {
+      for (Enemy e : enemies)
         e.add(currentStructure);
-      }
-    } else {
+    } else
       currentStructure = null;
-    }
   }
 }
 
 void mouseClicked() {
-  System.out.println(mouseY);
 }
 
 void mousePressed() {
@@ -206,7 +197,7 @@ void keyPressed() {
   if (key == 't' || key == 'T') {
     if (bk != null) {
       bk.train();
-      sect = second();
+      troopSec = second();
     } else message = "Cannot train: Build a barrack first";
   }
 }//end 
@@ -242,17 +233,36 @@ boolean isInside(Structure s, float x, float y) {
   return false;
 }
 
-
-//checks if an enemy is in the range of a structure
-boolean inRange(Entity attacker, Entity target) {
-  float distance = dist(attacker.getCX(), attacker.getCY(), target.getX(), target.getY());
-  if (distance < attacker.getRange()/2 && distance != 0)
-    return true;
-  return false;
-}
-
 void displayMessage() {
   fill(0);
   textSize(14);
   text(message, 20, height-180);
+}
+
+void endGame() {
+  background(0);
+  textSize(64);
+  fill(255, 0, 0);
+  text("GAME OVER", width/2-175, height/2);
+}
+
+void startGame() {
+
+  //add difficulty choice 
+
+  textSize(32); 
+  fill(0);
+  text("Click to start game!", width/2-150, height/2);
+  if (mousePressed == true)
+    startGame = true;
+}
+
+void enemySpawn() {
+  int tempSec = second(); //controls enemy spawn 
+  if (enemySec -tempSec >= 2)
+    enemySec = second();
+  if (tempSec-enemySec > 1) {
+    enemies.add(new Enemy(0));
+    enemySec = second();
+  }
 }

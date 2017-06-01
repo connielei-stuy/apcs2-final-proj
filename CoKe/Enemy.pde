@@ -123,6 +123,7 @@ class Enemy extends Unit {
 
         if (dis - 10 < _speed) {
           _speed = dis - 10;
+          state = 1;
         }
         float hyp = dist(cornerX, cornerY, _x, _y);
         _dx = _speed * (cornerX - _x) / hyp;
@@ -136,5 +137,17 @@ class Enemy extends Unit {
 
   void add(Entity e) {
     targets.add(e);
+  }
+  
+  void attack() {
+    int tempSec = second();
+    if (tempSec - enemySec > 2) {
+      enemySec = second();
+      attack(targets.peekMin());
+      if (targets.peekMin().getHealth() < 0) {
+        targets.removeMin();
+        state = 0;
+      }
+    }
   }
 }
