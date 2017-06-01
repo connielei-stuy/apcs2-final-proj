@@ -138,16 +138,5 @@ class Enemy extends Unit {
   void add(Entity e) {
     targets.add(e);
   }
-  
-  void attack() {
-    int tempSec = second();
-    if (tempSec - enemySec > 2) {
-      enemySec = second();
-      attack(targets.peekMin());
-      if (targets.peekMin().getHealth() < 0) {
-        targets.removeMin();
-        state = 0;
-      }
-    }
-  }
+
 }

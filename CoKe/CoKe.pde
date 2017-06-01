@@ -42,8 +42,6 @@ void draw() {
   else if (!startGame)
     startGame();
   
-  
-  
   else {
     enemySpawn();
     if (bk != null && !bk.trainingQ.isEmpty()) {
@@ -54,14 +52,7 @@ void draw() {
     }
 
     generate();
-
-    for (Structure s : structures) {
-      if (mouseX > s.getX() && mouseX < s.getX() + s.getWidth() &&
-        mouseY > s.getY() && mouseY < s.getY() + s.getHeight() ) {
-        fill(0);
-        text("Health: " + s.getHealth(), s.getX(), s.getY());
-      }
-    }
+    displayHealth();
 
     if (currentStructure != null) {
       structures.add(currentStructure);
@@ -265,4 +256,14 @@ void enemySpawn() {
     enemies.add(new Enemy(0));
     enemySec = second();
   }
+}
+
+void displayHealth(){
+      for (Structure s : structures) {
+      if (mouseX > s.getX() && mouseX < s.getX() + s.getWidth() &&
+        mouseY > s.getY() && mouseY < s.getY() + s.getHeight() ) {
+        fill(0);
+        text("Health: " + s.getHealth(), s.getX(), s.getY());
+      }
+    }
 }

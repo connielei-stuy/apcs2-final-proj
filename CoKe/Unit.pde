@@ -13,7 +13,7 @@ abstract class Unit extends Entity {
     e.takeDamage(_attack);
   }
 
-  void update() {
+  void update() {  
     display();
     if (state == 1)
       attack();
@@ -21,7 +21,18 @@ abstract class Unit extends Entity {
       move();
   }
 
-  abstract void attack();
+  void attack() {
+    int tempSec = second();
+    if (tempSec % 2 == 0) {
+      enemySec = second();
+      attack(targets.peekMin());
+      if (targets.peekMin().getHealth() < 0) {
+        targets.removeMin();
+        state = 0;
+      }
+    }
+  }
+
   abstract void move();
   abstract void display();
 }

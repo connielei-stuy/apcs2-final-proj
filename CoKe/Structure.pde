@@ -63,9 +63,9 @@ class Structure extends Entity {
   void update() {
     display();
     for (Enemy e : enemies) {
-      if (inRange(e)) {
+      if (inRange(e))
         attack(e);
-      }
+        return;
     }
   }
 
