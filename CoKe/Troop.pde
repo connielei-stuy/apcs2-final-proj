@@ -1,6 +1,5 @@
 class Troop extends Unit implements Comparable<Troop> {
 
-  ALHeap<Entity> targets;
   int sec = second();
   float time = 3;
   Barrack home = CoKe.bk; //this is where a troop come from
@@ -36,31 +35,50 @@ class Troop extends Unit implements Comparable<Troop> {
     _y = home.getY()+home.getHeight()+10;
     _centerX = _x;
     _centerY = _y;
+    _width = 20;
+    _height  = 20;
     state = 0;
-    _width = 40;
-    _height  = 40;
+    heaping();
+  }
+
+
+  void heaping() {
+    targets = new ALHeap<Entity>(_x, _y);
+    for (Entity e : enemies)
+      targets.add(e);
   }
 
   void display() {
     fill(color(100, 50, 200));
     ellipse(_x, _y, 20, 20);
   }
-  
-  void update(){
-    return ;
-  }
-  
-  float getTime(){
+
+  float getTime() {
     return time;
-    
+  }
+
+  void move() {
+    if (!targets.isEmpty()) {
+      Entity temp = targets.peekMin();
+      float _dx = 0, _dy = 0, dis = 0;
+
+      dis = dist(temp.getCX(), temp.getCY(), _x, _y);
+
+      if (dis - 10 < _speed) {
+        _speed = dis - 10;
+        state = 1;
+      }
+
+      float hyp = dist(temp.getCX(), temp.getCY(), _x, _y);
+      _dx = _speed * (temp.getCX() - _x) / hyp;
+      _dy = _speed * (temp.getCY() - _y) / hyp;
+
+      _x += _dx;
+      _y += _dy;
+    }
   }
   
   int compareTo(Troop other){
-    return 1;
+    return 1;    
   }
-  
-  void attack(){
-   return ; 
-  }
-
 }
