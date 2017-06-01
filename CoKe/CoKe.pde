@@ -73,11 +73,14 @@ void draw() {
     }
 
     for (Structure s : structures) {
+      if (mouseX > s.getX() && mouseX < s.getX() + s.getWidth() &&
+          mouseY > s.getY() && mouseY < s.getY() + s.getHeight() ) {
+            fill(0);
+            text("Health: " + s.getHealth(), s.getX(), s.getY());
+      }
       for (Enemy e : enemies) {
         if (inRange(s, e)) {
           s.attack(e);
-          //System.out.println("Cannon" + s.getHealth());
-          //System.out.println(e.getHealth());
         }
       }
     }
@@ -176,8 +179,7 @@ void mouseReleased() {
       for (Enemy e : enemies) {
         e.add(currentStructure);
       }
-    }
-    else {
+    } else {
       currentStructure = null;
     }
   }
@@ -224,7 +226,7 @@ String canPlace(Structure s, float x, float y) { //s is the structure you want t
       isInside(st, x-s.getWidth()/2, y-s.getHeight()/2) || //ul corner
       isInside(st, x+s.getWidth()/2, y+s.getHeight()/2) || //br corner
       isInside(st, x+s.getWidth()/2, y-s.getHeight()/2) || //ur corner
-      isInside(st, x , y) )//center 
+      isInside(st, x, y) )//center 
       return "Cannot build: On another structure";
   }
   return "Structure successfully built";

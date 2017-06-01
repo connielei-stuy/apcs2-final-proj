@@ -3,8 +3,8 @@ class Bullet implements Location<Bullet>{
   float speed, w, h, x, y, dx, dy;
   
   Bullet(float startX , float startY , float moveX , float moveY) {
-    w = 15;
-    h = 15;
+    w = 10;
+    h = 10;
     x = startX;
     y = startY;
     dx = moveX;
