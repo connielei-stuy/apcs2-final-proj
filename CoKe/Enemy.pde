@@ -23,16 +23,16 @@ class Enemy extends Unit {
  
 
   void defaults() {
-    float r = random(4);
-    if (r >= 0 && r <1) {
+    float r = random(100);
+    if (r >= 0 && r <25) {
       _x = random(300, width-300);
       _y = 25;
     }
-    if (r >= 1 && r <2) {
+    else if (r >= 25 && r <50) {
       _x = width-300;
       _y = random(25, height-25);
     }
-    if (r >= 2 && r<3) {
+    else if (r >= 50 && r<75) {
       _x = random(300, width-300);
       _y = height-25;
     } else {
@@ -131,11 +131,23 @@ class Enemy extends Unit {
         
       }
 
-      _x += _dx;
-      _y += _dy;
+      _x += _dx; _centerX += _dx;
+      _y += _dy; _centerY += _dy;
     }
   }
 
+  void attack() {
+    int tempSec = second();
+    if (tempSec -sec > 2) {
+      sec = second();
+      attack(targets.peekMin());
+      if (targets.peekMin().getHealth() < 0) {
+        targets.removeMin();
+        state = 0;
+      }
+    }
+  }
+  
   void add(Entity e) {
     targets.add(e);
   }

@@ -3,25 +3,27 @@ class Structure extends Entity {
   protected String ID;
   protected color c;
   protected Bullet b = null;
+  int sec = second();
 
   String getID() {
     return ID;
   }
 
+  //generate a bullet and make the bullet move to an enemy
   void attack(Entity e) {
-    if (b == null)
-      b = new Bullet(_centerX, _centerY, e.getX() - _centerX, e.getY() - _centerY);
-    if (b.collision(e)) {
-      e.takeDamage(_attack);
-      b = null;
+    if (b == null) //if there isn't already an active bullet
+      b = new Bullet(_centerX, _centerY, e.getX() - _centerX, e.getY() - _centerY); //make a new bullet
+    if (b.collision(e)) { //if bullet and enemy collides
+      e.takeDamage(_attack); //enemy takes damage
+      b = null; //bullet dies
       return;
     }
-    b.move();
-    if (b.getX() < 312.5 || b.getX() > 1087.5 || b.getY() < 25 || b.getY() > height - 25)
-      b = null; 
+    b.move(); //bullet moves
+    if (b.getX() < 312.5 || b.getX() > 1087.5 || b.getY() < 25 || b.getY() > height - 25) //outta bounds
+      b = null;
   }
 
-  //checks if this is a certain structure
+  //checks if "this" is a certain structure by comparing ID's
   boolean isA(String str) {
     if (this.getID() == str) {
       return true;
@@ -29,7 +31,7 @@ class Structure extends Entity {
     return false;
   }
 
-  //rotates
+  //rotates a structure by swapping width and height
   void rotate() {
     float w = _width;
     _width = _height;
@@ -40,19 +42,24 @@ class Structure extends Entity {
   void display() {
     fill(c);
     rect(_x, _y, _width, _height);
-    fill(c, 50);
+    fill(c, 25);
     ellipse(_x + _width/2, _y + _height/2, _range, _range);
   }
 
+  //executes structure's functions
   void update() {
     display();
     for (Enemy e : enemies) {
-      if (inRange(e))
+      if (inRange(e)) {
         attack(e);
-        return;
+        //return;
+      }
     }
   }
 
+
+//checks if an entity is in-range for a structure to attack
+//true if in-range, false if not in-range
   boolean inRange(Entity target) {
     float distance = dist(_centerX, _centerY, target.getX(), target.getY());
     return (distance < _range/2 && distance != 0);

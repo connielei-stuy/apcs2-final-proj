@@ -18,7 +18,7 @@ class Barrack extends Structure{
     trainingQ = new ArrayPriorityQueue<Troop>();
   }
   
-  //trains a troop
+  //trains a troop by adding it to the training queue, later removed and added to arraylist
   void train() {
     trainingQ.add(new Troop());
   }

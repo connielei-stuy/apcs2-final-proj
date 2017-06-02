@@ -2,7 +2,7 @@ class Wall extends Structure {
   
   Wall() {
     ID = "wall";
-    _health = 500;
+    _health = 250;
     _attack = 0;
     _range = 0;
     _width = 60;

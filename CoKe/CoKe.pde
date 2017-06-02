@@ -1,13 +1,12 @@
-boolean startGame, endGame = false;
+boolean startGame, endGame = false; //controls whether or not game has started/ended
 
-int difficulty = 0; //difficulty
+int difficulty = 0; //difficulty: modifies stats of enemies
 
-TownHall th = new TownHall();
-static Barrack bk = null;
+static Barrack bk = null; //contains the only barrack user is allowed to build
 
-ArrayList<Structure> structures = new ArrayList<Structure>();
-ArrayList<Troop> troops = new ArrayList<Troop>();
-ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+ArrayList<Structure> structures = new ArrayList<Structure>(); //stores all structures
+ArrayList<Troop> troops = new ArrayList<Troop>(); //stores all troops
+ArrayList<Enemy> enemies = new ArrayList<Enemy>(); //stores all enemies
 
 int enemySec; //controls monster spawn
 int troopSec; //controls troop spawn
@@ -15,9 +14,9 @@ int troopSec; //controls troop spawn
 float gold = 500; //starting gold to spend
 
 Structure currentStructure; //stores a structure 
-State structureSelected; //stores a type of structure selected
-State state; //stores a state of the mouse
-String message = "";
+State structureSelected; //stores a type of structure selected (CANNON,WALL,BARRACK)
+State state; //stores a state of the mouse(NULL,STRUCTURESELECTED)
+String message = ""; //stores text that reflects latest action user has taken
 
 
 //enums for state of the mouse
@@ -27,37 +26,38 @@ public enum State {
 }
 
 void setup() {
-  size(1400, 825); //change this to fit the lab's computers 500/600
+  size(1400, 825); //change this to fit the lab's computers 
   frameRate(60); 
   stroke(255, 255, 0); //change color of outline of shapes
-  structures.add(th); //required for every game
-  enemySec = second();
-  troopSec = second();
+  structures.add(new TownHall()); //required for every game
+  enemySec = second(); //give enemySec a value
+  troopSec = second(); //give troopSec a value
   background(0, 200, 255);
 }
 
 void draw() {
   if (endGame)
-    endGame();
+    endGame(); //GAMEOVER
   else if (!startGame)
     startGame();
-  
+
   else {
-    enemySpawn();
+    enemySpawn(); //starts enemy spawnings
+    //primitive troop training
     if (bk != null && !bk.trainingQ.isEmpty()) {
-      int sec3 = second();
-      if (sec3-troopSec > bk.trainingQ.peekMin().getTime()) {
-        troops.add(bk.trainingQ.removeMin());
+      int tempSec = second();
+      if (tempSec-troopSec > bk.trainingQ.peekMin().getTime()) { //
+        troops.add(bk.trainingQ.removeMin()); //remove troop from queue and add it to Arraylist troops
       }
     }
 
-    generate();
-    displayHealth();
+    generate(); //generates the GUI
 
+    //displays a structure that is being dragged around (hasn't been placed yet)
     if (currentStructure != null) {
-      structures.add(currentStructure);
-      structures.get(structures.size()-1).display();
-      structures.remove(structures.size()-1);
+      structures.add(currentStructure); //add it
+      structures.get(structures.size()-1).display(); //show it
+      structures.remove(structures.size()-1); //remove it
     }
 
 
@@ -71,9 +71,8 @@ void draw() {
         structures.get(s).update();
         s ++;
       } else {
-        if (structures.get(s).equals(structures.get(0))) {
+        if (structures.get(s).isA("townhall"))
           endGame = true;
-        }
         structures.remove(s);
       }
     }
@@ -85,7 +84,7 @@ void draw() {
     int t = 0;
     while (t < troops.size()) {
       if (troops.get(t).getHealth() > 0) {
-        troops.get(t).display();
+        troops.get(t).update();
         t ++;
       } else {
         troops.remove(t);
@@ -102,10 +101,12 @@ void draw() {
         enemies.get(e).update();
         e ++;
       } else {
-        gold += enemies.get(e).getGold();
+        //System.out.println(enemies.get(e)._gold);
+        gold += enemies.get(e)._gold;
         enemies.remove(e);
       }
     }
+    displayHealth(); //displays health of an entity when hovering over it
   }
 }
 
@@ -138,33 +139,30 @@ void mouseDragged() {
   }
   if (state == State.STRUCTURESELECTED) {
     if (structureSelected == State.CANNON) {
-      //rect(mouseX-30,mouseY-30,60,60);
       currentStructure = new Cannon();
     }
     if (structureSelected == State.WALL) {
-      //rect(mouseX-40,mouseY-10,80,20);
       currentStructure = new Wall();
     }
     if (structureSelected == State.BARRACK) {
       currentStructure = new Barrack();
     }
-    //System.out.println("structure selected");
   }
 }
 
 void mouseReleased() {
-  if (state == State.STRUCTURESELECTED) {
-    state = State.NULL;
+  if (state == State.STRUCTURESELECTED) { //if you were dragging a structure
+    state = State.NULL; //you are no longer dragging it since you released it
     message = canPlace(currentStructure, mouseX, mouseY); 
-    if (message == "Structure successfully built") {
-      structures.add(currentStructure);
+    if (message == "Structure successfully built") { //if you can place it here
+      structures.add(currentStructure); //place it
       if (currentStructure.isA("barrack")) 
         bk = new Barrack();
-      gold -= currentStructure.getGold();
+      gold -= currentStructure.getGold(); //spend moneys
       for (Enemy e : enemies)
-        e.add(currentStructure);
+        e.add(currentStructure); //add this new structure to enemies' heap to keep track of
     } else
-      currentStructure = null;
+      currentStructure = null; //no structure is currently being dragged
   }
 }
 
@@ -178,6 +176,7 @@ void mouseWheel() {
 }
 
 void keyPressed() {
+  //very primitive rotation for walls
   if (key == 'r' || key == 'R') {
     for (Structure s : structures) {
       if (s.isA("wall")) {
@@ -185,17 +184,21 @@ void keyPressed() {
       }//end if s.isA(wall)
     }//end for
   }//end if
+  //very primitive troop training
   if (key == 't' || key == 'T') {
-    if (bk != null) {
-      bk.train();
-      troopSec = second();
+    if (bk != null) { //if there is a barrack
+      if (gold > 100 ) {
+        bk.train();
+        gold -= 100;
+        troopSec = second();
+      } else message = "Cannot train: insufficient gold";
     } else message = "Cannot train: Build a barrack first";
   }
 }//end 
 
 //returns a message 
 String canPlace(Structure s, float x, float y) { //s is the structure you want to place
-  if (s.getGold() > gold) { 
+  if (s.getGold() > gold) { //enough moneys?
     return "Cannot build: Insufficient gold";
   }
   if (x < 300+s.getWidth()/2 || x > width-300-s.getWidth()/2) return "Cannot build: Out of Bounds";
@@ -211,25 +214,27 @@ String canPlace(Structure s, float x, float y) { //s is the structure you want t
       isInside(st, x, y) )//center 
       return "Cannot build: On another structure";
   }
-  return "Structure successfully built";
+  return "Structure successfully built"; //yay
 }
 
 //checks if point is inside a structure
-boolean isInside(Structure s, float x, float y) {
-  if (x < s.getX()+s.getWidth() &&
-    x > s.getX() &&
-    y < s.getY()+s.getHeight() &&
-    y > s.getY() )
+boolean isInside(Entity s, float x, float y) {
+  if (x > s.getCX()-s.getWidth()/2 && //right of leftBound
+    x < s.getCX()+s.getWidth()/2 && //left of RightBound
+    y > s.getCY()-s.getHeight()/2 && //below upBound
+    y < s.getCY()+s.getHeight()/2 ) //above lowBound
     return true;
   return false;
 }
 
+//displays text regarding user's latest action in message box
 void displayMessage() {
   fill(0);
   textSize(14);
   text(message, 20, height-180);
 }
 
+//this happens when u lose
 void endGame() {
   background(0);
   textSize(64);
@@ -237,17 +242,17 @@ void endGame() {
   text("GAME OVER", width/2-175, height/2);
 }
 
+//this is where user can choose a difficulty or start the game
 void startGame() {
-
   //add difficulty choice 
-
   textSize(32); 
   fill(0);
   text("Click to start game!", width/2-150, height/2);
-  if (mousePressed == true)
+  if (mousePressed == true) //u clicked da mouse
     startGame = true;
 }
 
+//controls spawn rate of enemies
 void enemySpawn() {
   int tempSec = second(); //controls enemy spawn 
   if (enemySec - tempSec >= 2)
@@ -258,12 +263,24 @@ void enemySpawn() {
   }
 }
 
-void displayHealth(){
-      for (Structure s : structures) {
-      if (mouseX > s.getX() && mouseX < s.getX() + s.getWidth() &&
-        mouseY > s.getY() && mouseY < s.getY() + s.getHeight() ) {
-        fill(0);
-        text("Health: " + s.getHealth(), s.getX(), s.getY());
-      }
+//if mouse is hovering over an entity, display its health
+void displayHealth() {
+  for (Structure s : structures) {
+    if (isInside(s, mouseX, mouseY)) {
+      fill(0);
+      text("Health: " + s.getHealth(), s.getX(), s.getY());
     }
+  }
+  for (Enemy e : enemies) {
+    if (isInside(e, mouseX, mouseY)) {
+      fill(0);
+      text("Health: " + e.getHealth(), e.getX()-5, e.getY()-10);
+    }
+  }
+  for (Troop t : troops) {
+    if (isInside(t, mouseX, mouseY)) {
+      fill(0);
+      text("Health: " + t.getHealth(), t.getX()-5, t.getY()-10);
+    }
+  }
 }

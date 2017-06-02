@@ -1,6 +1,6 @@
 class Troop extends Unit implements Comparable<Troop> {
-  
-  float time = 3;
+
+  float time = 3; //takes 3 seconds to train a troop
   Barrack home = CoKe.bk; //this is where a troop come from
 
   Troop() {
@@ -16,7 +16,7 @@ class Troop extends Unit implements Comparable<Troop> {
   void setC(int difficulty) {
     if (difficulty == 0) {
       _health = 500;
-      _attack = random(75);
+      _attack = 1000;
       _speed = 2;
     } else if (difficulty == 1) {
       _health = 100;
@@ -33,15 +33,17 @@ class Troop extends Unit implements Comparable<Troop> {
     _width = 20;
     _height  = 20;
     state = 0;
-    _gold = 10;
-    heaping();
+    _gold = 100;
+    _dx = 0;
+    _dy = 0;
   }
 
+  /*
   void heaping() {
-    targets = new ALHeap<Entity>(_x, _y);
-    for (Entity e : enemies)
-      targets.add(e);
-  }
+   targets = new ALHeap<Entity>(_x, _y);
+   for (Entity e : enemies)
+   targets.add(e);
+   }*/
 
   void display() {
     fill(color(100, 50, 200));
@@ -52,28 +54,50 @@ class Troop extends Unit implements Comparable<Troop> {
     return time;
   }
 
-  void move() {
-    if (!targets.isEmpty()) {
-      Entity temp = targets.peekMin();
-      float _dx = 0, _dy = 0, dis = 0;
-
-      dis = dist(temp.getCX(), temp.getCY(), _x, _y);
-
-      if (dis - 10 < _speed) {
-        _speed = dis - 10;
-        state = 1;
+  //attacks nearest enemy every second
+  void attack() {
+    int tempSec = second();
+    if (tempSec -sec > 1) {
+      sec = second();
+      attack(findNearestEnemy());
+      if (findNearestEnemy().getHealth() < 0) {
+        state = 0;
       }
-
-      float hyp = dist(temp.getCX(), temp.getCY(), _x, _y);
-      _dx = _speed * (temp.getCX() - _x) / hyp;
-      _dy = _speed * (temp.getCY() - _y) / hyp;
-
-      _x += _dx;
-      _y += _dy;
     }
   }
-  
-  int compareTo(Troop other){
-    return 1;    
+
+  //moves to nearest enemy
+  //troops can move through structures as troops are good guys :) whereas enemies are bad guys
+  void move() {
+    Enemy nearest = findNearestEnemy();
+    float tempSpeed = _speed;
+    float dis = dist(nearest.getX(), nearest.getY(), _x, _y);
+    if (dis < _speed) {
+      tempSpeed = dis-10;
+      state = 1;
+    } 
+    _dx = tempSpeed * (nearest.getX() - _x) / dis;
+    _dy = tempSpeed * (nearest.getY() - _y) / dis;
+    _x += _dx; 
+    _centerX += _dx;
+    _y += _dy; 
+    _centerY += _dy;
+  }
+
+  //finds and returns nearest enemy
+  Enemy findNearestEnemy() {
+      Enemy retE = null;
+      for (Enemy e : enemies) {
+        if (dist(_x, _y, e.getX(), e.getY()) < dist(_x, _y, retE.getX(), retE.getY()) || retE == null) {
+          retE = e;
+        }
+      }
+      return retE;
+    }
+
+
+  int compareTo(Troop other) 
+  {
+    return 1;
   }
 }

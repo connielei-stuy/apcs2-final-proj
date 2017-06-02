@@ -4,6 +4,8 @@ abstract class Unit extends Entity {
   protected color c;
   protected int state;
   protected ALHeap<Entity> targets;
+  int sec = second();
+  float _dx,_dy;
 
   float getSpeed() {
     return _speed;
@@ -20,18 +22,20 @@ abstract class Unit extends Entity {
     else
       move();
   }
-
+/*
   void attack() {
     int tempSec = second();
-    if (tempSec % 2 == 0) {
-      enemySec = second();
+    if (tempSec -sec > 2) {
+      sec = second();
       attack(targets.peekMin());
       if (targets.peekMin().getHealth() < 0) {
         targets.removeMin();
         state = 0;
       }
     }
-  }
+  }*/
+  
+  abstract void attack();
 
   abstract void move();
   abstract void display();

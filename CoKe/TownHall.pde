@@ -2,7 +2,7 @@ class TownHall extends Structure {
 
   TownHall() {
     ID = "townhall";
-    _health = 10000000;
+    _health = 500;
     _attack = 5;
     _range = 160;
     _width = 80;
@@ -12,9 +12,5 @@ class TownHall extends Structure {
     _centerX = _x + _width/2;
     _centerY = _y + _width/2;
     c = color(255, 0, 0);
-  }
-  
-  String toString(){
-    return "Town Hall"; 
   }
 }
