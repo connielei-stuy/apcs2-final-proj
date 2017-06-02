@@ -14,7 +14,7 @@ class Structure extends Entity {
     if (b.collision(e)) {
       e.takeDamage(_attack);
       b = null;
-      //u.c = color(100,255,0);
+      return;
     }
     b.move();
     if (b.getX() < 312.5 || b.getX() > 1087.5 || b.getY() < 25 || b.getY() > height - 25)

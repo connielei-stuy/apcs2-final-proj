@@ -64,7 +64,10 @@ class Enemy extends Unit {
   }
 
   void move() {
-    if (!targets.isEmpty()) {
+    while(!targets.isEmpty() && targets.peekMin().getHealth() <= 0)
+      targets.removeMin();
+
+    if(!targets.isEmpty()){
       Entity temp = targets.peekMin();
 
       float _dx = 0, _dy = 0, dis = 0;
@@ -115,14 +118,17 @@ class Enemy extends Unit {
         }
 
         dis = dist(cornerX, cornerY, _x, _y);
+        
+        float tempSpeed = _speed;
 
         if (dis - 10 < _speed) {
-          _speed = dis - 10;
+          tempSpeed = dis - 10;
           state = 1;
         }
         float hyp = dist(cornerX, cornerY, _x, _y);
-        _dx = _speed * (cornerX - _x) / hyp;
-        _dy = _speed * (cornerY - _y) / hyp;
+        _dx = tempSpeed * (cornerX - _x) / hyp;
+        _dy = tempSpeed * (cornerY - _y) / hyp;
+        
       }
 
       _x += _dx;
