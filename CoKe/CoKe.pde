@@ -42,7 +42,11 @@ void draw() {
     startGame();
 
   else {
+
+    generate(); //generates the GUI
+    structurePlacement();  //displays a structure that is being dragged around (hasn't been placed yet)
     enemySpawn(); //starts enemy spawnings
+
     //primitive troop training
     if (bk != null && !bk.trainingQ.isEmpty()) {
       int tempSec = second();
@@ -50,16 +54,6 @@ void draw() {
         troops.add(bk.trainingQ.removeMin()); //remove troop from queue and add it to Arraylist troops
       }
     }
-
-    generate(); //generates the GUI
-
-    //displays a structure that is being dragged around (hasn't been placed yet)
-    if (currentStructure != null) {
-      structures.add(currentStructure); //add it
-      structures.get(structures.size()-1).display(); //show it
-      structures.remove(structures.size()-1); //remove it
-    }
-
 
     //STRUCTURE DISPLAY
     //displays all structures if their health > 0
@@ -282,5 +276,13 @@ void displayHealth() {
       fill(0);
       text("Health: " + t.getHealth(), t.getX()-5, t.getY()-10);
     }
+  }
+}
+
+void structurePlacement() {
+  if (currentStructure != null) {
+    structures.add(currentStructure); //add it
+    structures.get(structures.size()-1).display(); //show it
+    structures.remove(structures.size()-1); //remove it
   }
 }

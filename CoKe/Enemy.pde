@@ -138,7 +138,7 @@ class Enemy extends Unit {
 
   void attack() {
     int tempSec = second();
-    if (tempSec -sec > 2) {
+    if (tempSec - sec > 2) {
       sec = second();
       attack(targets.peekMin());
       if (targets.peekMin().getHealth() < 0) {

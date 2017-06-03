@@ -72,8 +72,8 @@ class Troop extends Unit implements Comparable<Troop> {
     Enemy nearest = findNearestEnemy();
     float tempSpeed = _speed;
     float dis = dist(nearest.getX(), nearest.getY(), _x, _y);
-    if (dis < _speed) {
-      tempSpeed = dis-10;
+    if (dis - 20 < _speed) {
+      tempSpeed = dis - 20;
       state = 1;
     } 
     _dx = tempSpeed * (nearest.getX() - _x) / dis;
@@ -86,14 +86,16 @@ class Troop extends Unit implements Comparable<Troop> {
 
   //finds and returns nearest enemy
   Enemy findNearestEnemy() {
-      Enemy retE = null;
+    if(!enemies.isEmpty()){
+      Enemy retE = enemies.get(0);
       for (Enemy e : enemies) {
-        if (dist(_x, _y, e.getX(), e.getY()) < dist(_x, _y, retE.getX(), retE.getY()) || retE == null) {
+        if (dist(_x, _y, e.getX(), e.getY()) < dist(_x, _y, retE.getX(), retE.getY()))
           retE = e;
-        }
       }
       return retE;
     }
+    return null;
+  }
 
 
   int compareTo(Troop other) 

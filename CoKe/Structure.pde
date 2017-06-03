@@ -52,7 +52,7 @@ class Structure extends Entity {
     for (Enemy e : enemies) {
       if (inRange(e)) {
         attack(e);
-        //return;
+        return;
       }
     }
   }
