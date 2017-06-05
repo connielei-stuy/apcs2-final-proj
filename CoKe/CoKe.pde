@@ -1,4 +1,4 @@
-boolean startGame, endGame = false; //controls whether or not game has started/ended
+boolean startGame; //controls whether or not game has started
 Screen screen;
 
 int difficulty = 0; //difficulty: modifies stats of enemies
@@ -27,7 +27,7 @@ State structureSelected; //stores a type of structure selected (CANNON,WALL,BARR
 State state; //stores a state of the mouse(NULL,STRUCTURESELECTED)
 
 public enum Screens {
-  TITLE, GAME, END, SETTINGS
+  TITLE, GAME, END, SETTINGS, PAUSE
 }
 Screens currentScreen;
 Screens previousScreen;
@@ -43,16 +43,18 @@ void setup() {
 
 void draw() {
   //System.out.println(difficulty);
-  if (endGame)
+  if (currentScreen == Screens.END)
     endGame(); //GAMEOVER
   else if (currentScreen == Screens.SETTINGS) {
-    settingsScreen(); 
-  }
-  else if (!startGame) {
+    settingsScreen();
+  } else if (!startGame) {
     currentScreen = Screens.TITLE;    
     titleScreen();
+  } else if (currentScreen == Screens.PAUSE) {
+    pauseScreen();
   } else {
 
+    currentScreen = Screens.GAME;
     generate(); //generates the GUI
     structurePlacement();  //displays a structure that is being dragged around (hasn't been placed yet)
     enemySpawn(); //starts enemy spawnings
@@ -76,7 +78,7 @@ void draw() {
         s ++;
       } else {
         if (structures.get(s).isA("townhall"))
-          endGame = true;
+          currentScreen = Screens.END;
         structures.remove(s);
       }
     }
@@ -135,7 +137,7 @@ void generate() {
 }
 
 void mouseDragged() {
-  if (mouseX >= width-275 && !endGame && startGame) {
+  if (mouseX >= width-275 && currentScreen == Screens.GAME) {
     state = State.STRUCTURESELECTED;
     if (mouseY < height/3.0) structureSelected = State.CANNON;
     if (mouseY > height/3.0 && mouseY < 2*(height/3.0)) structureSelected = State.WALL;
@@ -206,6 +208,12 @@ void keyPressed() {
       } else message = "Cannot train: insufficient gold";
     } else message = "Cannot train: Build a barrack first";
   }
+  if (key == 'p' || key == 'P') {
+    if (currentScreen == Screens.GAME) {
+      currentScreen = Screens.PAUSE;
+      previousScreen = Screens.GAME;
+    }
+  }
 }//end 
 
 //returns a message 
@@ -264,12 +272,19 @@ void titleScreen() {
 void settingsScreen() {
   screen = new SettingsScreen();
   textSize(32); 
-  text("Difficulty: " + difficulty , width/2-80,height/3);     
+  text("Difficulty: " + difficulty, width/2-80, height/3);     
   for (Button b : screen.buttons) {
     b.display();
   }
 }
-  
+
+void pauseScreen() {
+  screen = new PauseScreen();
+  for (Button b : screen.buttons) {
+    b.display();
+  }
+}
+
 //controls spawn rate of enemies
 void enemySpawn() {
   int tempSec = second(); //controls enemy spawn 
