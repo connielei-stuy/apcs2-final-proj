@@ -14,8 +14,8 @@ class Bullet implements Location<Bullet>{
   void move() {
     fill(150,150,0);
     ellipse(x , y , w , h);
-    x += dx/25;
-    y += dy/25;
+    x += dx/20;
+    y += dy/20;
   }
   
   float getX() {

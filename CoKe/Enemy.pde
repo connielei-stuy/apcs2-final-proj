@@ -14,7 +14,7 @@ class Enemy extends Unit {
       _speed = 2;
       _gold = 30;
     } else if (difficulty == 1) {
-      _health = 100;
+      _health = 1000;
       _attack = random(20);
       _speed = random(5);
       _gold = 50;

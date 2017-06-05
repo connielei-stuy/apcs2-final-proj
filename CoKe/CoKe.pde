@@ -1,4 +1,5 @@
 boolean startGame, endGame = false; //controls whether or not game has started/ended
+Screen screen;
 
 int difficulty = 0; //difficulty: modifies stats of enemies
 
@@ -14,8 +15,6 @@ int troopSec; //controls troop spawn
 float gold = 500; //starting gold to spend
 
 Structure currentStructure; //stores a structure 
-State structureSelected; //stores a type of structure selected (CANNON,WALL,BARRACK)
-State state; //stores a state of the mouse(NULL,STRUCTURESELECTED)
 String message = ""; //stores text that reflects latest action user has taken
 
 
@@ -24,6 +23,14 @@ String message = ""; //stores text that reflects latest action user has taken
 public enum State {
   NULL, STRUCTURESELECTED, CANNON, WALL, BARRACK
 }
+State structureSelected; //stores a type of structure selected (CANNON,WALL,BARRACK)
+State state; //stores a state of the mouse(NULL,STRUCTURESELECTED)
+
+public enum Screens {
+  TITLE, GAME, END, SETTINGS
+}
+Screens currentScreen;
+Screens previousScreen;
 
 void setup() {
   size(1400, 825); //change this to fit the lab's computers 
@@ -32,16 +39,19 @@ void setup() {
   structures.add(new TownHall()); //required for every game
   enemySec = second(); //give enemySec a value
   troopSec = second(); //give troopSec a value
-  background(0, 200, 255);
 }
 
 void draw() {
+  //System.out.println(difficulty);
   if (endGame)
     endGame(); //GAMEOVER
-  else if (!startGame)
-    startGame();
-
-  else {
+  else if (currentScreen == Screens.SETTINGS) {
+    settingsScreen(); 
+  }
+  else if (!startGame) {
+    currentScreen = Screens.TITLE;    
+    titleScreen();
+  } else {
 
     generate(); //generates the GUI
     structurePlacement();  //displays a structure that is being dragged around (hasn't been placed yet)
@@ -161,6 +171,14 @@ void mouseReleased() {
 }
 
 void mouseClicked() {
+  if (currentScreen != null) {
+    for (Button b : screen.buttons) {
+      if (b.overButton()) {
+        String command = b.buttonMessage;
+        screen.function(command);
+      }
+    }
+  }
 }
 
 void mousePressed() {
@@ -236,16 +254,22 @@ void endGame() {
   text("GAME OVER", width/2-175, height/2);
 }
 
-//this is where user can choose a difficulty or start the game
-void startGame() {
-  //add difficulty choice 
-  textSize(32); 
-  fill(0);
-  text("Click to start game!", width/2-150, height/2);
-  if (mousePressed == true) //u clicked da mouse
-    startGame = true;
+void titleScreen() {
+  screen = new TitleScreen();
+  for (Button b : screen.buttons) {
+    b.display();
+  }
 }
 
+void settingsScreen() {
+  screen = new SettingsScreen();
+  textSize(32); 
+  text("Difficulty: " + difficulty , width/2-80,height/3);     
+  for (Button b : screen.buttons) {
+    b.display();
+  }
+}
+  
 //controls spawn rate of enemies
 void enemySpawn() {
   int tempSec = second(); //controls enemy spawn 
