@@ -38,14 +38,6 @@ class Structure extends Entity {
     _height = w;
   }
 
-  //how to display structures for now
-  void display() {
-    fill(c);
-    rect(_x, _y, _width, _height);
-    fill(c, 25);
-    ellipse(_x + _width/2, _y + _height/2, _range, _range);
-  }
-
   //executes structure's functions
   void update() {
     display();

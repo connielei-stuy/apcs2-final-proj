@@ -15,12 +15,12 @@ abstract class Unit extends Entity {
     e.takeDamage(_attack);
   }
 
-  void update() {  
-    display();
+  void update() { 
     if (state == 1)
       attack();
     else
       move();
+    display();
   }
 /*
   void attack() {
@@ -36,7 +36,5 @@ abstract class Unit extends Entity {
   }*/
   
   abstract void attack();
-
   abstract void move();
-  abstract void display();
 }

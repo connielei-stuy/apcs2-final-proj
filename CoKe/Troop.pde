@@ -2,6 +2,7 @@ class Troop extends Unit implements Comparable<Troop> {
 
   float time = 3; //takes 3 seconds to train a troop
   Barrack home = CoKe.bk; //this is where a troop come from
+  int _level;
 
   Troop() {
     setC(0);
@@ -36,6 +37,7 @@ class Troop extends Unit implements Comparable<Troop> {
     _gold = 100;
     _dx = 0;
     _dy = 0;
+    _level = 0;
   }
 
   /*
@@ -79,14 +81,84 @@ class Troop extends Unit implements Comparable<Troop> {
     _dx = tempSpeed * (nearest.getX() - _x) / dis;
     _dy = tempSpeed * (nearest.getY() - _y) / dis;
     _x += _dx; 
-    _centerX += _dx;
+    _centerX = _x;
     _y += _dy; 
-    _centerY += _dy;
+    _centerY = _y;
+
+    if (nearest.getX() - _x > 0) { //east
+      if (abs(nearest.getX() - _x) - abs(nearest.getY() - _y) < 0) {
+        if (nearest.getY() - _y > 0) {//south
+          if (_level == 1) {
+            photo = loadImage("tt_s.png");
+          } else if (_level == 2) {
+            photo = loadImage("ttt_s.png");
+          } else if (_level == 3) {
+            photo = loadImage("tttt_s.png");
+          } else {
+            photo = loadImage("t_s.png");
+          }
+        } else {//north
+          if (_level == 1) {
+            photo = loadImage("tt_n.png");
+          } else if (_level == 2) {
+            photo = loadImage("ttt_n.png");
+          } else if (_level == 3) {
+            photo = loadImage("tttt_n.png");
+          } else {
+            photo = loadImage("t_n.png");
+          }
+        }
+      } else {
+        if (_level == 1) {
+          photo = loadImage("tt_e.png");
+        } else if (_level == 2) {
+          photo = loadImage("ttt_e.png");
+        } else if (_level == 3) {
+          photo = loadImage("tttt_e.png");
+        } else {
+          photo = loadImage("t_e.png");
+        }
+      }
+    } else {//west
+      if (abs(nearest.getX() - _x) - abs(nearest.getY() - _y) < 0) {
+        if (nearest.getY() - _y > 0) {//south
+          if (_level == 1) {
+            photo = loadImage("tt_s.png");
+          } else if (_level == 2) {
+            photo = loadImage("ttt_s.png");
+          } else if (_level == 3) {
+            photo = loadImage("tttt_s.png");
+          } else {
+            photo = loadImage("t_s.png");
+          }
+        } else {//north
+          if (_level == 1) {
+            photo = loadImage("tt_n.png");
+          } else if (_level == 2) {
+            photo = loadImage("ttt_n.png");
+          } else if (_level == 3) {
+            photo = loadImage("tttt_n.png");
+          } else {
+            photo = loadImage("t_n.png");
+          }
+        }
+      } else {
+        if (_level == 1) {
+          photo = loadImage("tt_w.png");
+        } else if (_level == 2) {
+          photo = loadImage("ttt_w.png");
+        } else if (_level == 3) {
+          photo = loadImage("tttt_w.png");
+        } else {
+          photo = loadImage("t_w.png");
+        }
+      }
+    }
   }
 
   //finds and returns nearest enemy
   Enemy findNearestEnemy() {
-    if(!enemies.isEmpty()){
+    if (!enemies.isEmpty()) {
       Enemy retE = enemies.get(0);
       for (Enemy e : enemies) {
         if (dist(_x, _y, e.getX(), e.getY()) < dist(_x, _y, retE.getX(), retE.getY()))

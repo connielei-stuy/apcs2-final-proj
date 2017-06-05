@@ -13,6 +13,7 @@ class Cannon extends Structure {
     _centerY = _y + _height/2;
     c = color(200, 0, 255);
     _gold = 200;
+    photo = loadImage("cannon.png");
   }
   
 }

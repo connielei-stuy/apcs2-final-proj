@@ -1,8 +1,10 @@
 class Enemy extends Unit {
 
   int target; //0 for structure, 1 for troop
+  int _difficulty;
 
   Enemy(int difficulty) {
+    _difficulty = difficulty;
     setC(difficulty);
     defaults();
   }
@@ -20,19 +22,17 @@ class Enemy extends Unit {
       _gold = 50;
     }
   }
- 
+
 
   void defaults() {
     float r = random(100);
     if (r >= 0 && r <25) {
       _x = random(300, width-300);
       _y = 25;
-    }
-    else if (r >= 25 && r <50) {
+    } else if (r >= 25 && r <50) {
       _x = width-300;
       _y = random(25, height-25);
-    }
-    else if (r >= 50 && r<75) {
+    } else if (r >= 50 && r<75) {
       _x = random(300, width-300);
       _y = height-25;
     } else {
@@ -58,16 +58,11 @@ class Enemy extends Unit {
     }
   }
 
-  void display() {
-    fill(color(255, 0, 255));
-    ellipse(_x, _y, 20, 20);
-  }
-
   void move() {
-    while(!targets.isEmpty() && targets.peekMin().getHealth() <= 0)
+    while (!targets.isEmpty() && targets.peekMin().getHealth() <= 0)
       targets.removeMin();
 
-    if(!targets.isEmpty()){
+    if (!targets.isEmpty()) {
       Entity temp = targets.peekMin();
 
       float _dx = 0, _dy = 0, dis = 0;
@@ -80,6 +75,23 @@ class Enemy extends Unit {
           _dy = dis - 10;
           state = 1;
         }
+        if (temp.getCY() - _y > 0) { //south
+          if (_difficulty == 0) {
+            photo = loadImage("e_s.png");
+          } else if (_difficulty == 2) {
+            photo = loadImage("ee_s.png");
+          } else {
+            photo = loadImage("eee_s.png");
+          }
+        } else {//north
+          if (_difficulty == 0) {
+            photo = loadImage("e_n.png");
+          } else if (_difficulty == 2) {
+            photo = loadImage("ee_n.png");
+          } else {
+            photo = loadImage("eee_n.png");
+          }
+        }
       }
       //chose what side like top or bot
       else if (temp.getCY() - temp.getHeight() /2 < _y && _y <= temp.getCY() + temp.getHeight()/2) {
@@ -89,6 +101,23 @@ class Enemy extends Unit {
         if (dis - 10 < _speed) {
           _dx = dis - 10;
           state = 1;
+        }
+        if (temp.getCX() - _x > 0) { //east
+          if (_difficulty == 0) {
+            photo = loadImage("e_e.png");
+          } else if (_difficulty == 2) {
+            photo = loadImage("ee_e.png");
+          } else {
+            photo = loadImage("eee_e.png");
+          }
+        } else {//west
+          if (_difficulty == 0) {
+            photo = loadImage("e_w.png");
+          } else if (_difficulty == 2) {
+            photo = loadImage("ee_w.png");
+          } else {
+            photo = loadImage("eee_w.png");
+          }
         }
       }
       //chose what side like right or left
@@ -108,17 +137,82 @@ class Enemy extends Unit {
         float cornerX = rightX;
         float cornerY = botY;
 
-        if (min(values) == quadI) {
+        if (min(values) == quadI) { //south west
           cornerY = topY;
-        } else if (min(values) == quadII) {
+          if (_difficulty == 0) {
+            photo = loadImage("e_s.png");
+            if (random(10) > 5) {
+              photo = loadImage("e_e.png");
+            }
+          } else if (_difficulty == 2) {
+            photo = loadImage("ee_s.png");
+            if(random(10) > 5) {
+              photo = loadImage("ee_e.png");
+            }
+          } else {
+            photo = loadImage("eee_s.png");
+            if (random(10) > 5) {
+              photo = loadImage("eee_e.png");
+            }
+          }
+        } else if (min(values) == quadII) { //south east
           cornerX = leftX;
           cornerY = topY;
-        } else if (min(values) == quadIII) {
+          if (_difficulty == 0) {
+            photo = loadImage("e_s.png");
+            if (random(10) > 5) {
+              photo = loadImage("e_w.png");
+            }
+          } else if (_difficulty == 2) {
+            photo = loadImage("ee_s.png");
+            if (random(10) > 5) {
+              photo = loadImage("ee_w.png");
+            }
+          } else {
+            photo = loadImage("eee_s.png");
+            if (random(10) > 5) {
+              photo = loadImage("eee_w.png");
+            }
+          }
+        } else if (min(values) == quadIII) { //north east
           cornerX = leftX;
+          if (_difficulty == 0) {
+            photo = loadImage("e_n.png");
+            if (random(10) > 5) {
+              photo = loadImage("e_w.png");
+            }
+          } else if (_difficulty == 2) {
+            photo = loadImage("ee_n.png");
+            if (random(10) > 5) {
+              photo = loadImage("ee_w.png");
+            }
+          } else {
+            photo = loadImage("eee_n.png");
+            if (random(10) > 5) {
+              photo = loadImage("eee_w.png");
+            }
+          }
+        } else { //north west
+                  if (_difficulty == 0) {
+            photo = loadImage("e_n.png");
+            if (random(10) > 5) {
+              photo = loadImage("e_e.png");
+            }
+          } else if (_difficulty == 2) {
+            photo = loadImage("ee_n.png");
+            if(random(10) > 5) {
+              photo = loadImage("ee_e.png");
+            }
+          } else {
+            photo = loadImage("eee_n.png");
+            if (random(10) > 5) {
+              photo = loadImage("eee_e.png");
+            }
+          }
         }
 
         dis = dist(cornerX, cornerY, _x, _y);
-        
+
         float tempSpeed = _speed;
 
         if (dis - 10 < _speed) {
@@ -128,11 +222,12 @@ class Enemy extends Unit {
         float hyp = dist(cornerX, cornerY, _x, _y);
         _dx = tempSpeed * (cornerX - _x) / hyp;
         _dy = tempSpeed * (cornerY - _y) / hyp;
-        
       }
 
-      _x += _dx; _centerX += _dx;
-      _y += _dy; _centerY += _dy;
+      _x += _dx; 
+      _centerX += _dx;
+      _y += _dy; 
+      _centerY += _dy;
     }
   }
 
@@ -147,9 +242,8 @@ class Enemy extends Unit {
       }
     }
   }
-  
+
   void add(Entity e) {
     targets.add(e);
   }
-
 }

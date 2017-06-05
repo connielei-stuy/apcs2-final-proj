@@ -13,6 +13,7 @@ class Wall extends Structure {
     _centerY = _y + _height/2;
     c = color(10, 150, 255);
     _gold = 75;
+    photo = loadImage("wall.png");
   }
   
 }

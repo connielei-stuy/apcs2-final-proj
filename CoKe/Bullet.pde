@@ -1,6 +1,7 @@
 class Bullet implements Location<Bullet>{
 
   float speed, w, h, x, y, dx, dy;
+  PImage photo;
   
   Bullet(float startX , float startY , float moveX , float moveY) {
     w = 10;
@@ -9,11 +10,12 @@ class Bullet implements Location<Bullet>{
     y = startY;
     dx = moveX;
     dy = moveY;
+    photo = loadImage("bullet.png");
   }
   
   void move() {
-    fill(150,150,0);
-    ellipse(x , y , w , h);
+    
+    image(photo, x - w, y - h, w , h);
     x += dx/20;
     y += dy/20;
   }
