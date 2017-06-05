@@ -1,5 +1,5 @@
 boolean startGame; //controls whether or not game has started
-Screen screen;
+Screen screen; //stores the current screen
 
 int difficulty = 0; //difficulty: modifies stats of enemies
 
@@ -29,8 +29,8 @@ State state; //stores a state of the mouse(NULL,STRUCTURESELECTED)
 public enum Screens {
   TITLE, GAME, END, SETTINGS, PAUSE
 }
-Screens currentScreen;
-Screens previousScreen;
+Screens currentScreen; //stores the enum value of the current screen
+Screens previousScreen; //stores the enum value of the previous screen
 
 void setup() {
   size(1400, 825); //change this to fit the lab's computers 
@@ -116,19 +116,21 @@ void draw() {
   }
 }
 
+//generates the in-game GUI
 void generate() {
   background(0, 255, 0); //0 for black, 255 for white
   fill(0, 255, 40);
-  rect(312.5, height/2-387.5, 775, 775);  
+  rect(312.5, height/2-387.5, 775, 775);   //the playing field
   fill(200, 0, 255);
-  rect(width-275, 0, 300, height/3);
-  rect(0, 0, 275, height-200);
+  rect(width-275, 0, 300, height/3); //cannon
+  rect(0, 0, 275, height-200); //left purple column
   fill(255, 245, 150);
-  rect(0, height-200, 275, 200);
+  rect(0, height-200, 275, 200); //message box
   fill(10, 150, 255);
-  rect(width-275, height/3, 300, height/3);
+  rect(width-275, height/3, 137.5, height/3); //wall
+  rect(width-275+137.5, height/3, 137.5,height/3);
   fill(100, 50, 200);
-  rect(width-275, 2*(height/3), 300, height/3);
+  rect(width-275, 2*(height/3), 300, height/3); //barrack
   textSize(20);
   fill(255, 250, 0);
   text("GOLD: " + gold, 30, 30);
