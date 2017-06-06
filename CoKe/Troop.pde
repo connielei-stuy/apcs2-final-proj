@@ -114,5 +114,9 @@ class Troop extends Unit implements Comparable<Troop> {
   float compareTo(Troop other){
      return _priority - other.getPriority();
   }
+  
+  void upgrade(){
+    
+  }
 
 }

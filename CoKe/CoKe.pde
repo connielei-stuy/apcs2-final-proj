@@ -328,18 +328,21 @@ void displayHealth() {
     if (isInside(s, mouseX, mouseY)) {
       fill(0);
       text("Health: " + s.getHealth(), s.getX(), s.getY());
+      s.healthBar();
     }
   }
   for (Enemy e : enemies) {
     if (isInside(e, mouseX, mouseY)) {
       fill(0);
       text("Health: " + e.getHealth(), e.getX()-5, e.getY()-10);
+      e.healthBar();
     }
   }
   for (Troop t : troops) {
     if (isInside(t, mouseX, mouseY)) {
       fill(0);
       text("Health: " + t.getHealth(), t.getX()-5, t.getY()-10);
+      t.healthBar();
     }
   }
 }
