@@ -297,7 +297,7 @@ void enemySpawn() {
   if (enemySec - tempSec >= 2)
     enemySec = second();
   if (tempSec - enemySec > 1) {
-    enemies.add(new Enemy(0));
+    enemies.add(new Enemy());
     enemySec = second();
   }
 }
