@@ -1,12 +1,16 @@
 class Structure extends Entity {
 
   protected String ID;
-  protected color c;
+  protected float _time;
   protected Bullet b = null;
   int sec = second();
 
   String getID() {
     return ID;
+  }
+
+  float getTime(){
+     return _time; 
   }
 
   //generate a bullet and make the bullet move to an enemy
@@ -40,6 +44,9 @@ class Structure extends Entity {
 
   //executes structure's functions
   void update() {
+    if(photo == null){
+      System.out.println("photo is missing");
+    }
     display();
     for (Enemy e : enemies) {
       if (inRange(e)) {

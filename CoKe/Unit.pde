@@ -13,18 +13,6 @@ abstract class Unit extends Entity {
     return _speed;
   }
 
-  void attack(Entity e) {
-    e.takeDamage(_attack);
-  }
-
-  void update() { 
-    if (_state == 1)
-      attack();
-    else
-      move();
-    display();
-  }
-  
   PImage getNorth(){
      return _north; 
   }
@@ -41,6 +29,16 @@ abstract class Unit extends Entity {
      return _west; 
   }
 
+  void update() { 
+    if (_state == 1){
+    System.out.println("attacking");
+      attack();
+    }
+    else
+      move();
+    display();
+  }
+
   void attack() {
     int tempSec = second();
     if (tempSec -sec > 2) {
@@ -51,6 +49,10 @@ abstract class Unit extends Entity {
         _state = 0;
       }
     }
+  }
+  
+  void attack(Entity e) {
+    e.takeDamage(_attack);
   }
   
   abstract void move();

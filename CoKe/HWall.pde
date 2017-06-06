@@ -11,7 +11,6 @@ class HWall extends Structure {
     _y = mouseY - _height/2;
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
-    c = color(10, 150, 255);
     _gold = 75;
     photo = loadImage("wall.png");
   }

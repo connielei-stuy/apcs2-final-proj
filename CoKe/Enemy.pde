@@ -24,8 +24,8 @@ class Enemy extends Unit {
 
   void enemySpawn(){
     temp = new LLStack<Enemy>();
-    temp.push(new Enemy(250, 40, 2.5, 80, loadImage("ee_n.png"), loadImage("ee_e.png"), loadImage("ee_s.png"), loadImage("ee_w.png")));
     temp.push(new Enemy(500, 50, 3.5, 120, loadImage("eee_n.png"), loadImage("eee_e.png"), loadImage("eee_s.png"), loadImage("eee_w.png")));
+    temp.push(new Enemy(250, 40, 2.5, 80, loadImage("ee_n.png"), loadImage("ee_e.png"), loadImage("ee_s.png"), loadImage("ee_w.png")));
     temp.push(new Enemy(150, 30, 2, 50, loadImage("e_n.png"), loadImage("e_e.png"), loadImage("e_s.png"), loadImage("e_w.png")));
   }
 
@@ -50,6 +50,8 @@ class Enemy extends Unit {
     _state = 0;
     _width = 20;
     _height  = 20;
+    _health = _maxHealth;
+    photo = _west;
     coordinates();
   }
   
@@ -182,8 +184,8 @@ class Enemy extends Unit {
 
         float tempSpeed = _speed;
 
-        if (dis - 4 < _speed) {
-          tempSpeed = dis - 4;
+        if (dis - 10 < _speed) {
+          tempSpeed = dis - 10;
           _state = 1;
         }
         float hyp = dist(cornerX, cornerY, _x, _y);

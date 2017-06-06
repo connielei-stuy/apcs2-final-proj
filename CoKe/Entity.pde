@@ -47,6 +47,10 @@ abstract class Entity implements Location<Entity>{
      return _maxHealth; 
   }
   
+  PImage getPhoto(){
+   return photo; 
+  }
+  
   void setHealth(float newHealth){
     _health = newHealth;
   }
@@ -56,7 +60,7 @@ abstract class Entity implements Location<Entity>{
   }
   
   void display(){
-    image(photo, _centerX - _width/2, _centerY - _height/2, _width * 1.2, _height * 1.2);
+    image(photo, _centerX - _width/2, _centerY - _height/2, _width, _height);
   }
   
   abstract void update();

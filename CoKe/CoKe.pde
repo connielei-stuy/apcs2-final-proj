@@ -66,6 +66,8 @@ void draw() {
         troops.add(bk.trainingQ.removeMin()); //remove troop from queue and add it to Arraylist troops
       }
     }
+  
+    System.out.println("town hall doesnt work");
 
     //STRUCTURE DISPLAY
     //displays all structures if their health > 0
@@ -73,6 +75,7 @@ void draw() {
     //also checks endGame condition
     int s = 0;
     while (s < structures.size()) {
+      System.out.println(structures.size());
       if (structures.get(s).getHealth() > 0) {
         structures.get(s).update();
         s ++;
@@ -82,6 +85,8 @@ void draw() {
         structures.remove(s);
       }
     }
+
+    System.out.println("got to this point");
 
     //TROOP DISPLAY
     //displays all troops if their health > 0
@@ -96,6 +101,8 @@ void draw() {
         troops.remove(t);
       }
     }  
+
+    System.out.println("got to this troop");
 
     //ENEMY DISPLAY
     //displays all enemies currently on the field with health > 0
@@ -112,8 +119,9 @@ void draw() {
         enemies.remove(e);
       }
     }
-    displayHealth(); //displays health of an entity when hovering over it
+    displayHealth();
   }
+  
 }
 
 //generates the in-game GUI
@@ -128,7 +136,7 @@ void generate() {
   rect(width-275, 0, 300, height/4); //cannon  
   fill(10, 150, 255);
   rect(width-275, height/4, 300, height/4); //hwall
-  rect(width-275, 2*(height/4), 300,height/4); //vwall
+  rect(width-275, 2*(height/4), 300, height/4); //vwall
   fill(100, 50, 200);
   rect(width-275, 3*(height/4), 300, height/4); //barrack
   textSize(20);

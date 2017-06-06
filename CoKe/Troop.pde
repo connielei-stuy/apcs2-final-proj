@@ -55,10 +55,11 @@ class Troop extends Unit implements Comparable<Troop> {
   }
 
   void defaults() {
-    coordinates();
     _width = 20;
     _height  = 20;
     _state = 0;
+    _health = _maxHealth;
+    coordinates();
   }
   
   void coordinates(){

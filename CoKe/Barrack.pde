@@ -13,7 +13,6 @@ class Barrack extends Structure{
     _y = mouseY - _height/2;
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
-    c = color(100, 50, 200);
     _gold = 300;
     trainingQ = new ArrayPriorityQueue<Troop>();
   }

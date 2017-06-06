@@ -11,7 +11,6 @@ class Cannon extends Structure {
     _y = mouseY - _height/2;
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
-    c = color(200, 0, 255);
     _gold = 200;
     photo = loadImage("cannon.png");
   }
