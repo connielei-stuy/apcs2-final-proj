@@ -21,7 +21,7 @@ String message = ""; //stores text that reflects latest action user has taken
 //enums for state of the mouse
 //should add more later
 public enum State {
-  NULL, STRUCTURESELECTED, CANNON, WALL, BARRACK
+  NULL, STRUCTURESELECTED, CANNON, HWALL, VWALL, BARRACK
 }
 State structureSelected; //stores a type of structure selected (CANNON,WALL,BARRACK)
 State state; //stores a state of the mouse(NULL,STRUCTURESELECTED)
@@ -121,16 +121,16 @@ void generate() {
   background(0, 255, 0); //0 for black, 255 for white
   fill(0, 255, 40);
   rect(312.5, height/2-387.5, 775, 775);   //the playing field
-  fill(200, 0, 255);
-  rect(width-275, 0, 300, height/3); //cannon
-  rect(0, 0, 275, height-200); //left purple column
   fill(255, 245, 150);
-  rect(0, height-200, 275, 200); //message box
+  rect(0, height-200, 275, 200); //message box  
+  fill(200, 0, 255);
+  rect(0, 0, 275, height-200); //left purple column
+  rect(width-275, 0, 300, height/4); //cannon  
   fill(10, 150, 255);
-  rect(width-275, height/3, 137.5, height/3); //wall
-  rect(width-275+137.5, height/3, 137.5,height/3);
+  rect(width-275, height/4, 300, height/4); //hwall
+  rect(width-275, 2*(height/4), 300,height/4); //vwall
   fill(100, 50, 200);
-  rect(width-275, 2*(height/3), 300, height/3); //barrack
+  rect(width-275, 3*(height/4), 300, height/4); //barrack
   textSize(20);
   fill(255, 250, 0);
   text("GOLD: " + gold, 30, 30);
@@ -141,16 +141,20 @@ void generate() {
 void mouseDragged() {
   if (mouseX >= width-275 && currentScreen == Screens.GAME) {
     state = State.STRUCTURESELECTED;
-    if (mouseY < height/3.0) structureSelected = State.CANNON;
-    if (mouseY > height/3.0 && mouseY < 2*(height/3.0)) structureSelected = State.WALL;
-    if (mouseY > 2*(height/3.0)) structureSelected = State.BARRACK;
+    if (mouseY < height/4.0) structureSelected = State.CANNON;
+    if (mouseY > height/4.0 && mouseY < 2*(height/4.0)) structureSelected = State.HWALL;
+    if (mouseY > 2*(height/4.0) && mouseY < 3*(height/4.0)) structureSelected = State.VWALL;    
+    if (mouseY > 3*(height/4.0)) structureSelected = State.BARRACK;
   }
   if (state == State.STRUCTURESELECTED) {
     if (structureSelected == State.CANNON) {
       currentStructure = new Cannon();
     }
-    if (structureSelected == State.WALL) {
-      currentStructure = new Wall();
+    if (structureSelected == State.HWALL) {
+      currentStructure = new HWall();
+    }
+    if (structureSelected == State.VWALL) {
+      currentStructure = new VWall();
     }
     if (structureSelected == State.BARRACK) {
       currentStructure = new Barrack();
@@ -195,9 +199,9 @@ void keyPressed() {
   //very primitive rotation for walls
   if (key == 'r' || key == 'R') {
     for (Structure s : structures) {
-      if (s.isA("wall")) {
+      if (s.isA("hwall")) {
         s.rotate();
-      }//end if s.isA(wall)
+      }//end if s.isA(hwall)
     }//end for
   }//end if
   //very primitive troop training

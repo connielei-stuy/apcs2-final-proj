@@ -2,7 +2,6 @@ class TitleScreen extends Screen {
 
   TitleScreen() {
     super();    
-    background(0, 200, 255);
     textSize(64);
     text("CoKe\nA Game" , width/2-100, height/4);
     buttons.add(new Button(width/3-50, height/2-25, 100, 50, color(255, 0, 0), "Start game"));

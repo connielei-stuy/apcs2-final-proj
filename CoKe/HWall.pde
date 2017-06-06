@@ -1,7 +1,7 @@
-class Wall extends Structure {
+class HWall extends Structure {
   
-  Wall() {
-    ID = "wall";
+  HWall() {
+    ID = "hwall";
     _health = 250;
     _attack = 0;
     _range = 0;
