@@ -1,8 +1,30 @@
 class HWall extends Structure {
-  
+
   HWall() {
+    if(difficulty == 0 || (difficulty == 1 && random(10) > 5))
+      setWall(HWALLUPGRADES.get(1));
+    else
+      setWall(HWALLUPGRADES.get(0));
+    defaults();
+  }
+
+  HWall(float maxHealth, float gold, float time, PImage hwall){
+    _maxHealth = maxHealth;
+    _gold = gold;
+    _time = time;
+    photo = hwall;
+  }
+
+  void setWall(HWall copy){
+    _maxHealth = copy.getMaxHealth();
+    _gold = copy.getGold();
+    _time = copy.getTime();
+    photo = copy.getPhoto();
+  }
+  
+  void defaults() {
     ID = "hwall";
-    _health = 250;
+    _health = _maxHealth;
     _attack = 0;
     _range = 0;
     _width = 60;
@@ -11,8 +33,7 @@ class HWall extends Structure {
     _y = mouseY - _height/2;
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
-    _gold = 75;
-    photo = loadImage("wall.png");
   }
+  
   
 }

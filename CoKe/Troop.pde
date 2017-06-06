@@ -1,13 +1,13 @@
 class Troop extends Unit implements Comparable<Troop> {
 
   float _time, _priority; //takes 3 seconds to train a troop
-  
-  LLStack<Troop> temp;
+  Barrack bk = CoKe.bk; //this is where a troop come from
 
   Troop() {
-    troopSpawn();
-    troopAdjust();
-    setTroop();
+    if(difficulty == 0 || (difficulty == 1 && random(10) > 5))
+      setTroop(TROOPUPGRADES.get(1));
+    else
+      setTroop(TROOPUPGRADES.get(0));
     defaults();
     heaping();
   }
@@ -25,26 +25,10 @@ class Troop extends Unit implements Comparable<Troop> {
     _west = west;
   }
   
-  void troopSpawn(){
-  temp = new LLStack<Troop>();
-  temp.push(new Troop(700, 70, 4, -1, 15, loadImage("tttt_n.png"), loadImage("tttt_e.png"), loadImage("tttt_s.png"), loadImage("tttt_w.png")));
-  temp.push(new Troop(450, 50, 3.5, 300, 10, loadImage("ttt_n.png"), loadImage("ttt_e.png"), loadImage("ttt_s.png"), loadImage("ttt_w.png")));
-  temp.push(new Troop(250, 40, 2.5, 150, 7, loadImage("tt_n.png"), loadImage("tt_e.png"), loadImage("tt_s.png"), loadImage("tt_w.png")));
-  temp.push(new Troop(150, 30, 2, 100, 5, loadImage("t_n.png"), loadImage("t_e.png"), loadImage("t_s.png"), loadImage("t_w.png")));
-  }
- 
-  void troopAdjust(){
-    if(difficulty == 0)
-      temp.pop();
-    if(difficulty != 2 && random(10) > 7)
-      temp.pop(); 
-  }
-  
-  void setTroop(){
-    Troop copy = temp.pop();
-    _maxHealth = copy.getMaxHealth();
-    _attack = copy.getAttack();
-    _speed = copy.getSpeed();
+  void setTroop(Troop copy){
+    _maxHealth = copy.getMaxHealth() + random(50);
+    _attack = copy.getAttack() +  random(10);
+    _speed = copy.getSpeed() + random(1);
     _gold = copy.getGold();
     _time = copy.getTime();
     _north = copy.getNorth();

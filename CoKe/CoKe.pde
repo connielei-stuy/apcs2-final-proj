@@ -4,13 +4,20 @@ Screen screen; //stores the current screen
 int difficulty = 0; //difficulty: modifies stats of enemies
 
 static Barrack bk = null; //contains the only barrack user is allowed to build
+static TownHall th = null;
+static LLStack<TownHall> TOWNHALL;
+
+static ArrayList<Enemy> ENEMYUPGRADES;
+static ArrayList<Troop> TROOPUPGRADES;
+static ArrayList<Cannon> CANNONUPGRADES;
+static ArrayList<HWall> HWALLUPGRADES;
+static ArrayList<VWall> VWALLUPGRADES;
 
 ArrayList<Structure> structures = new ArrayList<Structure>(); //stores all structures
 ArrayList<Troop> troops = new ArrayList<Troop>(); //stores all troops
 ArrayList<Enemy> enemies = new ArrayList<Enemy>(); //stores all enemies
 
-int enemySec; //controls monster spawn
-int troopSec; //controls troop spawn
+int enemySec, troopSec;
 
 float gold = 500; //starting gold to spend
 
@@ -36,7 +43,11 @@ void setup() {
   size(1400, 825); //change this to fit the lab's computers 
   frameRate(60); 
   stroke(255, 255, 0); //change color of outline of shapes
-  structures.add(new TownHall()); //required for every game
+
+  setTownHall();
+  generateUpdates();
+  
+  structures.add(th); //required for every game
   enemySec = second(); //give enemySec a value
   troopSec = second(); //give troopSec a value
 }
@@ -60,13 +71,14 @@ void draw() {
     enemySpawn(); //starts enemy spawnings
 
     //primitive troop training
+    /*
     if (bk != null && !bk.trainingQ.isEmpty()) {
       int tempSec = second();
       if (tempSec-troopSec > bk.trainingQ.peekMin().getTime()) { //
         troops.add(bk.trainingQ.removeMin()); //remove troop from queue and add it to Arraylist troops
       }
-    }
-  
+    }*/
+
     System.out.println("town hall doesnt work");
 
     //STRUCTURE DISPLAY
@@ -121,7 +133,6 @@ void draw() {
     }
     displayHealth();
   }
-  
 }
 
 //generates the in-game GUI
@@ -338,4 +349,63 @@ void structurePlacement() {
     structures.get(structures.size()-1).display(); //show it
     structures.remove(structures.size()-1); //remove it
   }
+}
+
+void townHallSpawn() {
+  TOWNHALL = new LLStack<TownHall>();
+  TOWNHALL.push(new TownHall(100000, 30, 185, 5, -1, loadImage("townhall10.png")));
+  TOWNHALL.push(new TownHall(77000, 22, 177, 6, 2000, loadImage("townhall9.png")));
+  TOWNHALL.push(new TownHall(35000, 18, 173, 7, 1700, loadImage("townhall8.png")));
+  TOWNHALL.push(new TownHall(28000, 15, 170, 8, 1450, loadImage("townhall7.png")));
+  TOWNHALL.push(new TownHall(25000, 13, 168, 9, 1300, loadImage("townhall6.png")));
+  TOWNHALL.push(new TownHall(18000, 10, 165, 10, 950, loadImage("townhall5.png")));
+  TOWNHALL.push(new TownHall(15000, 9, 164, 11, 850, loadImage("townhall4.png")));
+  TOWNHALL.push(new TownHall(10000, 8, 163, 12, 750, loadImage("townhall3.png")));
+  adjustTownHall();
+}
+
+void adjustTownHall() {
+  if (difficulty > 0) {
+    TOWNHALL.push(new TownHall(8000, 7, 162, 13, 500, loadImage("townhall2.png")));
+    if (difficulty == 2 || (random(10) > 5)) {
+      TOWNHALL.push(new TownHall(5000, 6, 161, 14, 300, loadImage("townhall1.png")));
+      if (difficulty == 2 || (random(10) > 5))
+        TOWNHALL.push(new TownHall(1000, 5, 160, 15, 100, loadImage("townhall.png")));
+    }
+  }
+}
+
+void setTownHall() {
+  townHallSpawn();
+  th = TOWNHALL.peek();
+}
+
+void generateUpdates() {
+  ENEMYUPGRADES = new ArrayList<Enemy>();
+  ENEMYUPGRADES.add(new Enemy(150, 30, 2, 50, loadImage("e_n.png"), loadImage("e_e.png"), loadImage("e_s.png"), loadImage("e_w.png")));
+  ENEMYUPGRADES.add(new Enemy(250, 40, 2.5, 80, loadImage("ee_n.png"), loadImage("ee_e.png"), loadImage("ee_s.png"), loadImage("ee_w.png")));
+  ENEMYUPGRADES.add(new Enemy(500, 50, 3.5, 120, loadImage("eee_n.png"), loadImage("eee_e.png"), loadImage("eee_s.png"), loadImage("eee_w.png")));
+
+  TROOPUPGRADES = new ArrayList<Troop>();
+  TROOPUPGRADES.add(new Troop(150, 30, 2, 100, 5, loadImage("t_n.png"), loadImage("t_e.png"), loadImage("t_s.png"), loadImage("t_w.png")));
+  TROOPUPGRADES.add(new Troop(250, 40, 2.5, 150, 7, loadImage("tt_n.png"), loadImage("tt_e.png"), loadImage("tt_s.png"), loadImage("tt_w.png")));
+  TROOPUPGRADES.add(new Troop(450, 50, 3.5, 300, 10, loadImage("ttt_n.png"), loadImage("ttt_e.png"), loadImage("ttt_s.png"), loadImage("ttt_w.png")));
+  TROOPUPGRADES.add(new Troop(700, 70, -1, -1, 15, loadImage("tttt_n.png"), loadImage("tttt_e.png"), loadImage("tttt_s.png"), loadImage("tttt_w.png")));
+
+  CANNONUPGRADES = new ArrayList<Cannon>();
+  CANNONUPGRADES.add(new Cannon(1000, 25, 100, 10, 150, loadImage("tower.png")));
+  CANNONUPGRADES.add(new Cannon(2000, 45, 115, 8, 275, loadImage("tower1.png")));
+  CANNONUPGRADES.add(new Cannon(3000, 65, 145, 7, 400, loadImage("tower2.png")));
+  CANNONUPGRADES.add(new Cannon(4000, 85, 200, 6, 600, loadImage("tower3.png")));
+  CANNONUPGRADES.add(new Cannon(5000, 100, 250, -1, -1, loadImage("tower4.png")));
+
+  HWALLUPGRADES = new ArrayList<HWall>();
+  HWALLUPGRADES.add(new HWall(1000, 150, 10, loadImage("wall.png")));
+  HWALLUPGRADES.add(new HWall(2000, 300, 15, loadImage("wall.png")));
+  HWALLUPGRADES.add(new HWall(3000, -1, -1, loadImage("wall.png")));
+  
+  VWALLUPGRADES = new ArrayList<VWall>();
+  VWALLUPGRADES.add(new VWall(1000, 150, 10, loadImage("wall.png")));
+  VWALLUPGRADES.add(new VWall(2000, 300, 15, loadImage("wall.png")));
+  VWALLUPGRADES.add(new VWall(3000, -1, -1, loadImage("wall.png")));
 }

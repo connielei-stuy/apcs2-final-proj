@@ -1,11 +1,10 @@
 class Enemy extends Unit {
-
-  LLStack<Enemy> temp;
   
   Enemy() {
-    enemySpawn();
-    enemyAdjust();
-    setEnemy();
+    if(difficulty == 0 || (difficulty == 1 && random(10) > 5))
+      setEnemy(ENEMYUPGRADES.get(0));
+    else
+      setEnemy(ENEMYUPGRADES.get(1));
     defaults();
     heaping();
   }
@@ -21,21 +20,8 @@ class Enemy extends Unit {
     _south = south;
     _west = west;
   }
-
-  void enemySpawn(){
-    temp = new LLStack<Enemy>();
-    temp.push(new Enemy(500, 50, 3.5, 120, loadImage("eee_n.png"), loadImage("eee_e.png"), loadImage("eee_s.png"), loadImage("eee_w.png")));
-    temp.push(new Enemy(250, 40, 2.5, 80, loadImage("ee_n.png"), loadImage("ee_e.png"), loadImage("ee_s.png"), loadImage("ee_w.png")));
-    temp.push(new Enemy(150, 30, 2, 50, loadImage("e_n.png"), loadImage("e_e.png"), loadImage("e_s.png"), loadImage("e_w.png")));
-  }
-
-  void enemyAdjust(){
-    if(difficulty == 3 && random(10) > 7 )
-      temp.pop();
-  }
   
-  void setEnemy(){
-    Enemy copy = temp.pop();
+  void setEnemy(Enemy copy){
     _maxHealth = copy.getMaxHealth();
     _attack = copy.getAttack();
     _speed = copy.getSpeed();
