@@ -1,11 +1,16 @@
 class Structure extends Entity {
 
   protected float _time;
+  protected int _level;
   protected Bullet b = null;
   int sec = second();
 
   float getTime(){
      return _time; 
+  }
+  
+  int getLevel(){
+    return _level; 
   }
 
   //generate a bullet and make the bullet move to an enemy

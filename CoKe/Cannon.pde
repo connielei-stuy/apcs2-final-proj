@@ -1,10 +1,14 @@
 class Cannon extends Structure {
 
   Cannon() {    
-    if(difficulty == 0 || (difficulty == 1 && random(10) > 5))
+    if(difficulty == 0 || (difficulty == 1 && random(10) > 5)){
       setCannon(CANNONUPGRADES.get(1));
-    else
+      _level = 1;
+    }
+    else{
       setCannon(CANNONUPGRADES.get(0));
+      _level = 0;
+    }
     defaults();
   }
 

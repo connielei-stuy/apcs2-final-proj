@@ -1,10 +1,14 @@
 class VWall extends Structure {
   
   VWall() {
-    if(difficulty == 0 || (difficulty == 1 && random(10) > 5))
+    if(difficulty == 0 || (difficulty == 1 && random(10) > 5)){
       setWall(VWALLUPGRADES.get(1));
-    else
+      _level = 1;
+    }
+    else{
       setWall(VWALLUPGRADES.get(0));
+      _level = 0;
+    }
     defaults();
   }
   

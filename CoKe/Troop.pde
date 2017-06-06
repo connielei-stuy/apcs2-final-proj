@@ -1,13 +1,18 @@
 class Troop extends Unit implements Comparable<Troop> {
 
   float _time, _priority; //takes 3 seconds to train a troop
+  int _level;
   Barrack bk = CoKe.bk; //this is where a troop come from
 
   Troop() {
-    if(difficulty == 0 || (difficulty == 1 && random(10) > 5))
+    if(difficulty == 0 || (difficulty == 1 && random(10) > 5)){
       setTroop(TROOPUPGRADES.get(1));
-    else
+      _level = 1;
+    }
+    else{
       setTroop(TROOPUPGRADES.get(0));
+      _level = 0;
+    }
     defaults();
     heaping();
   }

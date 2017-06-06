@@ -1,10 +1,14 @@
 class HWall extends Structure {
 
   HWall() {
-    if(difficulty == 0 || (difficulty == 1 && random(10) > 5))
+    if(difficulty == 0 || (difficulty == 1 && random(10) > 5)){
       setWall(HWALLUPGRADES.get(1));
-    else
+      _level = 1;
+    }
+    else{
       setWall(HWALLUPGRADES.get(0));
+      _level = 0;
+    }
     defaults();
   }
 

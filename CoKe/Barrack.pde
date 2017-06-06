@@ -4,8 +4,14 @@ class Barrack extends Structure {
   LLStack<Barrack> temp;
 
   Barrack() {
-    spawnBarrack();
-    setBarrack();
+    if(difficulty == 0 || (difficulty == 1 && random(10) > 5)){
+      setBarrack(BARRACKUPGRADES.get(1));
+      _level = 1;
+    }
+    else {
+      setBarrack(BARRACKUPGRADES.get(0));
+      _level = 0;
+    }
     defaults();
   }
 
@@ -15,24 +21,8 @@ class Barrack extends Structure {
     _gold = gold;
     photo = barrack;
   }
-
-  void spawnBarrack() {
-    temp = new LLStack<Barrack>();
-    temp.push(new Barrack(10000, 10, 1400, loadImage("barrack9.png")));
-    temp.push(new Barrack(10000, 9, 1100, loadImage("barrack7.png")));
-    temp.push(new Barrack(10000, 8, 800, loadImage("barrack5.png")));
-    temp.push(new Barrack(15000, 7, 500, loadImage("barrack2.png")));
-    temp.push(new Barrack(10000, 6, 300, loadImage("barrack.png")));
-    adjustBarrack();
-  }
   
-  void adjustBarrack(){
-    if(difficulty == 0 || (difficulty == 1 && random(10) > 5))
-      temp.pop();
-  }
-
-  void setBarrack(){
-    Barrack copy = temp.pop();
+  void setBarrack(Barrack copy){
     _maxHealth = copy.getHealth();
     _time = copy.getTime();
     _gold = copy.getGold();
