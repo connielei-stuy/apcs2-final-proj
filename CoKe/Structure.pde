@@ -1,13 +1,8 @@
 class Structure extends Entity {
 
-  protected String ID;
   protected float _time;
   protected Bullet b = null;
   int sec = second();
-
-  String getID() {
-    return ID;
-  }
 
   float getTime(){
      return _time; 

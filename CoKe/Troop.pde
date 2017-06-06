@@ -1,7 +1,6 @@
 class Troop extends Unit implements Comparable<Troop> {
 
   float _time, _priority; //takes 3 seconds to train a troop
-  Barrack home = CoKe.bk; //this is where a troop come from
   
   LLStack<Troop> temp;
 
@@ -63,8 +62,8 @@ class Troop extends Unit implements Comparable<Troop> {
   }
   
   void coordinates(){
-    _x = home.getX()+random(home.getWidth());
-    _y = home.getY()+home.getHeight()+10;
+    _x = bk.getX()+random(bk.getWidth());
+    _y = bk.getY()+bk.getHeight()+10;
     _centerX = _x;
     _centerY = _y;
   }

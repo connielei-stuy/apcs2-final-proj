@@ -2,6 +2,7 @@ abstract class Entity implements Location<Entity>{
   
   protected float _health, _maxHealth, _attack, _x, _y, _centerX, _centerY, _width, _height, _range, _gold;
   protected PImage photo;
+  protected String ID;
   
   float getX(){
     return _x;
@@ -49,6 +50,10 @@ abstract class Entity implements Location<Entity>{
   
   PImage getPhoto(){
    return photo; 
+  }
+  
+  String getID() {
+    return ID;
   }
   
   void setHealth(float newHealth){

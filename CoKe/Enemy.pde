@@ -128,7 +128,8 @@ class Enemy extends Unit {
       }
 
       //DIAGONAL
-      else {
+      //check for town hall or cannon or barracks, use 
+      else if(temp.getID() == "barrack"){ //means it is a barrack
         float topY = temp.getCY() - temp.getHeight()/2;
         float botY = temp.getCY() + temp.getHeight()/2;
         float rightX = temp.getCX() - temp.getWidth()/2;
@@ -192,6 +193,10 @@ class Enemy extends Unit {
         _dx = tempSpeed * (cornerX - _x) / hyp;
         _dy = tempSpeed * (cornerY - _y) / hyp;
       }
+      
+      else{
+        
+      }//end else
 
       _x += _dx; 
       _y += _dy; 
