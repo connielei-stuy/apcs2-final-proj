@@ -23,16 +23,9 @@ trained before others in the priorityQueue.
 
 <b>Launch Instructions</b>:<br>
 
-1. Download the repo
-```$ git clone https://github.com/kaybowwow/CoKe.git```
-
-2. Use processing to run
-```$ processing CoKe.pde```
-
-  OR
-
-2. Open ```Coke.pde``` in the  ```Coke``` directory, contained in the root of this repo.
-
-3. Press the triangle Run button.
+1. ```$ cd CoKe```
+2. ```$ processing CoKe.pde```
+3. Press the triangle play button in processing
+4. The program's buttons will guide you, while in game, press P to pause.
 
 [ANTHEM](https://www.youtube.com/watch?v=9DwzBICPhdM)

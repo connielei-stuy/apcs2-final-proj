@@ -15,13 +15,16 @@ class Button {
     buttonMessage = bMes;
   }
   
+  //returns true if mouse is over a Button
+  //returns false otherwise
   boolean overButton() {
     if (mouseX > _x && mouseX < _x+_width &&
         mouseY > _y && mouseY < _y+_height )
           return true;
     return false;
   }
-  
+ 
+  //displays a button
   void display() {
     fill(c);
     rect(_x,_y,_width,_height);

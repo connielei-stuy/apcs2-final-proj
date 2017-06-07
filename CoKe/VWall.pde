@@ -1,3 +1,4 @@
+//vertical wall
 class VWall extends Structure {
   
   VWall() {
