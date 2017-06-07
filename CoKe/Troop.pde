@@ -32,6 +32,7 @@ class Troop extends Unit implements Comparable<Troop> {
   
   void setTroop(Troop copy){
     _maxHealth = copy.getMaxHealth() + random(50);
+    _health = _maxHealth;
     _attack = copy.getAttack() +  random(10);
     _speed = copy.getSpeed() + random(1);
     _gold = copy.getGold();
@@ -134,5 +135,16 @@ class Troop extends Unit implements Comparable<Troop> {
   void time(float time){
     _time -= time;
   }
+  
+  void add(Entity e){
+    targets.add(e);
+  }
+  
+  boolean maxedOut(){
+    return _level >= TROOPUPGRADES.size();
+  }
 
+  void setInQueue(boolean t){
+    inQueue = t;
+  }
 }

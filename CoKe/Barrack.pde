@@ -2,7 +2,7 @@ class Barrack extends Structure {
 
   ArrayPriorityQueue<Troop> trainingQ;
   LLStack<Barrack> temp;
-  int _priority;
+  int p;
 
   Barrack() {
     if(difficulty == 0 || (difficulty == 1 && random(10) > 5)){
@@ -17,16 +17,15 @@ class Barrack extends Structure {
   }
 
   Barrack(float maxHealth, float time, float gold, PImage barrack) {
-    System.out.println("setting max health" + maxHealth);
     _maxHealth = maxHealth;
     _time = time;
     _gold = gold;
     photo = barrack;
-    System.out.println("max health" + _maxHealth);
   }
   
   void setBarrack(Barrack copy){
     _maxHealth = copy.getMaxHealth();
+    _health = _maxHealth; 
     _time = copy.getTime();
     _gold = copy.getGold();
     photo = copy.getPhoto();
@@ -43,18 +42,19 @@ class Barrack extends Structure {
     _y = mouseY - _height/2;
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
-    _priority = 1;
+    p = 1;
     trainingQ = new ArrayPriorityQueue<Troop>();
   }
   
   //trains a troop by adding it to the training queue, later removed and added to arraylist
   void addTroop(Troop other){
     if(other.getInQueue()){
-      other.setPriority(_priority);
-      _priority ++;
+      other.setPriority(p);
+      p ++;
     }
     else{
       trainingQ.add(other);
+      other.setInQueue(true);
     }
   }
   
@@ -63,13 +63,8 @@ class Barrack extends Structure {
     int _sec = second();
     trainingQ.peekMin().time(abs(trainSec - (_sec + 60)) % 3);
     if(trainingQ.peekMin().getTime() <= 0)
-      trainingQ.removeMin().update();
-      if(trainingQ.isEmpty()){
-        trainSec = 0;
-      }
-      else{
-        trainSec = second();
-      }
+      trainingQ.removeMin().upgrade();
+      trainSec = second();
     }
   }
   
@@ -79,5 +74,13 @@ class Barrack extends Structure {
       _level ++;
       inQueue = false;
     }
+  }
+  
+  boolean emptyTrainingQueue(){
+    return trainingQ.isEmpty();
+  }
+  
+  boolean maxedOut(){
+    return _level >= BARRACKUPGRADES.size() - 1;
   }
 }

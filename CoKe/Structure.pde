@@ -1,7 +1,8 @@
-class Structure extends Entity {
+abstract class Structure extends Entity implements Comparable<Structure>{
 
   protected float _time;
   protected int _level;
+  protected float _priority;
   protected Bullet b = null;
   protected boolean inQueue;
   int sec = second();
@@ -16,6 +17,30 @@ class Structure extends Entity {
   
   void train(){
     inQueue = true;
+  }
+  
+  boolean getInQueue(){
+    return inQueue;
+  }
+  
+  void setInQueue(boolean x){
+    inQueue = x;
+  }
+  
+  void setPriority(float priority){
+    _priority = priority;
+  }
+  
+  float compareTo(Structure other){
+     return _priority - other.getPriority();
+  }
+  
+  float getPriority(){
+    return _priority;
+  }
+  
+  void time(float time){
+    _time -= time;
   }
 
   //generate a bullet and make the bullet move to an enemy
@@ -58,11 +83,17 @@ class Structure extends Entity {
     }
   }
 
-
-//checks if an entity is in-range for a structure to attack
-//true if in-range, false if not in-range
+  //checks if an entity is in-range for a structure to attack
+  //true if in-range, false if not in-range
   boolean inRange(Entity target) {
     float distance = dist(_centerX, _centerY, target.getX(), target.getY());
     return (distance < _range/2 && distance != 0);
+  }
+  
+  abstract void upgrade();
+  abstract boolean maxedOut();
+  
+    String toString(){
+    return "" + ID + _priority;
   }
 }

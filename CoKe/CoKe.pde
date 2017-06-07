@@ -13,6 +13,10 @@ ArrayList<Structure> structures = new ArrayList<Structure>(); //stores all struc
 ArrayList<Troop> troops = new ArrayList<Troop>(); //stores all troops
 ArrayList<Enemy> enemies = new ArrayList<Enemy>(); //stores all enemies
 
+//upgrading structures
+ArrayPriorityQueue<Structure> upgradeQ = new ArrayPriorityQueue<Structure>();
+int PRIORITY = 1;
+
 //non changing structure
 //reference stays the same even when properties change
 static Barrack bk = null; //contains the only barrack user is allowed to build
@@ -22,7 +26,7 @@ static LLStack<TownHall> TOWNHALL;
 boolean startGame; //controls whether or not game has started
 float gold = 50000; //starting gold to spend
 int difficulty = 0; //difficulty: modifies stats of enemies
-int enemySec, troopSec, trainSec; //used for spawning 
+int enemySec, troopSec, trainSec, upgradeSec; //used for spawning 
 String message = ""; //stores text that reflects latest action user has taken
 
 //enums for state of the mouse
@@ -57,20 +61,20 @@ void setup() {
 //----------------------------SETUP METHODS----------------------------\\
 void setTownHall() {
   TOWNHALL = new LLStack<TownHall>();
-  TOWNHALL.push(new TownHall(100000, 30, 185, 5, -1, loadImage("townhall10.png")));
-  TOWNHALL.push(new TownHall(77000, 22, 177, 6, 2000, loadImage("townhall9.png")));
-  TOWNHALL.push(new TownHall(35000, 18, 173, 7, 1700, loadImage("townhall8.png")));
-  TOWNHALL.push(new TownHall(28000, 15, 170, 8, 1450, loadImage("townhall7.png")));
-  TOWNHALL.push(new TownHall(25000, 13, 168, 9, 1300, loadImage("townhall6.png")));
-  TOWNHALL.push(new TownHall(18000, 10, 165, 10, 950, loadImage("townhall5.png")));
-  TOWNHALL.push(new TownHall(15000, 9, 164, 11, 850, loadImage("townhall4.png")));
-  TOWNHALL.push(new TownHall(10000, 8, 163, 12, 750, loadImage("townhall3.png")));
+  TOWNHALL.push(new TownHall(100000, 30, 185, 15, -1, loadImage("townhall10.png")));
+  TOWNHALL.push(new TownHall(77000, 22, 177, 16, 2000, loadImage("townhall9.png")));
+  TOWNHALL.push(new TownHall(35000, 18, 173, 17, 1700, loadImage("townhall8.png")));
+  TOWNHALL.push(new TownHall(28000, 15, 170, 18, 1450, loadImage("townhall7.png")));
+  TOWNHALL.push(new TownHall(25000, 13, 168, 19, 1300, loadImage("townhall6.png")));
+  TOWNHALL.push(new TownHall(18000, 10, 165, 20, 950, loadImage("townhall5.png")));
+  TOWNHALL.push(new TownHall(15000, 9, 164, 21, 850, loadImage("townhall4.png")));
+  TOWNHALL.push(new TownHall(10000, 8, 163, 22, 750, loadImage("townhall3.png")));
   if (difficulty > 0) {
-    TOWNHALL.push(new TownHall(8000, 7, 162, 13, 500, loadImage("townhall2.png")));
+    TOWNHALL.push(new TownHall(8000, 7, 162, 23, 500, loadImage("townhall2.png")));
     if (difficulty == 2 || (random(10) > 5)) {
-      TOWNHALL.push(new TownHall(5000, 6, 161, 14, 300, loadImage("townhall1.png")));
+      TOWNHALL.push(new TownHall(5000, 6, 161, 24, 300, loadImage("townhall1.png")));
       if (difficulty == 2 || (random(10) > 5))
-        TOWNHALL.push(new TownHall(1000, 5, 160, 15, 100, loadImage("townhall.png")));
+        TOWNHALL.push(new TownHall(1000, 5, 160, 25, 100, loadImage("townhall.png")));
     }
   }
   th = TOWNHALL.peek();
@@ -84,33 +88,33 @@ void generateUpdates() {
   ENEMYUPGRADES.add(new Enemy(500, 50, 3.5, 120, loadImage("eee_n.png"), loadImage("eee_e.png"), loadImage("eee_s.png"), loadImage("eee_w.png")));
 
   TROOPUPGRADES = new ArrayList<Troop>();
-  TROOPUPGRADES.add(new Troop(150, 30, 2, 100, 5, loadImage("t_n.png"), loadImage("t_e.png"), loadImage("t_s.png"), loadImage("t_w.png")));
-  TROOPUPGRADES.add(new Troop(250, 40, 2.5, 150, 7, loadImage("tt_n.png"), loadImage("tt_e.png"), loadImage("tt_s.png"), loadImage("tt_w.png")));
-  TROOPUPGRADES.add(new Troop(450, 50, 3.5, 300, 10, loadImage("ttt_n.png"), loadImage("ttt_e.png"), loadImage("ttt_s.png"), loadImage("ttt_w.png")));
-  TROOPUPGRADES.add(new Troop(700, 70, -1, -1, 15, loadImage("tttt_n.png"), loadImage("tttt_e.png"), loadImage("tttt_s.png"), loadImage("tttt_w.png")));
+  TROOPUPGRADES.add(new Troop(150, 30, 2, 100, 15, loadImage("t_n.png"), loadImage("t_e.png"), loadImage("t_s.png"), loadImage("t_w.png")));
+  TROOPUPGRADES.add(new Troop(250, 40, 2.5, 150, 17, loadImage("tt_n.png"), loadImage("tt_e.png"), loadImage("tt_s.png"), loadImage("tt_w.png")));
+  TROOPUPGRADES.add(new Troop(450, 50, 3.5, 300, 20, loadImage("ttt_n.png"), loadImage("ttt_e.png"), loadImage("ttt_s.png"), loadImage("ttt_w.png")));
+  TROOPUPGRADES.add(new Troop(700, 70, -1, -1, 25, loadImage("tttt_n.png"), loadImage("tttt_e.png"), loadImage("tttt_s.png"), loadImage("tttt_w.png")));
 
   BARRACKUPGRADES = new ArrayList<Barrack>();
-  BARRACKUPGRADES.add(new Barrack(10000, 6, 300, loadImage("barrack.png")));
-  BARRACKUPGRADES.add(new Barrack(15000, 7, 500, loadImage("barrack2.png")));
-  BARRACKUPGRADES.add(new Barrack(10000, 8, 800, loadImage("barrack5.png")));
-  BARRACKUPGRADES.add(new Barrack(10000, 9, 1100, loadImage("barrack7.png")));
-  BARRACKUPGRADES.add(new Barrack(10000, 10, 1400, loadImage("barrack9.png")));
+  BARRACKUPGRADES.add(new Barrack(1000, 16, 300, loadImage("barrack.png")));
+  BARRACKUPGRADES.add(new Barrack(2000, 17, 500, loadImage("barrack2.png")));
+  BARRACKUPGRADES.add(new Barrack(3000, 18, 900, loadImage("barrack5.png")));
+  BARRACKUPGRADES.add(new Barrack(4000, 19, 1400, loadImage("barrack7.png")));
+  BARRACKUPGRADES.add(new Barrack(5000, -1, -1, loadImage("barrack9.png")));
 
   CANNONUPGRADES = new ArrayList<Cannon>();
   CANNONUPGRADES.add(new Cannon(1000, 25, 100, 10, 150, loadImage("tower.png")));
-  CANNONUPGRADES.add(new Cannon(2000, 45, 115, 8, 275, loadImage("tower1.png")));
-  CANNONUPGRADES.add(new Cannon(3000, 65, 145, 7, 400, loadImage("tower2.png")));
-  CANNONUPGRADES.add(new Cannon(4000, 85, 200, 6, 600, loadImage("tower3.png")));
+  CANNONUPGRADES.add(new Cannon(2000, 45, 115, 18, 275, loadImage("tower1.png")));
+  CANNONUPGRADES.add(new Cannon(3000, 65, 145, 20, 400, loadImage("tower2.png")));
+  CANNONUPGRADES.add(new Cannon(4000, 85, 200, 26, 600, loadImage("tower3.png")));
   CANNONUPGRADES.add(new Cannon(5000, 100, 250, -1, -1, loadImage("tower4.png")));
 
   HWALLUPGRADES = new ArrayList<HWall>();
-  HWALLUPGRADES.add(new HWall(1000, 150, 10, loadImage("wall.png")));
-  HWALLUPGRADES.add(new HWall(2000, 300, 15, loadImage("wall.png")));
+  HWALLUPGRADES.add(new HWall(1000, 150, 20, loadImage("wall.png")));
+  HWALLUPGRADES.add(new HWall(2000, 300, 30, loadImage("wall.png")));
   HWALLUPGRADES.add(new HWall(3000, -1, -1, loadImage("wall.png")));
 
   VWALLUPGRADES = new ArrayList<VWall>();
-  VWALLUPGRADES.add(new VWall(1000, 150, 10, loadImage("wall.png")));
-  VWALLUPGRADES.add(new VWall(2000, 300, 15, loadImage("wall.png")));
+  VWALLUPGRADES.add(new VWall(1000, 150, 20, loadImage("wall.png")));
+  VWALLUPGRADES.add(new VWall(2000, 300, 30, loadImage("wall.png")));
   VWALLUPGRADES.add(new VWall(3000, -1, -1, loadImage("wall.png")));
 }
 //----------------------------SETUP METHODS----------------------------\\
@@ -131,10 +135,8 @@ void draw() {
     structurePlacement();  //displays a structure that is being dragged around (hasn't been placed yet)
     enemySpawn(); //starts enemy spawnings
     troopTraining();
+    structureTraining();
     displayAll();
-    if(bk != null){
-      System.out.println("BARRACK HEALTH:" + bk.getMaxHealth());
-    }
     //primitive troop training
     /*
     if (bk != null && !bk.trainingQ.isEmpty()) {
@@ -242,16 +244,32 @@ void enemySpawn() {
   if (enemySec - tempSec >= 2)
     enemySec = second();
   if (tempSec - enemySec > 1) {
-    enemies.add(new Enemy());
+    Enemy temp = new Enemy();
+    enemies.add(temp);
+    for(Troop t: troops){
+      t.add(temp);
+    }
     enemySec = second();
   }
 }
 
-void troopTraining(){
-  if(bk != null){
+void troopTraining() {
+  if (bk != null) {
     bk.trainTroop();
   }
   trainSec = second();
+}
+
+void structureTraining() {
+  if (!upgradeQ.isEmpty()) {
+    System.out.println(upgradeQ);
+    int _sec = second();
+    upgradeQ.peekMin().time(abs(upgradeSec - (_sec + 60)) % 3);
+    if (upgradeQ.peekMin().getTime() <= 0) {
+      upgradeQ.removeMin().upgrade();
+      upgradeSec = second();
+    }
+  }
 }
 
 void displayAll() {
@@ -261,7 +279,6 @@ void displayAll() {
   //also checks endGame condition
   int s = 0;
   while (s < structures.size()) {
-    System.out.println(structures.size());
     if (structures.get(s).getHealth() > 0) {
       structures.get(s).update();
       s ++;
@@ -285,8 +302,6 @@ void displayAll() {
       troops.remove(t);
     }
   }  
-
-  System.out.println("got to this troop");
 
   //ENEMY DISPLAY
   //displays all enemies currently on the field with health > 0
@@ -362,11 +377,10 @@ void mouseReleased() {
     state = State.NULL; //you are no longer dragging it since you released it
     message = canPlace(currentStructure, mouseX, mouseY); 
     if (message == "Structure successfully built") { //if you can place it here
-      if (currentStructure.isA("barrack")){
+      if (currentStructure.isA("barrack")) {
         bk = new Barrack();
         structures.add(bk);
-      }
-      else
+      } else
         structures.add(currentStructure); //place it
       gold -= currentStructure.getGold(); //spend moneys
       for (Enemy e : enemies)
@@ -387,23 +401,21 @@ void mouseClicked() {
   }
   if (currentScreen == Screens.GAME) {
     for (Structure s : structures) {
-      if (isInside(s , mouseX , mouseY)) {
+      if (isInside(s, mouseX, mouseY)) {
         if (upGradeStructureCheck(s)) {
-          if (upgradeQ.isEmpty()) {
+          if (upgradeQ.isEmpty())
             upgradeSec = second();
-            upgradeQ.addStructure(s);
-          }
+          addStructure(s);
         }
       }
     }
     if (!troops.isEmpty()) {
       for (Troop t : troops) {
-        if (isInside(t,mouseX,mouseY)) {
+        if (isInside(t, mouseX, mouseY)) {
           if (trainTroopCheck(t)) {
-            if (bk.emptyTrainingQueue()) {
+            if (bk.emptyTrainingQueue())
               trainSec = second();
-              bk.addTroop(t);
-            }
+            bk.addTroop(t);
           }
         }
       }
@@ -427,7 +439,11 @@ void keyPressed() {
   if (key == 't' || key == 'T') {
     if (bk != null) { //if there is a barrack
       if (gold > 100 ) {
-        bk.train();
+        Troop temp = new Troop();
+        troops.add(temp);
+        for(Enemy e: enemies){
+          e.add(temp);
+        }
         gold -= 100;
         troopSec = second();
       } else message = "Cannot train: insufficient gold";
@@ -470,5 +486,39 @@ boolean isInside(Entity s, float x, float y) {
     x < s.getCX()+s.getWidth()/2 && //left of RightBound
     y > s.getCY()-s.getHeight()/2 && //below upBound
     y < s.getCY()+s.getHeight()/2 ); //above lowBound
+}
+
+boolean upGradeStructureCheck(Structure other) {
+  if (other.maxedOut())
+    return false;
+  else if (other.getInQueue())
+    return true;
+  else if (other.getGold() < gold) {
+    gold -= other.getGold();
+    return true;
+  }
+  return false;
+}
+
+void addStructure(Structure other) {
+  if (other.getInQueue()) {
+    other.setPriority(PRIORITY);
+    PRIORITY ++;
+  } else{
+    upgradeQ.add(other);
+    other.setInQueue(true);
+  }
+}
+
+boolean trainTroopCheck(Troop other) {
+  if (other.maxedOut()) {
+    return false;
+  } else if (other.getInQueue()) {
+    return true;
+  } else if (other.getGold() < gold) {
+    gold -= other.getGold();
+    return true;
+  }
+  return false;
 }
 //----------------------------MOUSE HELPER FUNCTIONS----------------------------\\

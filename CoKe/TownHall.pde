@@ -22,4 +22,11 @@ class TownHall extends Structure {
     _centerY = _y + _width/2;
   }
   
+  void upgrade(){
+    return;
+  }
+  
+  boolean maxedOut(){
+    return _gold == -1;
+  }
 }

@@ -23,6 +23,7 @@ class Cannon extends Structure {
 
   void setCannon(Cannon copy){
     _maxHealth = copy.getMaxHealth();
+    _health = _maxHealth; 
     _attack = copy.getAttack();
     _range = copy.getRange();
     _gold = copy.getGold();
@@ -47,5 +48,9 @@ class Cannon extends Structure {
       _level ++;
       inQueue = false;
     }
+  }
+  
+  boolean maxedOut(){
+    return _level >= CANNONUPGRADES.size() - 1;
   }
 }

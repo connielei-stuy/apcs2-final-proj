@@ -20,16 +20,29 @@ public class ArrayPriorityQueue<T extends Comparable<T>>
   public T peekMin() {
     if (isEmpty()) //exception throwing according to the API
       throw new RuntimeException();
-    return _queue.get(0);
+    else {
+      T temp = _queue.get(0);
+      for (int counter = 1; counter < _queue.size(); counter ++) {
+        if ((_queue.get(counter).compareTo(temp)) > 0)
+          temp = _queue.get(counter);
+      }
+      return temp;
+    }
   }
 
 
   public T removeMin() {
-    if (isEmpty())
+    if (isEmpty()) //exception throwing according to the API
       throw new RuntimeException();
-    T temp = peekMin();
-    _queue.remove(0);
-    return temp;
+    else {
+      int position = 0;
+      for (int counter = 1; counter < _queue.size(); counter ++) { //iterates through the entire ArrayList looking for the T with the smallest priority
+        if (_queue.get(counter).compareTo(_queue.get(position)) < 0) {
+          position = counter;
+        }
+      }
+      return _queue.remove(position);
+    }
   }
 
   public String toString() {
