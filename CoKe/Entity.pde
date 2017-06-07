@@ -70,8 +70,6 @@ abstract class Entity implements Location<Entity>{
   
   void healthBar() {
     if (_health >= 0) {
-      // Outline
-      stroke(0);
       fill(255, 0, 0);
       rect(_centerX - _width/2, _centerY - _height/2 - 10, _width, 5);
 
@@ -80,7 +78,7 @@ abstract class Entity implements Location<Entity>{
       fill(0, 255, 0); // Green
       rect(_centerX - _width/2, _centerY - _height/2 - 10, drawWidth, 5);
     }
-  }
+  } 
   
   abstract void update();
   

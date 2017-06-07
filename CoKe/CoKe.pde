@@ -37,15 +37,15 @@ Structure currentStructure; //stores a structure
 public enum Screens {
   TITLE, GAME, END, SETTINGS, PAUSE
 }
-Screens currentScreen; //stores the enum value of the current screen
-Screens previousScreen; //stores the enum value of the previous screen
-Screen screen; //stores the current screen
+Screens currentScreen = Screens.TITLE; //stores the enum value of the current screen
+Screens previousScreen = null; //stores the enum value of the previous screen
+Screen screen ; //stores the current screen
 
 
 void setup() {
   size(1400, 825); //change this to fit the lab's computers 
   frameRate(60); 
-  stroke(255, 255, 0); //change color of outline of shapes
+  stroke(0); //change color of outline of shapes
 
   setTownHall();
   generateUpdates();
@@ -117,9 +117,8 @@ void generateUpdates() {
 
 void draw() {
   if (currentScreen == Screens.END)
-    endGame(); //GAMEOVER 
-  else if (!startGame) {
-    currentScreen = Screens.TITLE;    
+    endScreen(); //GAMEOVER 
+  else if (currentScreen == Screens.TITLE) {
     titleScreen();
   } else if (currentScreen == Screens.SETTINGS)
     settingsScreen();
@@ -144,13 +143,6 @@ void draw() {
 }
 
 //----------------------------GAME SCREEN FUNCTIONS----------------------------\\
-//this happens when u lose
-void endGame() {
-  background(0);
-  textSize(64);
-  fill(255, 0, 0);
-  text("GAME OVER", width/2-175, height/2);
-}
 
 void titleScreen() {
   screen = new TitleScreen();
@@ -174,6 +166,13 @@ void pauseScreen() {
     b.display();
   }
 }
+
+void endScreen() {
+  screen = new EndScreen();
+  for (Button b : screen.buttons) {
+    b.display();
+  }
+}
 //----------------------------GAME SCREEN FUNCTIONS----------------------------\\
 
 //----------------------------GAME LOOP FUNCTIONS----------------------------\\
@@ -184,19 +183,38 @@ void generate() {
   rect(312.5, height/2-387.5, 775, 775);   //the playing field
   fill(255, 245, 150);
   rect(0, height-200, 275, 200); //message box  
-  fill(200, 0, 255);
+  fill(100);
   rect(0, 0, 275, height-200); //left purple column
-  rect(width-275, 0, 300, height/4); //cannon  
-  fill(10, 150, 255);
-  rect(width-275, height/4, 300, height/4); //hwall
-  rect(width-275, 2*(height/4), 300, height/4); //vwall
-  fill(100, 50, 200);
-  rect(width-275, 3*(height/4), 300, height/4); //barrack
+  fill(0, 175, 255);
+  cannonButton();
+  hWallButton();
+  vWallButton();
+  barrackButton();
   textSize(20);
   fill(255, 250, 0);
   text("GOLD: " + gold, 30, 30);
   text("ENEMIES LEFT: " + enemies.size(), 30, 60);
   displayMessage();
+}
+
+void cannonButton() {
+  rect(width-275, 0, 275, height/4); 
+  image(loadImage("tower.png"), width-200, height/4-125);
+}
+
+void hWallButton() {
+  rect(width-275, height/4, 275, height/4); 
+  image(loadImage("wall.png"), width-212.5, 2*(height/4)-75, 120, 40);
+}  
+
+void vWallButton() {
+  rect(width-275, 2*(height/4), 275, height/4); 
+  image(loadImage("wall.png"), width-170, 3*(height/4)-125, 40, 120);
+} 
+
+void barrackButton() {
+  rect(width-275, 3*(height/4), 275, height/4); 
+  image(loadImage("barrack.png"), width-200, height-175, 100, 100);
 }
 
 //displays text regarding user's latest action in message box
@@ -281,22 +299,22 @@ void displayAll() {
 void displayHealth() {
   for (Structure s : structures) {
     if (isInside(s, mouseX, mouseY)) {
-      fill(0);
-      text("Health: " + s.getHealth(), s.getX(), s.getY());
+      //fill(0);
+      //text("Health: " + s.getHealth(), s.getX(), s.getY());
       s.healthBar();
     }
   }
   for (Enemy e : enemies) {
     if (isInside(e, mouseX, mouseY)) {
-      fill(0);
-      text("Health: " + e.getHealth(), e.getX()-5, e.getY()-10);
+      //fill(0);
+      //text("Health: " + e.getHealth(), e.getX()-5, e.getY()-10);
       e.healthBar();
     }
   }
   for (Troop t : troops) {
     if (isInside(t, mouseX, mouseY)) {
-      fill(0);
-      text("Health: " + t.getHealth(), t.getX()-5, t.getY()-10);
+      //fill(0);
+      //text("Health: " + t.getHealth(), t.getX()-5, t.getY()-10);
       t.healthBar();
     }
   }
@@ -413,6 +431,6 @@ boolean isInside(Entity s, float x, float y) {
   return(x > s.getCX()-s.getWidth()/2 && //right of leftBound
     x < s.getCX()+s.getWidth()/2 && //left of RightBound
     y > s.getCY()-s.getHeight()/2 && //below upBound
-    y < s.getCY()+s.getHeight()/2 ) //above lowBound
+    y < s.getCY()+s.getHeight()/2 ); //above lowBound
 }
 //----------------------------MOUSE HELPER FUNCTIONS----------------------------\\

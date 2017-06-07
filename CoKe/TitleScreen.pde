@@ -10,7 +10,7 @@ class TitleScreen extends Screen {
 
   void function(String command) {
     if (command == "Go Back") text("Can't go back!",200,200);    
-    if (command == "Start game") startGame = true;
+    if (command == "Start game") currentScreen = Screens.GAME;
     if (command == "Settings") {
       currentScreen = Screens.SETTINGS;
       previousScreen = Screens.TITLE;
