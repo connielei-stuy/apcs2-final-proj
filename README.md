@@ -1,4 +1,4 @@
-##<b>Project: CoKe: A Game</b>
+<b>Project: CoKe: A Game</b>
 <br>
 by Team CoKe: Connie Lei, Kevin Bao
 <b>What is it?</b><br>
