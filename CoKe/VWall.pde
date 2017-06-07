@@ -22,6 +22,7 @@ class VWall extends Structure {
 
   void setWall(VWall copy){
     _maxHealth = copy.getMaxHealth();
+    _health = _maxHealth; 
     _gold = copy.getGold();
     photo = copy.getPhoto();
   }
@@ -45,6 +46,10 @@ class VWall extends Structure {
       _level ++;
       inQueue = false;
     }
+  }
+  
+    boolean maxedOut(){
+    return _level >= VWALLUPGRADES.size() -1;
   }
 
 }

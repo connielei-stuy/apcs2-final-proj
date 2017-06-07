@@ -22,6 +22,7 @@ class HWall extends Structure {
 
   void setWall(HWall copy){
     _maxHealth = copy.getMaxHealth();
+    _health = _maxHealth; 
     _gold = copy.getGold();
     _time = copy.getTime();
     photo = copy.getPhoto();
@@ -48,4 +49,7 @@ class HWall extends Structure {
     }
   }
 
+  boolean maxedOut(){
+    return _level >= HWALLUPGRADES.size() - 1;
+  }
 }

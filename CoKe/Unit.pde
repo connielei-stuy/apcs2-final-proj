@@ -31,7 +31,6 @@ abstract class Unit extends Entity {
 
   void update() { 
     if (_state == 1){
-    System.out.println("attacking");
       attack();
     }
     else
