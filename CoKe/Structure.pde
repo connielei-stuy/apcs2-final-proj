@@ -34,10 +34,7 @@ class Structure extends Entity {
 
   //checks if "this" is a certain structure by comparing ID's
   boolean isA(String str) {
-    if (this.getID() == str) {
-      return true;
-    }
-    return false;
+    return(ID == str);
   }
 
   //rotates a structure by swapping width and height

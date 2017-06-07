@@ -130,5 +130,9 @@ class Troop extends Unit implements Comparable<Troop> {
   void setPriority(float priority){
     _priority = priority;
   }
+  
+  void time(float time){
+    _time -= time;
+  }
 
 }

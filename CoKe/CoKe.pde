@@ -22,7 +22,7 @@ static LLStack<TownHall> TOWNHALL;
 boolean startGame; //controls whether or not game has started
 float gold = 50000; //starting gold to spend
 int difficulty = 0; //difficulty: modifies stats of enemies
-int enemySec, troopSec; //used for spawning 
+int enemySec, troopSec, trainSec; //used for spawning 
 String message = ""; //stores text that reflects latest action user has taken
 
 //enums for state of the mouse
@@ -129,8 +129,8 @@ void draw() {
     generate(); //generates the GUI
     structurePlacement();  //displays a structure that is being dragged around (hasn't been placed yet)
     enemySpawn(); //starts enemy spawnings
+    troopTraining();
     displayAll();
-
     //primitive troop training
     /*
     if (bk != null && !bk.trainingQ.isEmpty()) {
@@ -241,6 +241,13 @@ void enemySpawn() {
     enemies.add(new Enemy());
     enemySec = second();
   }
+}
+
+void troopTraining(){
+  if(bk != null){
+    bk.trainTroop();
+  }
+  trainSec = second();
 }
 
 void displayAll() {

@@ -55,6 +55,21 @@ class Barrack extends Structure {
     }
   }
   
+  void trainTroop(){
+    if(!trainingQ.isEmpty()){
+    int _sec = second();
+    trainingQ.peekMin().time(abs(trainSec - (_sec + 60)) % 3);
+    if(trainingQ.peekMin().getTime() <= 0)
+      trainingQ.removeMin().update();
+      if(trainingQ.isEmpty()){
+        trainSec = 0;
+      }
+      else{
+        trainSec = second();
+      }
+    }
+  }
+  
   void upgrade(){
     if(_time <= 0){
       setBarrack(BARRACKUPGRADES.get(_level + 1));
