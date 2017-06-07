@@ -386,6 +386,7 @@ void mouseClicked() {
     }
   }
   if (currentScreen == Screens.GAME) {
+    /*
     for (Structure s : structures) {
       if (isInside(s , mouseX , mouseY)) {
         if (s.isA("cannon")) {
@@ -396,6 +397,18 @@ void mouseClicked() {
               s._level++;
                             message= ""+s.getLevel();
               
+            }
+          }
+        }
+      }
+    }*/
+    if (!troops.isEmpty()) {
+      for (Troop t : troops) {
+        if (isInside(t,mouseX,mouseY)) {
+          if (trainTroopCheck(t)) {
+            if (bk.emptyTrainingQueue()) {
+              trainSec = second();
+              bk.addTroop(t);
             }
           }
         }
