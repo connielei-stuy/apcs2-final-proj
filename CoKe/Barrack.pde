@@ -55,6 +55,7 @@ class Barrack extends Structure {
     }
   }
   
+<<<<<<< HEAD
   void upgrade(){
     if(_time <= 0){
       setBarrack(BARRACKUPGRADES.get(_level + 1));
@@ -62,4 +63,6 @@ class Barrack extends Structure {
       inQueue = false;
     }
   }
+=======
+>>>>>>> e512e268609b577b7bd8076a420bdf1f23cb5cd0
 }
