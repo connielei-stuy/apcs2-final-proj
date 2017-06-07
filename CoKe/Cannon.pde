@@ -40,7 +40,6 @@ class Cannon extends Structure {
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
   }
-<<<<<<< HEAD
   
   void upgrade(){
     if(_time <= 0){
@@ -49,6 +48,4 @@ class Cannon extends Structure {
       inQueue = false;
     }
   }
-=======
->>>>>>> e512e268609b577b7bd8076a420bdf1f23cb5cd0
 }
