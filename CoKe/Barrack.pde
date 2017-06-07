@@ -50,6 +50,9 @@ class Barrack extends Structure {
       other.setPriority(_priority);
       _priority ++;
     }
+    else{
+      trainingQ.add(other);
+    }
   }
   
   void upgrade(){
