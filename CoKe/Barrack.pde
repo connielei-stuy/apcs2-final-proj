@@ -47,10 +47,4 @@ class Barrack extends Structure {
     trainingQ.add(new Troop());
   }
   
-  void upgrade(){
-    if(_time <= 0){
-      setBarrack(BARRACKUPGRADES.get(_level + 1));
-      _level ++;
-    }
-  }
 }

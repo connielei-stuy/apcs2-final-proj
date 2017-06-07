@@ -22,7 +22,4 @@ class TownHall extends Structure {
     _centerY = _y + _width/2;
   }
   
-  void upgrade(){ //placeholder, upgrade is done in CoKe
-    return;
-  }
 }

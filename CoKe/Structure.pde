@@ -1,16 +1,16 @@
-abstract class Structure extends Entity {
+class Structure extends Entity {
 
   protected float _time;
   protected int _level;
   protected Bullet b = null;
   int sec = second();
 
-  float getTime() {
-    return _time;
+  float getTime(){
+     return _time; 
   }
-
-  int getLevel() {
-    return _level;
+  
+  int getLevel(){
+    return _level; 
   }
 
   //generate a bullet and make the bullet move to an enemy
@@ -44,7 +44,7 @@ abstract class Structure extends Entity {
 
   //executes structure's functions
   void update() {
-    if (photo == null) {
+    if(photo == null){
       System.out.println("photo is missing");
     }
     display();
@@ -56,17 +56,11 @@ abstract class Structure extends Entity {
     }
   }
 
-  //checks if an entity is in-range for a structure to attack
-  //true if in-range, false if not in-range
+
+//checks if an entity is in-range for a structure to attack
+//true if in-range, false if not in-range
   boolean inRange(Entity target) {
     float distance = dist(_centerX, _centerY, target.getX(), target.getY());
     return (distance < _range/2 && distance != 0);
   }
-
-  abstract void upgrade();
-  
-  void time(float time){
-    _time -= time;
-  }
-  
 }

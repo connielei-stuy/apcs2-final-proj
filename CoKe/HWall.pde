@@ -39,10 +39,5 @@ class HWall extends Structure {
     _centerY = _y + _height/2;
   }
   
-  void upgrade(){
-    if(_time <= 0){
-      setWall(HWALLUPGRADES.get(_level + 1));
-      _level ++;
-    }
-  }
+  
 }

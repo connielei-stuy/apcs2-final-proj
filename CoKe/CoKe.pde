@@ -20,7 +20,7 @@ static TownHall th = null; //contains the only town hall user is given upon spaw
 static LLStack<TownHall> TOWNHALL;
 
 boolean startGame; //controls whether or not game has started
-float gold = 500; //starting gold to spend
+float gold = 50000; //starting gold to spend
 int difficulty = 0; //difficulty: modifies stats of enemies
 int enemySec, troopSec; //used for spawning 
 String message = ""; //stores text that reflects latest action user has taken
@@ -368,6 +368,23 @@ void mouseClicked() {
       if (b.overButton()) {
         String command = b.buttonMessage;
         screen.function(command);
+      }
+    }
+  }
+  if (currentScreen == Screens.GAME) {
+    for (Structure s : structures) {
+      if (isInside(s , mouseX , mouseY)) {
+        if (s.isA("cannon")) {
+          if (s.getGold() != -1) {
+            if (gold >= CANNONUPGRADES.get(s.getLevel()).getGold()) {
+              gold -= CANNONUPGRADES.get(s.getLevel()).getGold();                              
+              s = CANNONUPGRADES.get(s.getLevel()+1);
+              s._level++;
+                            message= ""+s.getLevel();
+              
+            }
+          }
+        }
       }
     }
   }
