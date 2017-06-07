@@ -5,6 +5,53 @@ TLSFN
 
 Dev-Log
 ========================================================================
+Obstacles Overcome (and how!)
+Upgrading a troop or a structure was actually rather hard, so in the end we devised a solution of keeping all the possible versions of a troop and all the structures as information inside our sketch. This helped with the queues situtation.
+Making the targeting work using a heap. This meant organizing entities using their distance away and choosing the closest point. This meant that the move function was rewritten 4 times.
+Making queues work even if they aren't priority queues. This meant we had to make sure that troops could only be trained through the barrack separate from spawning.
+All the GUI prettifying. Lots of menial work and testing.
+The images and making sure that they synced up with direction.
+
+Unresolved Issues
+The training queue and structure queue are not priority queues. You were supposed to be able to double click on a troop and then push it to the front. Same goes for structures. It also happens to be a little wonky right now. It needs to be more consistent. 
+
+You can't upgrade town hall.
+
+There was supposed to be a better display where you could see the countdown of your queues.
+
+Enemies are rather dumb. They need to have smarter pathfinding instead of just walking straight into a wall when there's a nearby space for them to go to.
+
+Enemies and troops also don't work well together.
+
+You only have one queue training spot when depending on the barrack's level, you could have multiple.
+
+There's no music.
+
+There's no spell.
+
+Cool Stuff Learned (conceptual and/or practical)
+-working with ArrayLists of Stacks
+-experimented badly with multiple inheritance
+-front-end display, drag and drop
+-using heaps and queues and stacks
+-understanding typecasting, inheritance, interfaces, abstract classes
+-using images
+
+Mid-development Design Changes (and why!)
+Troops were supposed to use a heap and then we changed it because they didn't need that much information, but then we realized that it made things a lot simpler so we decided to use it again.
+Troops were supposed to walk around structures, but we decided to follow Clash of Clans style.
+Instead of doing a drag and drop, we ended up doing a double click because scrolling in Processing?
+Instead of doing an arraylist of stacks, we changed it to each entity have its own stack so we could perserve the arraylist of entities. We changed it because it is not memory efficient. It also was somewhat laggy. We changed it to a store information and retreive information method.
+Move was rewritten 4 times using a different algorithm and also to be more efficient.
+
+Lessons Learned (...which you might apply to future projects, CS or otherwise) ...have you achieved flow?
+Things take a lot longer than expected. Instead of building the game up and then adding things later on, make sure that all  the different componenets work separately before combining all of the aspects. 
+Issues are extremely helpful.
+Be careful of what needs to be done first. Think very carefully about which part to work on first. Strip it down to the bones of what needs to be done. Prioritize better.
+Do not try rewriting a giant portion of your code the day before it is due. 
+Be less ambitious. You can also add things later.
+Expect less progress later on in the project even when you're spending the same amount of time. 
+========================================================================
 5/18
 
 Kevin:
@@ -133,7 +180,7 @@ Connie:
 Kevin:
 -removed defense from all entities, changed isInside() a little 
 Connie:
-
+-added Images
 ========================================================================
 6/1
 
@@ -143,19 +190,19 @@ Kevin:
 -updated isInside()
 -modified enemies so that they spawn from any 4 sides
 Connie:
-
+-updated move and images so they sync up
 ========================================================================
 6/2
 
 Kevin:
 Connie:
-
+-created the upgrade progression
 ========================================================================
 6/3
 
 Kevin:
 Connie:
-
+-worked on the upgrade progression for all Structures and Troop
 ========================================================================
 6/4
 
@@ -163,7 +210,7 @@ Kevin:
 -added buttons
 -added screens (title,settings)
 Connie:
-
+-worked on Troop
 ========================================================================
 6/5
 
@@ -171,7 +218,7 @@ Kevin:
 -added more functional screens
 -changed GUI a bit
 Connie:
-
+-worked on the queues
 ========================================================================
 6/6
 
@@ -180,7 +227,9 @@ Kevin:
 -fixed an invisible button bug
 -added comments
 Connie:
-
+-worked on the training queues
+-fixed little bugs
+-added structure upgrades
 
 
 
