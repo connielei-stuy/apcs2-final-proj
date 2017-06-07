@@ -45,6 +45,7 @@ class Cannon extends Structure {
     if(_time <= 0){
       setCannon(CANNONUPGRADES.get(_level + 1));
       _level ++;
+      inQueue = false;
     }
   }
 }

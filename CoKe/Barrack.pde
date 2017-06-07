@@ -2,6 +2,7 @@ class Barrack extends Structure {
 
   ArrayPriorityQueue<Troop> trainingQ;
   LLStack<Barrack> temp;
+  int _priority;
 
   Barrack() {
     if(difficulty == 0 || (difficulty == 1 && random(10) > 5)){
@@ -40,17 +41,22 @@ class Barrack extends Structure {
     _y = mouseY - _height/2;
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
+    _priority = 1;
   }
   
   //trains a troop by adding it to the training queue, later removed and added to arraylist
-  void train() {
-    trainingQ.add(new Troop());
+  void addTroop(Troop other){
+    if(other.getInQueue()){
+      other.setPriority(_priority);
+      _priority ++;
+    }
   }
   
   void upgrade(){
     if(_time <= 0){
       setBarrack(BARRACKUPGRADES.get(_level + 1));
       _level ++;
+      inQueue = false;
     }
   }
 }

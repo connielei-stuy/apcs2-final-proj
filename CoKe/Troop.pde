@@ -2,7 +2,7 @@ class Troop extends Unit implements Comparable<Troop> {
 
   float _time, _priority; //takes 3 seconds to train a troop
   int _level;
-  Barrack bk = CoKe.bk; //this is where a troop come from
+  boolean inQueue;
 
   Troop() {
     if(difficulty == 0 || (difficulty == 1 && random(10) > 5)){
@@ -116,7 +116,19 @@ class Troop extends Unit implements Comparable<Troop> {
   }
   
   void upgrade(){
-    
+    if(_time <= 0){
+      setTroop(TROOPUPGRADES.get(_level + 1));
+      _level ++;
+      inQueue = false;
+    }
+  }
+  
+  boolean getInQueue(){
+    return inQueue;
+  }
+  
+  void setPriority(float priority){
+    _priority = priority;
   }
 
 }

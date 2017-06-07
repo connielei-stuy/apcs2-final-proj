@@ -43,6 +43,7 @@ class HWall extends Structure {
     if(_time <= 0){
       setWall(HWALLUPGRADES.get(_level + 1));
       _level ++;
+      inQueue = false;
     }
   }
 }

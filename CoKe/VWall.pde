@@ -42,6 +42,7 @@ class VWall extends Structure {
     if(_time <= 0){
       setWall(VWALLUPGRADES.get(_level + 1));
       _level ++;
+      inQueue = false;
     }
   }
   

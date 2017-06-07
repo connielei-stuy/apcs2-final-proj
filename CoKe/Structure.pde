@@ -3,6 +3,7 @@ abstract class Structure extends Entity {
   protected float _time;
   protected int _level;
   protected Bullet b = null;
+  protected boolean inQueue;
   int sec = second();
 
   float getTime() {
@@ -11,6 +12,10 @@ abstract class Structure extends Entity {
 
   int getLevel() {
     return _level;
+  }
+  
+  void train(){
+    inQueue = true;
   }
 
   //generate a bullet and make the bullet move to an enemy
