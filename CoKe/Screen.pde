@@ -6,7 +6,7 @@ abstract class Screen {
   
   Screen() {
     image(p,0,0,width,height);
-    if (currentScreen != Screens.TITLE && currentScreen != Screens.END) 
+    if (currentScreen != Screens.TITLE && currentScreen != Screens.END) //title and endgame screen dont have go back buttons
     buttons.add(new Button(100,height-300,100,50,color(255,0,0),"Go Back"));
   }
 

@@ -1,3 +1,4 @@
+//horizontal wall
 class HWall extends Structure {
 
   HWall() {

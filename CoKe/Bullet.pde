@@ -13,8 +13,8 @@ class Bullet implements Location<Bullet>{
     photo = loadImage("bullet.png");
   }
   
+  //move method for a bullet
   void move() {
-    
     image(photo, x - w, y - h, w , h);
     x += dx/20;
     y += dy/20;
@@ -27,7 +27,8 @@ class Bullet implements Location<Bullet>{
   float getY() {
     return y;
   }
-  
+ 
+  //returns true if bullet collides with an entity , false otherwise
   boolean collision(Entity u) {
     return dist(x, y, u.getX(), u.getY()) < (w);
   }
