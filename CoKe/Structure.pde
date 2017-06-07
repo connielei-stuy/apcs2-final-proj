@@ -90,6 +90,12 @@ abstract class Structure extends Entity implements Comparable<Structure>{
     return (distance < _range/2 && distance != 0);
   }
   
+  void display(){
+    image(photo, _centerX - _width/2, _centerY - _height/2, _width, _height);
+    fill(255,30);
+    ellipse(_centerX,_centerY,_range,_range);  
+}  
+  
   abstract void upgrade();
   abstract boolean maxedOut();
   

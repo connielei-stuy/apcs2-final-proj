@@ -24,9 +24,10 @@ static TownHall th = null; //contains the only town hall user is given upon spaw
 static LLStack<TownHall> TOWNHALL;
 
 boolean startGame; //controls whether or not game has started
-float gold = 50000; //starting gold to spend
+float gold = 600; //starting gold to spend
 int difficulty = 0; //difficulty: modifies stats of enemies
 int enemySec, troopSec, trainSec, upgradeSec; //used for spawning 
+int numKilled = 0;
 String message = ""; //stores text that reflects latest action user has taken
 
 //enums for state of the mouse
@@ -61,20 +62,20 @@ void setup() {
 //----------------------------SETUP METHODS----------------------------\\
 void setTownHall() {
   TOWNHALL = new LLStack<TownHall>();
-  TOWNHALL.push(new TownHall(100000, 30, 185, 15, -1, loadImage("townhall10.png")));
-  TOWNHALL.push(new TownHall(77000, 22, 177, 16, 2000, loadImage("townhall9.png")));
-  TOWNHALL.push(new TownHall(35000, 18, 173, 17, 1700, loadImage("townhall8.png")));
-  TOWNHALL.push(new TownHall(28000, 15, 170, 18, 1450, loadImage("townhall7.png")));
-  TOWNHALL.push(new TownHall(25000, 13, 168, 19, 1300, loadImage("townhall6.png")));
-  TOWNHALL.push(new TownHall(18000, 10, 165, 20, 950, loadImage("townhall5.png")));
-  TOWNHALL.push(new TownHall(15000, 9, 164, 21, 850, loadImage("townhall4.png")));
-  TOWNHALL.push(new TownHall(10000, 8, 163, 22, 750, loadImage("townhall3.png")));
+  TOWNHALL.push(new TownHall(10000, 30, 185, 15, -1, loadImage("townhall10.png")));
+  TOWNHALL.push(new TownHall(7700, 22, 177, 16, 2000, loadImage("townhall9.png")));
+  TOWNHALL.push(new TownHall(3500, 18, 173, 17, 1700, loadImage("townhall8.png")));
+  TOWNHALL.push(new TownHall(2800, 15, 170, 18, 1450, loadImage("townhall7.png")));
+  TOWNHALL.push(new TownHall(2500, 13, 168, 19, 1300, loadImage("townhall6.png")));
+  TOWNHALL.push(new TownHall(1800, 10, 165, 20, 950, loadImage("townhall5.png")));
+  TOWNHALL.push(new TownHall(1500, 9, 164, 21, 850, loadImage("townhall4.png")));
+  TOWNHALL.push(new TownHall(1000, 8, 163, 22, 750, loadImage("townhall3.png")));
   if (difficulty > 0) {
-    TOWNHALL.push(new TownHall(8000, 7, 162, 23, 500, loadImage("townhall2.png")));
+    TOWNHALL.push(new TownHall(800, 7, 162, 23, 500, loadImage("townhall2.png")));
     if (difficulty == 2 || (random(10) > 5)) {
-      TOWNHALL.push(new TownHall(5000, 6, 161, 24, 300, loadImage("townhall1.png")));
+      TOWNHALL.push(new TownHall(500, 6, 161, 24, 300, loadImage("townhall1.png")));
       if (difficulty == 2 || (random(10) > 5))
-        TOWNHALL.push(new TownHall(1000, 5, 160, 25, 100, loadImage("townhall.png")));
+        TOWNHALL.push(new TownHall(100, 5, 160, 25, 100, loadImage("townhall.png")));
     }
   }
   th = TOWNHALL.peek();
@@ -94,28 +95,28 @@ void generateUpdates() {
   TROOPUPGRADES.add(new Troop(700, 70, -1, -1, 25, loadImage("tttt_n.png"), loadImage("tttt_e.png"), loadImage("tttt_s.png"), loadImage("tttt_w.png")));
 
   BARRACKUPGRADES = new ArrayList<Barrack>();
-  BARRACKUPGRADES.add(new Barrack(1000, 16, 300, loadImage("barrack.png")));
-  BARRACKUPGRADES.add(new Barrack(2000, 17, 500, loadImage("barrack2.png")));
-  BARRACKUPGRADES.add(new Barrack(3000, 18, 900, loadImage("barrack5.png")));
-  BARRACKUPGRADES.add(new Barrack(4000, 19, 1400, loadImage("barrack7.png")));
-  BARRACKUPGRADES.add(new Barrack(5000, -1, -1, loadImage("barrack9.png")));
+  BARRACKUPGRADES.add(new Barrack(300, 16, 300, loadImage("barrack.png")));
+  BARRACKUPGRADES.add(new Barrack(400, 17, 500, loadImage("barrack2.png")));
+  BARRACKUPGRADES.add(new Barrack(500, 18, 900, loadImage("barrack5.png")));
+  BARRACKUPGRADES.add(new Barrack(600, 19, 1400, loadImage("barrack7.png")));
+  BARRACKUPGRADES.add(new Barrack(700, -1, -1, loadImage("barrack9.png")));
 
   CANNONUPGRADES = new ArrayList<Cannon>();
-  CANNONUPGRADES.add(new Cannon(1000, 25, 100, 10, 150, loadImage("tower.png")));
-  CANNONUPGRADES.add(new Cannon(2000, 45, 115, 18, 275, loadImage("tower1.png")));
-  CANNONUPGRADES.add(new Cannon(3000, 65, 145, 20, 400, loadImage("tower2.png")));
-  CANNONUPGRADES.add(new Cannon(4000, 85, 200, 26, 600, loadImage("tower3.png")));
-  CANNONUPGRADES.add(new Cannon(5000, 100, 250, -1, -1, loadImage("tower4.png")));
+  CANNONUPGRADES.add(new Cannon(500, 25, 100, 10, 150, loadImage("tower.png")));
+  CANNONUPGRADES.add(new Cannon(750, 45, 115, 18, 275, loadImage("tower1.png")));
+  CANNONUPGRADES.add(new Cannon(1000, 65, 145, 20, 400, loadImage("tower2.png")));
+  CANNONUPGRADES.add(new Cannon(1250, 85, 200, 26, 600, loadImage("tower3.png")));
+  CANNONUPGRADES.add(new Cannon(1500, 100, 250, -1, -1, loadImage("tower4.png")));
 
   HWALLUPGRADES = new ArrayList<HWall>();
-  HWALLUPGRADES.add(new HWall(1000, 150, 20, loadImage("wall.png")));
+  HWALLUPGRADES.add(new HWall(1000, 200, 20, loadImage("wall.png")));
   HWALLUPGRADES.add(new HWall(2000, 300, 30, loadImage("wall.png")));
   HWALLUPGRADES.add(new HWall(3000, -1, -1, loadImage("wall.png")));
 
   VWALLUPGRADES = new ArrayList<VWall>();
-  VWALLUPGRADES.add(new VWall(1000, 150, 20, loadImage("wall.png")));
-  VWALLUPGRADES.add(new VWall(2000, 300, 30, loadImage("wall.png")));
-  VWALLUPGRADES.add(new VWall(3000, -1, -1, loadImage("wall.png")));
+  VWALLUPGRADES.add(new VWall(1000, 200, 20, loadImage("vwall.png")));
+  VWALLUPGRADES.add(new VWall(2000, 300, 30, loadImage("vwall.png")));
+  VWALLUPGRADES.add(new VWall(3000, -1, -1, loadImage("vwall.png")));
 }
 //----------------------------SETUP METHODS----------------------------\\
 
@@ -137,14 +138,6 @@ void draw() {
     troopTraining();
     structureTraining();
     displayAll();
-    //primitive troop training
-    /*
-    if (bk != null && !bk.trainingQ.isEmpty()) {
-     int tempSec = second();
-     if (tempSec-troopSec > bk.trainingQ.peekMin().getTime()) { //
-     troops.add(bk.trainingQ.removeMin()); //remove troop from queue and add it to Arraylist troops
-     }
-     }*/
   }
 }
 
@@ -191,7 +184,6 @@ void generate() {
   rect(0, height-200, 275, 200); //message box  
   fill(100);
   rect(0, 0, 275, height-200); //left purple column
-  fill(0, 175, 255);
   cannonButton();
   hWallButton();
   vWallButton();
@@ -204,23 +196,35 @@ void generate() {
 }
 
 void cannonButton() {
+  fill(0, 175, 255);  
   rect(width-275, 0, 275, height/4); 
   image(loadImage("tower.png"), width-200, height/4-125);
+  fill(0);
+  text("Cannon\n$275",width-250,height/4-150);
 }
 
 void hWallButton() {
+  fill(0, 175, 255);  
   rect(width-275, height/4, 275, height/4); 
-  image(loadImage("wall.png"), width-212.5, 2*(height/4)-75, 120, 40);
+  image(loadImage("wall.png"), width-212.5, 2*(height/4)-75,120,40);
+  fill(0);
+  text("Horizontal Wall\n$300",width-250,height/2-150);  
 }  
 
 void vWallButton() {
+  fill(0, 175, 255);   
   rect(width-275, 2*(height/4), 275, height/4); 
-  image(loadImage("wall.png"), width-170, 3*(height/4)-125, 40, 120);
+  image(loadImage("vwall.png"), width-170, 3*(height/4)-125,40,120);
+  fill(0);
+  text("Vertical Wall\n$300",width-250,3*(height/4)-150);   
 } 
 
 void barrackButton() {
+  fill(0, 175, 255);    
   rect(width-275, 3*(height/4), 275, height/4); 
   image(loadImage("barrack.png"), width-200, height-175, 100, 100);
+  fill(0);
+  text("Barrack\n$500",width-250,height-150);  
 }
 
 //displays text regarding user's latest action in message box
@@ -285,6 +289,8 @@ void displayAll() {
     } else {
       if (structures.get(s).isA("townhall"))
         currentScreen = Screens.END;
+      if (structures.get(s).isA("barrack"))
+        bk = null;
       structures.remove(s);
     }
   }
@@ -316,6 +322,7 @@ void displayAll() {
       //System.out.println(enemies.get(e)._gold);
       gold += enemies.get(e)._gold;
       enemies.remove(e);
+      numKilled ++;
     }
   }
   displayHealth();
@@ -427,15 +434,7 @@ void mousePressed() {
 }
 
 void keyPressed() {
-  //very primitive rotation for walls
-  if (key == 'r' || key == 'R') {
-    for (Structure s : structures) {
-      if (s.isA("hwall")) {
-        s.rotate();
-      }//end if s.isA(hwall)
-    }//end for
-  }//end if
-  //very primitive troop training
+  //troop training
   if (key == 't' || key == 'T') {
     if (bk != null) { //if there is a barrack
       if (gold > 100 ) {
@@ -497,6 +496,8 @@ boolean upGradeStructureCheck(Structure other) {
     gold -= other.getGold();
     return true;
   }
+  else if (other.isA("townhall"))
+    return false;
   return false;
 }
 
