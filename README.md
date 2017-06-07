@@ -1,6 +1,6 @@
 <b>Project: CoKe: A Game</b>
 <br>
-by Team CoKe: Connie Lei, Kevin Bao
+by Team CoKe: Connie Lei, Kevin Bao<br>
 <b>What is it?</b><br>
 Our project is a strategy game where a user has to defend a town hall by using
 gold to construct structures and/or by using gold to train troops. These
