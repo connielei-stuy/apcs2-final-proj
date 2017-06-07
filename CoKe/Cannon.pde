@@ -40,4 +40,11 @@ class Cannon extends Structure {
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
   }
+  
+  void upgrade(){
+    if(_time <= 0){
+      setCannon(CANNONUPGRADES.get(_level + 1));
+      _level ++;
+    }
+  }
 }

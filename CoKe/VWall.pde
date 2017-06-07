@@ -38,4 +38,11 @@ class VWall extends Structure {
     _centerY = _y + _height/2;
   }
   
+  void upgrade(){
+    if(_time <= 0){
+      setWall(VWALLUPGRADES.get(_level + 1));
+      _level ++;
+    }
+  }
+  
 }
