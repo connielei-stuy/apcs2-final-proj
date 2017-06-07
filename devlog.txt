@@ -36,12 +36,12 @@ Cool Stuff Learned (conceptual and/or practical)
 -using heaps and queues and stacks
 -understanding typecasting, inheritance, interfaces, abstract classes
 -using images
+-different methods of pathfinding
 
 Mid-development Design Changes (and why!)
 Troops were supposed to use a heap and then we changed it because they didn't need that much information, but then we realized that it made things a lot simpler so we decided to use it again.
 Troops were supposed to walk around structures, but we decided to follow Clash of Clans style.
-Instead of doing a drag and drop, we ended up doing a double click because scrolling in Processing?
-Instead of doing an arraylist of stacks, we changed it to each entity have its own stack so we could perserve the arraylist of entities. We changed it because it is not memory efficient. It also was somewhat laggy. We changed it to a store information and retreive information method.
+Instead of doing an Arraylist of stacks, we changed it to each entity have its own stack so we could perserve the Arraylist of entities. We changed it because it is not memory efficient. It also was somewhat laggy. We changed it to a store information and retreive information method.
 Move was rewritten 4 times using a different algorithm and also to be more efficient.
 
 Lessons Learned (...which you might apply to future projects, CS or otherwise) ...have you achieved flow?
@@ -226,6 +226,7 @@ Kevin:
 -replaced Wall with hWall and vWall
 -fixed an invisible button bug
 -added comments
+-added help and score
 Connie:
 -worked on the training queues
 -fixed little bugs
