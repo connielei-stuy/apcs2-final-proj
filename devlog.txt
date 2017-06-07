@@ -131,12 +131,17 @@ Connie:
 5/31
 
 Kevin:
+-removed defense from all entities, changed isInside() a little 
 Connie:
 
 ========================================================================
 6/1
 
 Kevin:
+-health is displayed as a number when mouse is hovering over an entity
+-added pathfinding, attacking for troops
+-updated isInside()
+-modified enemies so that they spawn from any 4 sides
 Connie:
 
 ========================================================================
@@ -155,18 +160,25 @@ Connie:
 6/4
 
 Kevin:
+-added buttons
+-added screens (title,settings)
 Connie:
 
 ========================================================================
 6/5
 
 Kevin:
+-added more functional screens
+-changed GUI a bit
 Connie:
 
 ========================================================================
 6/6
 
 Kevin:
+-replaced Wall with hWall and vWall
+-fixed an invisible button bug
+-added comments
 Connie:
 
 
