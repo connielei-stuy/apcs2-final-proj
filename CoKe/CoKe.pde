@@ -126,6 +126,7 @@ void draw() {
     pauseScreen();
   else {
     currentScreen = Screens.GAME;
+    screen = null;
     generate(); //generates the GUI
     structurePlacement();  //displays a structure that is being dragged around (hasn't been placed yet)
     enemySpawn(); //starts enemy spawnings
@@ -376,7 +377,7 @@ void mouseReleased() {
 }
 
 void mouseClicked() {
-  if (currentScreen != null) {
+  if (currentScreen != null && currentScreen != Screens.GAME) {
     for (Button b : screen.buttons) {
       if (b.overButton()) {
         String command = b.buttonMessage;
