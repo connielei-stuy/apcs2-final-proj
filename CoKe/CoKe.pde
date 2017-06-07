@@ -131,6 +131,9 @@ void draw() {
     enemySpawn(); //starts enemy spawnings
     troopTraining();
     displayAll();
+    if(bk != null){
+      System.out.println("BARRACK HEALTH:" + bk.getMaxHealth());
+    }
     //primitive troop training
     /*
     if (bk != null && !bk.trainingQ.isEmpty()) {
@@ -358,9 +361,12 @@ void mouseReleased() {
     state = State.NULL; //you are no longer dragging it since you released it
     message = canPlace(currentStructure, mouseX, mouseY); 
     if (message == "Structure successfully built") { //if you can place it here
-      structures.add(currentStructure); //place it
-      if (currentStructure.isA("barrack")) 
+      if (currentStructure.isA("barrack")){
         bk = new Barrack();
+        structures.add(bk);
+      }
+      else
+        structures.add(currentStructure); //place it
       gold -= currentStructure.getGold(); //spend moneys
       for (Enemy e : enemies)
         e.add(currentStructure); //add this new structure to enemies' heap to keep track of

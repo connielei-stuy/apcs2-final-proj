@@ -17,14 +17,16 @@ class Barrack extends Structure {
   }
 
   Barrack(float maxHealth, float time, float gold, PImage barrack) {
+    System.out.println("setting max health" + maxHealth);
     _maxHealth = maxHealth;
     _time = time;
     _gold = gold;
     photo = barrack;
+    System.out.println("max health" + _maxHealth);
   }
   
   void setBarrack(Barrack copy){
-    _maxHealth = copy.getHealth();
+    _maxHealth = copy.getMaxHealth();
     _time = copy.getTime();
     _gold = copy.getGold();
     photo = copy.getPhoto();
@@ -42,6 +44,7 @@ class Barrack extends Structure {
     _centerX = _x + _width/2;
     _centerY = _y + _height/2;
     _priority = 1;
+    trainingQ = new ArrayPriorityQueue<Troop>();
   }
   
   //trains a troop by adding it to the training queue, later removed and added to arraylist
