@@ -386,22 +386,16 @@ void mouseClicked() {
     }
   }
   if (currentScreen == Screens.GAME) {
-    /*
     for (Structure s : structures) {
       if (isInside(s , mouseX , mouseY)) {
-        if (s.isA("cannon")) {
-          if (s.getGold() != -1) {
-            if (gold >= CANNONUPGRADES.get(s.getLevel()).getGold()) {
-              gold -= CANNONUPGRADES.get(s.getLevel()).getGold();                              
-              s = CANNONUPGRADES.get(s.getLevel()+1);
-              s._level++;
-                            message= ""+s.getLevel();
-              
-            }
+        if (upGradeStructureCheck(s)) {
+          if (upgradeQ.isEmpty()) {
+            upgradeSec = second();
+            upgradeQ.addStructure(s);
           }
         }
       }
-    }*/
+    }
     if (!troops.isEmpty()) {
       for (Troop t : troops) {
         if (isInside(t,mouseX,mouseY)) {
